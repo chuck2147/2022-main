@@ -35,8 +35,12 @@ public class RobotContainer {
   private final Controller driverController = new Controller(0, Hand.Left, 0.05);
   private final Controller operatorController = new Controller(1, Hand.Left, 0.05);
 
-  private final JoystickButton climberUpButton = driverController.getButton(Controller.Button.A);
-  private final JoystickButton shootCloseButton = operatorController.getButton(Controller.Button.A);
+  //private final JoystickButton climberUpButton = driverController.getButton(Controller.Button.A);
+  //private final JoystickButton shootCloseButton = operatorController.getButton(Controller.Button.A);
+  private final JoystickButton shooterTriangleButton = operatorController.getButton(Controller.Button.X);
+  private final JoystickButton shooterBehindLineButton = operatorController.getButton(Controller.Button.A);
+  private final JoystickButton shooterFarButton = operatorController.getButton(Controller.Button.B);
+  private final JoystickButton shooterFrontOfTrench = operatorController.getButton(Controller.Button.Y);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -52,6 +56,18 @@ public class RobotContainer {
   private void configureButtonBindings() {
 
     Drivetrain.setDefaultCommand(getArcadeDrive());
+
+    shooterBehindLineButton.whileHeld(shooter::shootFromBehindLine, shooter);
+    shooterBehindLineButton.whenReleased(shooter::stopShooter, shooter);
+    
+    shooterTriangleButton.whileHeld(shooter::shootFromTriangle, shooter);
+    shooterTriangleButton.whenReleased(shooter::stopShooter, shooter);
+
+    shooterFrontOfTrench.whileHeld(shooter::shootFromFrontOfTrench, shooter);
+    shooterFrontOfTrench.whenReleased(shooter::stopShooter, shooter);
+    shooterFarButton.whileHeld(shooter::shootFromFar, shooter);
+    shooterFarButton.whenReleased(shooter::stopShooter, shooter);
+  
   }
 
   /**
