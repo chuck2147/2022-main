@@ -34,4 +34,5 @@ public class IndexerCommand extends CommandBase {
   public boolean isFinished() {
     return false;
   }
+
 }

@@ -16,24 +16,8 @@ public final class DrivetrainConstants{
     //PIGEON ID
     public static final int DRIVETRAIN_PIGEON_ID = 0;
     //MOTOR ID
-    public static final int FRONT_LEFT_MODULE_DRIVE_MOTOR = 1;
-    public static final int FRONT_LEFT_MODULE_STEER_MOTOR = 2; 
-    public static final int FRONT_LEFT_MODULE_STEER_ENCODER = 9; 
-    public static final double FRONT_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(90);
-
-    public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3; 
-    public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 4; 
-    public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 10;
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(0);
-
-    public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 5;
-    public static final int BACK_LEFT_MODULE_STEER_MOTOR = 6;
-    public static final int BACK_LEFT_MODULE_STEER_ENCODER = 11;
-    public static final double BACK_LEFT_MODULE_STEER_OFFSET = -Math.toRadians(75);
-
-    public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 7;
-    public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 8;
-    public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12;
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(130);
+    public static final int DRIVETRAIN_LEFT_MOTOR_ID = 1;
+    public static final int DRIVETRAIN_RIGHT_MOTOR_ID = 2;
+    public static final double DRIVE_SPEED_SCALE = 0.8;
 } 
 
