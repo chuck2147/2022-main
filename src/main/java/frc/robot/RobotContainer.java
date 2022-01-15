@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Controller.Hand;
+import frc.robot.buttons.ClimberButtons;
+import frc.robot.buttons.IntakeButtons;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -33,7 +35,6 @@ public class RobotContainer {
   private final Controller driverController = new Controller(0, Hand.Left, 0.05);
   private final Controller operatorController = new Controller(1, Hand.Left, 0.05);
 
-  private final JoystickButton climberUpButton = driverController.getButton(Controller.Button.A);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -46,7 +47,10 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
    * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {}
+  private void configureButtonBindings() {
+    IntakeButtons.Configure(m_intakeSubsystem, operatorController);
+    ClimberButtons.Configure(m_climberSubsystem, driverController);
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
