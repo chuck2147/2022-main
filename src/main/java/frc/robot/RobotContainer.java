@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Controller.Hand;
 import frc.robot.commands.ArcadeDriveCommand;
 import frc.robot.commands.TankDriveCommand;
+import frc.robot.buttons.ClimberButtons;
+import frc.robot.buttons.IntakeButtons;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -35,6 +37,7 @@ public class RobotContainer {
   private final Controller driverController = new Controller(0, Hand.Left, 0.05);
   private final Controller operatorController = new Controller(1, Hand.Left, 0.05);
 
+
   //private final JoystickButton climberUpButton = driverController.getButton(Controller.Button.A);
   //private final JoystickButton shootCloseButton = operatorController.getButton(Controller.Button.A);
   private final JoystickButton shooterTriangleButton = operatorController.getButton(Controller.Button.X);
@@ -43,6 +46,7 @@ public class RobotContainer {
   private final JoystickButton shooterFrontOfTrench = operatorController.getButton(Controller.Button.Y);
   private final JoystickButton HoodUp = operatorController.getButton(Controller.Button.RightBumper);
   private final JoystickButton HoodDown = operatorController.getButton(Controller.Button.LeftBumper);
+  
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -70,6 +74,8 @@ public class RobotContainer {
     shooterFarButton.whileHeld(shooter::shootFromFar, shooter);
     shooterFarButton.whenReleased(shooter::stopShooter, shooter);
     
+    IntakeButtons.Configure(m_intakeSubsystem, operatorController);
+    ClimberButtons.Configure(m_climberSubsystem, driverController);
   }
 
   /**
