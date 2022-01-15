@@ -16,39 +16,32 @@ import frc.robot.NTValue;
  */
 public final class ShooterConstants{
     //MOTOR ID
-    public static int LOWER_SHOOTER_MOTOR_ID = 15;
-    public static int UPPER_SHOOTER_MOTOR_ID = 16;
-    public static int HOOD_SHOOTER_MOTOR_ID = 17;
+    public static int LOWER_MOTOR_ID = 15;
+    public static int UPPER_MOTOR_ID = 16;
 
     //MOTOR PIDs
-    public static final double UPPER_SHOOTER_P = 0.3;
-    public static final double UPPER_SHOOTER_I = 0;
-    public static final double UPPER_SHOOTER_D = 4.5;
-    public static final double UPPER_SHOOTER_F = 0.0487; 
-    public static final double LOWER_SHOOTER_P = 0.3;
-    public static final double LOWER_SHOOTER_I = 0;
-    public static final double LOWER_SHOOTER_D = 4.5;
-    public static final double LOWER_SHOOTER_F = 0.0487;
-
-    public static double HOOD_SHOOTER_MOTOR_P = 0;
-    public static double HOOD_SHOOTER_MOTOR_I = 0;
-    public static double HOOD_SHOOTER_MOTOR_D = 0;
-    public static double HOOD_SHOOTER_MOTOR_F = 0;
+    public static final double UPPER_P = 0.3;
+    public static final double UPPER_I = 0;
+    public static final double UPPER_D = 4.5;
+    public static final double UPPER_F = 0.0487; 
+    public static final double LOWER_P = 0.3;
+    public static final double LOWER_I = 0;
+    public static final double LOWER_D = 4.5;
+    public static final double LOWER_F = 0.0487;
 
     //MOTORSPEEDs
-    public static double HOOD_SHOOTER_SPEED = 0.1;
-    public static final NTValue SHOOTER_TRIANGLE_UPPER = new NTValue(-3000, "Shooter Triangle Upper");
-    public static final NTValue SHOOTER_TRIANGLE_LOWER = new NTValue(15000, "Shooter Triangle Lower");
+    public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(1000, "Front of Hub Upper");
+    public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(-13000, "Front of Hub Lower");
 
-    public static final NTValue SHOOTER_BEHIND_LINE_UPPER = new NTValue(4500, "Shooter Behind Line Upper");
-    public static final NTValue SHOOTER_BEHING_LINE_LOWER = new NTValue(10000, "Shooter Behind Line Lower");
+    public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(3000, "Behind Tarmac Upper");
+    public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(-13000, "Behind Tarmac Lower");
     
-    public static final NTValue SHOOTER_FRONT_OF_TRENCH_UPPER = new NTValue(4000, "Shooter Front Of Trench Upper"); 
-    public static final NTValue SHOOTER_FRONT_OF_TRENCH_LOWER = new NTValue(12750, "Shooter Front OF Trench Lower"); 
+    public static final NTValue LAUNCH_PAD_UPPER = new NTValue(15000, "Launch Pad Upper"); 
+    public static final NTValue LAUNCH_PAD_LOWER = new NTValue(-15000, "Launch Pad Lower"); 
    
 
-    public static final NTValue SHOOTER_FAR_UPPER = new NTValue(10000, "Shooter Far Upper"); 
-    public static final NTValue SHOOTER_FAR_LOWER = new NTValue(11000, "Shooter Far Lower"); 
+    public static final NTValue CHUCK_IT_UPPER = new NTValue(19000, "Chuck it Upper"); 
+    public static final NTValue CHUCK_IT_LOWER = new NTValue(-19000, "Chuck it Lower"); 
 
     public static final double velocityPIDTolerance = 1000;
 } 

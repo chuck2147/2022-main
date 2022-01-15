@@ -8,9 +8,6 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Controller.Hand;
-import frc.robot.commands.ArcadeDriveCommand;
-import frc.robot.commands.TankDriveCommand;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.IntakeButtons;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
@@ -28,24 +25,21 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //private final DrivetrainSubsystem Drivetrain = new DrivetrainSubsystem();
-  // private final ClimberSubsystem climber = new ClimberSubsystem();
-  // private final IndexerSubsystem indexer = new IndexerSubsystem();
-  // private final IntakeSubsystem intake = new IntakeSubsystem();
+  //private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
+  //private final ClimberSubsystem climber = new ClimberSubsystem();
+  //private final IndexerSubsystem indexer = new IndexerSubsystem();
+  //private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
-  private final Controller driverController = new Controller(0, Hand.Left, 0.05);
-  private final Controller operatorController = new Controller(1, Hand.Left, 0.05);
+  private final Controller driverController = new Controller(0, 0.05);
+  private final Controller operatorController = new Controller(1, 0.05);
 
 
   //private final JoystickButton climberUpButton = driverController.getButton(Controller.Button.A);
-  //private final JoystickButton shootCloseButton = operatorController.getButton(Controller.Button.A);
-  private final JoystickButton shooterTriangleButton = operatorController.getButton(Controller.Button.X);
-  private final JoystickButton shooterBehindLineButton = operatorController.getButton(Controller.Button.A);
-  private final JoystickButton shooterFarButton = operatorController.getButton(Controller.Button.B);
-  private final JoystickButton shooterFrontOfTrench = operatorController.getButton(Controller.Button.Y);
-  private final JoystickButton HoodUp = operatorController.getButton(Controller.Button.RightBumper);
-  private final JoystickButton HoodDown = operatorController.getButton(Controller.Button.LeftBumper);
+  private final JoystickButton shooterFrontOfHubButton = operatorController.getButton(Controller.Button.X);
+  private final JoystickButton shooterBehindTarmacButton = operatorController.getButton(Controller.Button.A);
+  private final JoystickButton shooterChuckItButton = operatorController.getButton(Controller.Button.B);
+  private final JoystickButton shooterLaunchPadButton = operatorController.getButton(Controller.Button.Y);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -61,21 +55,13 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    //Drivetrain.setDefaultCommand(getArcadeDrive());
-
-    shooterBehindLineButton.whileHeld(shooter::shootFromBehindLine, shooter);
-    shooterBehindLineButton.whenReleased(shooter::stopShooter, shooter);
+    shooterBehindTarmacButton.whileHeld(shooter::shootFromBehindTarmac, shooter);
+    shooterFrontOfHubButton.whileHeld(shooter::shootFromFrontOfHub, shooter);
+    shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
+    shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
-    shooterTriangleButton.whileHeld(shooter::shootFromTriangle, shooter);
-    shooterTriangleButton.whenReleased(shooter::stopShooter, shooter);
-
-    shooterFrontOfTrench.whileHeld(shooter::shootFromFrontOfTrench, shooter);
-    shooterFrontOfTrench.whenReleased(shooter::stopShooter, shooter);
-    shooterFarButton.whileHeld(shooter::shootFromFar, shooter);
-    shooterFarButton.whenReleased(shooter::stopShooter, shooter);
-    
-    IntakeButtons.Configure(m_intakeSubsystem, operatorController);
-    ClimberButtons.Configure(m_climberSubsystem, driverController);
+    // IntakeButtons.Configure(intake, operatorController);
+    // ClimberButtons.Configure(climber, driverController);
   }
 
   /**
@@ -84,16 +70,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
     return new DriveForwardCommand();
   }
-
-//   private Command getTankDrive() {
-//     return new TankDriveCommand(Drivetrain, () -> driverController.getRawAxis(5), () -> driverController.getRawAxis(0));
-//  }
-
-//  private Command getArcadeDrive() {
-//     return new ArcadeDriveCommand(Drivetrain, () -> -driverController.getRawAxis(1), () -> driverController.getRawAxis(4));
-//  }
-
 }

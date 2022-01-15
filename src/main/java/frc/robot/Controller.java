@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class Controller extends XboxController {
-  Controller(int port, Hand hand, double deadband) {
+  Controller(int port, double deadband) {
     super(port);
     this.deadband = deadband;
   }
@@ -20,36 +20,6 @@ public class Controller extends XboxController {
 
   public JoystickButton getButton(Button button) {
     return new JoystickButton(this, button.port);
-  }
-
-  public enum Hand {
-    Left, Right
-  }
-  
-  public double getX(Hand hand) {
-    var ret = 0.0;
-    switch(hand) {
-      case Left:
-        ret = applyDeadband(super.getLeftY(), deadband);
-        break;
-      case Right:
-        ret = applyDeadband(super.getRightY(), deadband);
-        break;
-    }
-    return ret;
-  }
-
-  public double getY(Hand hand) {
-      var ret = 0.0;
-      switch(hand) {
-        case Left:
-          ret = applyDeadband(super.getLeftY(), deadband);
-          break;
-        case Right:
-          ret = applyDeadband(super.getRightY(), deadband);
-          break;
-      }
-      return ret;
   }
   
   public double getRawAxis(int axis) {
