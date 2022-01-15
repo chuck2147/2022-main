@@ -26,10 +26,10 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final DrivetrainSubsystem Drivetrain = new DrivetrainSubsystem();
-  private final ClimberSubsystem climber = new ClimberSubsystem();
-  private final IndexerSubsystem indexer = new IndexerSubsystem();
-  private final IntakeSubsystem intake = new IntakeSubsystem();
+  //private final DrivetrainSubsystem Drivetrain = new DrivetrainSubsystem();
+  // private final ClimberSubsystem climber = new ClimberSubsystem();
+  // private final IndexerSubsystem indexer = new IndexerSubsystem();
+  // private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
   private final Controller driverController = new Controller(0, Hand.Left, 0.05);
@@ -57,7 +57,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    Drivetrain.setDefaultCommand(getArcadeDrive());
+    //Drivetrain.setDefaultCommand(getArcadeDrive());
 
     shooterBehindLineButton.whileHeld(shooter::shootFromBehindLine, shooter);
     shooterBehindLineButton.whenReleased(shooter::stopShooter, shooter);
@@ -69,12 +69,6 @@ public class RobotContainer {
     shooterFrontOfTrench.whenReleased(shooter::stopShooter, shooter);
     shooterFarButton.whileHeld(shooter::shootFromFar, shooter);
     shooterFarButton.whenReleased(shooter::stopShooter, shooter);
-    
-    HoodUp.whileHeld(shooter::setHoodSpeed, shooter);
-    HoodUp.whenReleased(shooter::stopHood, shooter);
-
-    HoodDown.whileHeld(shooter::setHoodSpeedReverse, shooter);
-    HoodDown.whenReleased(shooter::stopHood, shooter);
     
   }
 
@@ -88,12 +82,12 @@ public class RobotContainer {
     return new DriveForwardCommand();
   }
 
-  private Command getTankDrive() {
-    return new TankDriveCommand(Drivetrain, () -> driverController.getRawAxis(5), () -> driverController.getRawAxis(0));
- }
+//   private Command getTankDrive() {
+//     return new TankDriveCommand(Drivetrain, () -> driverController.getRawAxis(5), () -> driverController.getRawAxis(0));
+//  }
 
- private Command getArcadeDrive() {
-    return new ArcadeDriveCommand(Drivetrain, () -> -driverController.getRawAxis(1), () -> driverController.getRawAxis(4));
- }
+//  private Command getArcadeDrive() {
+//     return new ArcadeDriveCommand(Drivetrain, () -> -driverController.getRawAxis(1), () -> driverController.getRawAxis(4));
+//  }
 
 }

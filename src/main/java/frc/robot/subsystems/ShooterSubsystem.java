@@ -10,6 +10,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -22,7 +23,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final TalonFX upperMotor = new TalonFX(ShooterConstants.UPPER_SHOOTER_MOTOR_ID);
   private final TalonFX lowerMotor = new TalonFX(ShooterConstants.LOWER_SHOOTER_MOTOR_ID);
-  private final TalonFX hoodMotor = new TalonFX(ShooterConstants.HOOD_SHOOTER_MOTOR_ID);
   private boolean isRunning = false;
   private ShooterDistances distance = ShooterDistances.BEHIND_TRENCH;
   private int lower = 0;
@@ -85,7 +85,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // PIDF
     new PIDNTValue(ShooterConstants.UPPER_SHOOTER_P, ShooterConstants.UPPER_SHOOTER_I, ShooterConstants.UPPER_SHOOTER_D, ShooterConstants.UPPER_SHOOTER_F, upperMotor, "Upper Shooter"); 
     new PIDNTValue(ShooterConstants.LOWER_SHOOTER_P, ShooterConstants.LOWER_SHOOTER_I, ShooterConstants.LOWER_SHOOTER_D, ShooterConstants.LOWER_SHOOTER_F, lowerMotor, "Lower Shooter"); 
-  }
+   }
 
   public static double encToRPM(double enc) {
     return enc / 100 * 1000 / 2048 * 60;
@@ -127,17 +127,6 @@ public class ShooterSubsystem extends SubsystemBase {
     lowerMotor.set(TalonFXControlMode.Velocity, velocityLower);
   }
 
-  public void setHoodSpeed(){
-    hoodMotor.set(TalonFXControlMode.Velocity, ShooterConstants.HOOD_SHOOTER_SPEED);
-  }
-
-  public void setHoodSpeedReverse(){
-    hoodMotor.set(TalonFXControlMode.Velocity, -ShooterConstants.HOOD_SHOOTER_SPEED);
-  }
-
-  public void stopHood(){
-    hoodMotor.set(TalonFXControlMode.Velocity, 0);
-  }
   public void shootFromBehindLine() {
     setVelocity(ShooterConstants.SHOOTER_BEHIND_LINE_UPPER.value, ShooterConstants.SHOOTER_BEHING_LINE_LOWER.value);
   }
@@ -198,7 +187,7 @@ public class ShooterSubsystem extends SubsystemBase {
     upperVelocityEntry.setValue(upperMotor.getSelectedSensorVelocity());
     upperVelocityGraphEntry.setValue(lowerMotor.getSelectedSensorVelocity());
     lowerVelocityEntry.setValue(lowerMotor.getSelectedSensorVelocity());
-
+    
     // SmartDashboard.putNumber("Upper Velocity", upperMotor.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Lower Velocity", lowerMotor.getSelectedSensorVelocity());
     // SmartDashboard.putNumber("Target Velocity", targetVelocityLower);
