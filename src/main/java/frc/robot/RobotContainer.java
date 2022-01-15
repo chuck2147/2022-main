@@ -41,6 +41,8 @@ public class RobotContainer {
   private final JoystickButton shooterBehindLineButton = operatorController.getButton(Controller.Button.A);
   private final JoystickButton shooterFarButton = operatorController.getButton(Controller.Button.B);
   private final JoystickButton shooterFrontOfTrench = operatorController.getButton(Controller.Button.Y);
+  private final JoystickButton HoodUp = operatorController.getButton(Controller.Button.RightBumper);
+  private final JoystickButton HoodDown = operatorController.getButton(Controller.Button.LeftBumper);
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -67,7 +69,13 @@ public class RobotContainer {
     shooterFrontOfTrench.whenReleased(shooter::stopShooter, shooter);
     shooterFarButton.whileHeld(shooter::shootFromFar, shooter);
     shooterFarButton.whenReleased(shooter::stopShooter, shooter);
-  
+    
+    HoodUp.whileHeld(shooter::setHoodSpeed, shooter);
+    HoodUp.whenReleased(shooter::stopHood, shooter);
+
+    HoodDown.whileHeld(shooter::setHoodSpeedReverse, shooter);
+    HoodDown.whenReleased(shooter::stopHood, shooter);
+    
   }
 
   /**

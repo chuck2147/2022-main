@@ -22,6 +22,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
   private final TalonFX upperMotor = new TalonFX(ShooterConstants.UPPER_SHOOTER_MOTOR_ID);
   private final TalonFX lowerMotor = new TalonFX(ShooterConstants.LOWER_SHOOTER_MOTOR_ID);
+  private final TalonFX hoodMotor = new TalonFX(ShooterConstants.HOOD_SHOOTER_MOTOR_ID);
   private boolean isRunning = false;
   private ShooterDistances distance = ShooterDistances.BEHIND_TRENCH;
   private int lower = 0;
@@ -33,6 +34,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
   public enum ShooterDistances {
     BEHIND_TRENCH, FRONT_OF_TRENCH, BEHIND_LINE
+  }
+
+  public enum HoodMovements {
+    UP, DOWN
   }
 
   ShuffleboardTab tab = Shuffleboard.getTab("NTValues");
@@ -122,6 +127,17 @@ public class ShooterSubsystem extends SubsystemBase {
     lowerMotor.set(TalonFXControlMode.Velocity, velocityLower);
   }
 
+  public void setHoodSpeed(){
+    hoodMotor.set(TalonFXControlMode.Velocity, ShooterConstants.HOOD_SHOOTER_SPEED);
+  }
+
+  public void setHoodSpeedReverse(){
+    hoodMotor.set(TalonFXControlMode.Velocity, -ShooterConstants.HOOD_SHOOTER_SPEED);
+  }
+
+  public void stopHood(){
+    hoodMotor.set(TalonFXControlMode.Velocity, 0);
+  }
   public void shootFromBehindLine() {
     setVelocity(ShooterConstants.SHOOTER_BEHIND_LINE_UPPER.value, ShooterConstants.SHOOTER_BEHING_LINE_LOWER.value);
   }

@@ -35,6 +35,8 @@ public final class ShooterConstants{
     public static double HOOD_SHOOTER_MOTOR_D = 0;
     public static double HOOD_SHOOTER_MOTOR_F = 0;
 
+    //MOTORSPEEDs
+    public static double HOOD_SHOOTER_SPEED = 0.25;
     public static final NTValue SHOOTER_TRIANGLE_UPPER = new NTValue(-3000, "Shooter Triangle Upper");
     public static final NTValue SHOOTER_TRIANGLE_LOWER = new NTValue(15000, "Shooter Triangle Lower");
 
