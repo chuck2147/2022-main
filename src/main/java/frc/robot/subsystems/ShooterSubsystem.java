@@ -95,7 +95,11 @@ public class ShooterSubsystem extends SubsystemBase {
   public double getVelocityLower() {
     return lowerMotor.getSelectedSensorVelocity();
   } 
-  
+  public void stopShooter(){
+    upperMotor.set(ControlMode.PercentOutput, 0);
+    lowerMotor.set(ControlMode.PercentOutput, 0);
+  }
+
   public void setVelocity(double velocityUpper, double velocityLower) {
     lowerTargetSpeed = velocityLower;
     upperTargetSpeed = velocityUpper;
