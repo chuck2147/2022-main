@@ -19,5 +19,9 @@ public final class IndexerConstants{
     //MOTOR SPEED
     public static double INDEXER_MOTOR_SPEED = .25;
 
+    //IR ID
+    public static int INDEXER_IR_ID = 0;
+    public static int HOPPER_IR_ID = 1;
+
 } 
 
