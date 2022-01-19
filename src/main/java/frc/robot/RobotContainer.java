@@ -25,10 +25,10 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
-  //private final ClimberSubsystem climber = new ClimberSubsystem();
-  //private final IndexerSubsystem indexer = new IndexerSubsystem();
-  //private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final IndexerSubsystem indexer = new IndexerSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
   private final Controller driverController = new Controller(0, 0.05);
@@ -60,7 +60,7 @@ public class RobotContainer {
     shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
     shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
-    // IntakeButtons.Configure(intake, operatorController);
+    IntakeButtons.Configure(intake, operatorController);
     // ClimberButtons.Configure(climber, driverController);
   }
 

@@ -19,20 +19,21 @@ public class IntakeCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    intakeSubsystem.extendIntake();
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     intakeSubsystem.runIntake();
-    intakeSubsystem.extendIntake();
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    intakeSubsystem.retractIntake();
     intakeSubsystem.stopIntake();
+    intakeSubsystem.retractIntake();
   }
 
   // Returns true when the command should end.
