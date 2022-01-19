@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.IntakeButtons;
+import frc.robot.buttons.ShooterButtons;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -25,10 +26,10 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
-  //private final ClimberSubsystem climber = new ClimberSubsystem();
-  //private final IndexerSubsystem indexer = new IndexerSubsystem();
-  //private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
+  private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final IndexerSubsystem indexer = new IndexerSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
   private final Controller driverController = new Controller(0, 0.05);
@@ -36,10 +37,10 @@ public class RobotContainer {
 
 
   //private final JoystickButton climberUpButton = driverController.getButton(Controller.Button.A);
-  private final JoystickButton shooterFrontOfHubButton = operatorController.getButton(Controller.Button.X);
-  private final JoystickButton shooterBehindTarmacButton = operatorController.getButton(Controller.Button.A);
-  private final JoystickButton shooterChuckItButton = operatorController.getButton(Controller.Button.B);
-  private final JoystickButton shooterLaunchPadButton = operatorController.getButton(Controller.Button.Y);
+  // private final JoystickButton shooterFrontOfHubButton = operatorController.getButton(Controller.Button.X);
+  // private final JoystickButton shooterBehindTarmacButton = operatorController.getButton(Controller.Button.A);
+  // private final JoystickButton shooterChuckItButton = operatorController.getButton(Controller.Button.B);
+  // private final JoystickButton shooterLaunchPadButton = operatorController.getButton(Controller.Button.Y);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -55,13 +56,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    shooterBehindTarmacButton.whileHeld(shooter::shootFromBehindTarmac, shooter);
-    shooterFrontOfHubButton.whileHeld(shooter::shootFromFrontOfHub, shooter);
-    shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
-    shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
+    // shooterBehindTarmacButton.whileHeld(shooter::shootFromBehindTarmac, shooter);
+    // shooterFrontOfHubButton.whileHeld(shooter::shootFromFrontOfHub, shooter);
+    // shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
+    // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
-    // IntakeButtons.Configure(intake, operatorController);
-    // ClimberButtons.Configure(climber, driverController);
+    IntakeButtons.Configure(intake, operatorController);
+    ClimberButtons.Configure(climber, driverController);
+    ShooterButtons.Configure(shooter, operatorController);
   }
 
   /**

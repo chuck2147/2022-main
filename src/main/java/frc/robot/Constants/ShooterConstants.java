@@ -44,5 +44,10 @@ public final class ShooterConstants{
     public static final NTValue CHUCK_IT_LOWER = new NTValue(-19000, "Chuck it Lower"); 
 
     public static final double velocityPIDTolerance = 1000;
+
+    //SHOOTER STATES 
+    public enum ShooterState {
+        Hub, Tarmac, LaunchPad, ChuckIt;
+    }
 } 
 
