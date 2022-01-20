@@ -6,47 +6,65 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.motorcontrol.Talon;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.ClimberConstants.ClimberType;
 
 public class ClimberSubsystem extends SubsystemBase {
-  public TalonFX leftClimberMotor = new TalonFX(ClimberConstants.LEFT_CLIMBER_MOTOR_ID);
-  public TalonFX rightClimberMotor = new TalonFX(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID);
-  PneumaticsModuleType climbLeftModuleType = PneumaticsModuleType.REVPH;
-  PneumaticsModuleType climbRightModuleType = PneumaticsModuleType.REVPH;
-  private final DoubleSolenoid climbRightPiston = new DoubleSolenoid(climbRightModuleType, ClimberConstants.CLIMBER_RIGHT_AIR_IN, ClimberConstants.CLIMBER_RIGHT_AIR_OUT);
-  private final DoubleSolenoid climbLeftPiston = new DoubleSolenoid(climbLeftModuleType, ClimberConstants.CLIMBER_LEFT_AIR_IN, ClimberConstants.CLIMBER_LEFT_AIR_OUT);
-
- 
-
+  public TalonFX climberMotor;
+  PneumaticsModuleType moduleType = PneumaticsModuleType.REVPH;
+  private DoubleSolenoid climbPiston;
     
-  public ClimberSubsystem() {
-    leftClimberMotor.setInverted(false);
-    rightClimberMotor.setInverted(false);
+  public ClimberSubsystem(ClimberType climberType) {
+    climberMotor = getMotorFromType(climberType);
+    climbPiston = getPistonFromType(climberType);
 
-  }
-
-  public void runClimber(){
-    leftClimberMotor.set(ControlMode.Velocity, ClimberConstants.CLIMBER_MOTOR_SPEED);
-    rightClimberMotor.set(ControlMode.Velocity, ClimberConstants.CLIMBER_MOTOR_SPEED);
+    climberMotor.setInverted(false);
   }
 
-    public void reverseClimber(){
-    leftClimberMotor.set(ControlMode.Velocity, ClimberConstants.CLIMBER_MOTOR_SPEED);
-    rightClimberMotor.set(ControlMode.Velocity, ClimberConstants.CLIMBER_MOTOR_SPEED);
+  private TalonFX getMotorFromType(ClimberType climberType) {
+    int motorId = (climberType == ClimberType.Low) ? ClimberConstants.LOW_CLIMBER_MOTOR_ID : ClimberConstants.HIGH_CLIMBER_MOTOR_ID;
+
+    return new TalonFX(motorId);
   }
-  public void stopClimber(){
-    leftClimberMotor.set(ControlMode.Velocity, 0);
-    rightClimberMotor.set(ControlMode.Velocity, 0);
+
+  private DoubleSolenoid getPistonFromType(ClimberType climberType) {
+    int forwardChannel;
+    int reverseChannel;
+
+    if (climberType == ClimberType.Low) {
+      forwardChannel = ClimberConstants.CLIMBER_LOW_AIR_IN;
+      reverseChannel = ClimberConstants.CLIMBER_LOW_AIR_OUT;
+    }
+    else {      
+      forwardChannel = ClimberConstants.CLIMBER_HIGH_AIR_IN;
+      reverseChannel = ClimberConstants.CLIMBER_HIGH_AIR_OUT;
+    }
+
+    return new DoubleSolenoid(moduleType, forwardChannel, reverseChannel);
   }
-  public void extendClimber() {
-    climbRightPiston.set(Value.kReverse);
-    climbLeftPiston.set(Value.kReverse);
+
+  public void extendClimber(ClimberType climberType) {
+    climberMotor.set(ControlMode.PercentOutput, 1);
   }
-  public void retractClimber() {
-    climbRightPiston.set(Value.kForward);
-    climbLeftPiston.set(Value.kForward);
+
+  public void reverseClimber(ClimberType climberType) {
+    climberMotor.set(ControlMode.PercentOutput, -1);
   }
+
+  public void stopClimber(ClimberType climberType) {
+    climberMotor.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void climberPistonOn(ClimberType climberType) {
+    climbPiston.set(Value.kReverse);
+  }
+
+  public void climberPistonOff(ClimberType climberType) {
+    climbPiston.set(Value.kForward);
+  }
+
   @Override
   public void periodic() { 
   }

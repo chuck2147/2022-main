@@ -6,14 +6,15 @@ package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Controller;
+import frc.robot.Constants.ClimberConstants.ClimberType;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 
 /** Add your docs here. */
 public class ClimberButtons {
-    public static void Configure(ClimberSubsystem subsystem, Controller controller) {
+    public static void Configure(ClimberSubsystem subsystem, ClimberType climberType, Controller controller) {
         final JoystickButton button = controller.getButton(Controller.Button.A);
 
-        button.whileHeld(new ClimberCommand(subsystem));
+        button.whileHeld(new ClimberCommand(subsystem, climberType));
     }
 }

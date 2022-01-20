@@ -1,4 +1,4 @@
-// Copyright (c) FIRST and other WPILib contributors.
+// Copy (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
@@ -14,22 +14,26 @@ package frc.robot.Constants;
  */
 public final class ClimberConstants{
     //MOTOR ID
-    public static int LEFT_CLIMBER_MOTOR_ID = 18;
-    public static int RIGHT_CLIMBER_MOTOR_ID = 19;
+    public static int LOW_CLIMBER_MOTOR_ID = 18;
+    public static int HIGH_CLIMBER_MOTOR_ID = 19;
 
     //MOTOR SPEED
     public static double CLIMBER_MOTOR_SPEED = .5;
 
     // PNEUMATIC ID
-    public static int CLIMBER_RIGHT_AIR_IN = 4;
-    public static int CLIMBER_RIGHT_AIR_OUT = 5;
-    public static int CLIMBER_LEFT_AIR_OUT = 6;
-    public static int CLIMBER_LEFT_AIR_IN = 7;
+    public static int CLIMBER_HIGH_AIR_IN = 4;
+    public static int CLIMBER_HIGH_AIR_OUT = 5;
+    public static int CLIMBER_LOW_AIR_OUT = 6;
+    public static int CLIMBER_LOW_AIR_IN = 7;
 
     //MOTOR PIDs
     public static double CLIMBER_MOTOR_P = 0;
     public static double CLIMBER_MOTOR_I = 0;
     public static double CLIMBER_MOTOR_D = 0;
     public static double CLIMBER_MOTOR_F = 0;
+
+    public enum ClimberType {
+        Low, High
+    }
 } 
 

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants.ClimberConstants.ClimberType;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.IntakeButtons;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
@@ -26,7 +27,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
-  private final ClimberSubsystem climber = new ClimberSubsystem();
+  private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberType.Low);
+  private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberType.High);
   private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();

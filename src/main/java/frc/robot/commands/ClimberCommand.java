@@ -5,13 +5,14 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ClimberConstants.ClimberType;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
   private ClimberSubsystem climberSubsystem;
 
-  public ClimberCommand(ClimberSubsystem subsystem) {
+  public ClimberCommand(ClimberSubsystem subsystem, ClimberType climberType) {
     // Use addRequirements() here to declare subsystem dependencies.
     climberSubsystem = subsystem;
     addRequirements(subsystem);
