@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants.ClimberType;
 import frc.robot.buttons.ClimberButtons;
+import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.IntakeButtons;
 import frc.robot.buttons.ShooterButtons;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
@@ -64,8 +65,9 @@ public class RobotContainer {
     // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
     IntakeButtons.Configure(intake, operatorController);
-    ClimberButtons.Configure(climber, driverController);
+    ClimberButtons.Configure(lowClimber, ClimberType.Low, driverController);
     ShooterButtons.Configure(shooter, operatorController);
+    IndexerButtons.Configure(indexer, driverController);
   }
 
   /**

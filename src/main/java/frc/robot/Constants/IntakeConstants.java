@@ -14,7 +14,7 @@ package frc.robot.Constants;
  */
 public final class IntakeConstants{
     //MOTOR ID
-    public static int INTAKE_MOTOR_ID = 14;
+    public static int INTAKE_MOTOR_ID = 15;
 
     //MOTOR SPEED
     public static double INTAKE_MOTOR_SPEED = .5;
