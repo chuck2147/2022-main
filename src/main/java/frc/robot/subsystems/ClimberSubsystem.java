@@ -45,23 +45,23 @@ public class ClimberSubsystem extends SubsystemBase {
     return new DoubleSolenoid(moduleType, forwardChannel, reverseChannel);
   }
 
-  public void extendClimber(ClimberType climberType) {
+  public void extendClimber() {
     climberMotor.set(ControlMode.PercentOutput, 1);
   }
 
-  public void reverseClimber(ClimberType climberType) {
+  public void reverseClimber() {
     climberMotor.set(ControlMode.PercentOutput, -1);
   }
 
-  public void stopClimber(ClimberType climberType) {
+  public void stopClimber() {
     climberMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public void climberPistonOn(ClimberType climberType) {
+  public void climberPistonOn() {
     climbPiston.set(Value.kReverse);
   }
 
-  public void climberPistonOff(ClimberType climberType) {
+  public void climberPistonOff() {
     climbPiston.set(Value.kForward);
   }
 
