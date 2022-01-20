@@ -22,19 +22,18 @@ public class IndexerCommand extends CommandBase {
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
-  // @Override
-  // public void execute() {
-  //   if (indexerSubsystem.isIndexerTriggered()) {
-  //     indexerSubsystem.runHopper();
-  //     indexerSubsystem.runIndexer();
-  // }
+  @Override
+  public void execute() {
+    indexerSubsystem.runHopper();
+    indexerSubsystem.runIndexer();
+  }
 
   // Called once the command ends or is interrupted.
-  // @Override
-  // public void end(boolean interrupted){
-  //   indexerSubsystem.stopHopper();
-  //   indexerSubsystem.stopIndexer();
-  // }
+  @Override
+  public void end(boolean interrupted){
+    indexerSubsystem.stopHopper();
+    indexerSubsystem.stopIndexer();
+  }
 
   // Returns true when the command should end.
   @Override

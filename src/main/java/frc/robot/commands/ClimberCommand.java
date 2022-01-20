@@ -12,9 +12,9 @@ public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
   private ClimberSubsystem climber;
 
-  public ClimberCommand(ClimberSubsystem subsystem, ClimberType climberType) {
+  public ClimberCommand(ClimberSubsystem climber, ClimberType climberType) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(subsystem);
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
