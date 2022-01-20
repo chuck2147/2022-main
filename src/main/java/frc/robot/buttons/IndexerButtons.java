@@ -12,8 +12,8 @@ import frc.robot.subsystems.IndexerSubsystem;
 /** Add your docs here. */
 public class IndexerButtons {
     public static void Configure(IndexerSubsystem subsystem, Controller controller) {
-        //final AxisTrigger button = controller.getButton(Controller.);/
-
-        //button.whileHeld(new IndexerCommand(subsystem));/
+        final JoystickButton button = controller.getButton(Controller.Button.LeftBumper);
+        button.whileHeld(new IndexerCommand(subsystem));
     }
+    
 }

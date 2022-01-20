@@ -9,7 +9,7 @@ import frc.robot.subsystems.IndexerSubsystem;
 
 public class IndexerCommand extends CommandBase {
   /** Creates a new IndexerCommand. */
-  private IndexerSubsystem indexerSubsystem;
+  public final IndexerSubsystem indexerSubsystem;
 
   public IndexerCommand(IndexerSubsystem subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,12 +22,19 @@ public class IndexerCommand extends CommandBase {
   public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
-  @Override
-  public void execute() {}
+  // @Override
+  // public void execute() {
+  //   if (indexerSubsystem.isIndexerTriggered()) {
+  //     indexerSubsystem.runHopper();
+  //     indexerSubsystem.runIndexer();
+  // }
 
   // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted){}
+  // @Override
+  // public void end(boolean interrupted){
+  //   indexerSubsystem.stopHopper();
+  //   indexerSubsystem.stopIndexer();
+  // }
 
   // Returns true when the command should end.
   @Override

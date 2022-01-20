@@ -16,8 +16,8 @@ import frc.robot.NTValue;
  */
 public final class ShooterConstants{
     //MOTOR ID
-    public static int LOWER_MOTOR_ID = 15;
-    public static int UPPER_MOTOR_ID = 16;
+    public static int LOWER_MOTOR_ID = 16;
+    public static int UPPER_MOTOR_ID = 17;
 
     //MOTOR PIDs
     public static final double UPPER_P = 0.3;

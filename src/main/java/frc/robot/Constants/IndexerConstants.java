@@ -15,13 +15,19 @@ package frc.robot.Constants;
 public final class IndexerConstants{
     //MOTOR ID
     public static int INDEXER_MOTOR_ID = 13;
+    public static int HOPPER_MOTOR_ID = 14;
 
     //MOTOR SPEED
     public static double INDEXER_MOTOR_SPEED = .25;
+    public static double HOPPER_MOTOR_SPEED = .25;
 
     //IR ID
     public static int INDEXER_IR_ID = 0;
     public static int HOPPER_IR_ID = 1;
+
+    //IR VOLTAGE LIMITS
+    public static double INDEXER_IR_VOLTAGE = 1.75;
+    public static double HOPPER_IR_VOLTAGE = 1.2;
 
 } 
 
