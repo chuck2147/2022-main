@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PIDNTValue;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.ShooterConstants.ShooterState;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -25,10 +26,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX lowerMotor = new TalonFX(ShooterConstants.LOWER_MOTOR_ID);
   private double lowerTargetSpeed = 0;
   private double upperTargetSpeed = 0;
-
-  public enum ShooterDistances {
-    BEHIND_TRENCH, FRONT_OF_TRENCH, BEHIND_LINE
-  }
+  private double yInbetween = 0;
+  ShooterState shooterState;
 
   public enum HoodMovements {
     UP, DOWN

@@ -19,5 +19,10 @@ public final class DrivetrainConstants{
     public static final int DRIVETRAIN_LEFT_MOTOR_ID = 1;
     public static final int DRIVETRAIN_RIGHT_MOTOR_ID = 2;
     public static final double DRIVE_SPEED_SCALE = 0.8;
+    //LIMELIGHT PIDs 
+    public static final double VISION_ALIGN_P = 0.185;
+    public static final double VISION_ALIGN_I = 0;
+    public static final double VISION_ALIGN_D = 0.005;
+    public static final double VISION_ALIGN_F = 0;
 } 
 
