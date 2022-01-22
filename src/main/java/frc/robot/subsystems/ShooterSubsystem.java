@@ -108,20 +108,20 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shootFromBehindTarmac() {
-    lowerShooterSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-    upperShooterSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+    lowerTargetSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
+    upperTargetSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
   }
   public void shootFromFrontOfHub() {
-    lowerShooterSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
-    upperShooterSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
+    lowerTargetSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
+    upperTargetSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
   }
   public void shootFromLaunchPad(){
-    lowerShooterSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
-    upperShooterSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.LAUNCH_PAD_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.LAUNCH_PAD_UPPER.value;
   }
   public void shootChuckIt() {
-    lowerShooterSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
-    upperShooterSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
+    lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
+    upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
   }
   // Lower_Motor Velocity will always take longer to get on target... so only needs lower velocity
   public boolean isOnTarget() {
@@ -168,8 +168,9 @@ public class ShooterSubsystem extends SubsystemBase {
     upperVelocityGraphEntry.setValue(lowerMotor.getSelectedSensorVelocity());
     lowerVelocityEntry.setValue(lowerMotor.getSelectedSensorVelocity());
 
-    upperMotor.set(TalonFXControlMode.Velocity, upperTargetSpeed);
+    upperMotor.set(TalonFXControlMode.Velocity, -upperTargetSpeed);
     lowerMotor.set(TalonFXControlMode.Velocity, lowerTargetSpeed);
+    System.out.println(upperTargetSpeed);
 
     lowerTargetSpeed = 0;
     upperTargetSpeed = 0;
