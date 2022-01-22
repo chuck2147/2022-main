@@ -13,6 +13,8 @@ public class VisionAlignCommand extends CommandBase {
   DrivetrainSubsystem drivetrain;
   ShooterState shooterState;
   double yDestination = 0;
+  double closestPoint = 0;
+  ShooterState determineShooterState;
   private PIDController pid = new PIDController(DrivetrainConstants.VISION_ALIGN_P, DrivetrainConstants.VISION_ALIGN_I, DrivetrainConstants.VISION_ALIGN_D, 0.01);
   public VisionAlignCommand(DrivetrainSubsystem drivetrain, ShooterState shooterState) {
     addRequirements(drivetrain);
@@ -32,26 +34,38 @@ public class VisionAlignCommand extends CommandBase {
    return 0;
   }
 
+  private ShooterState determineShooterState(double point1, double point2, double yDistance, ShooterState shooterState1, ShooterState shooterState2){
+   double difference1 = yDistance - point1;
+   double difference2 = yDistance - point2;
+   if (Math.abs(difference1) >= Math.abs(difference2)) {
+     return shooterState2;
+   } else if (Math.abs(difference2) >= Math.abs(difference1)){
+     return shooterState1;
+   }
+   return shooterState1;
+  }
+  
+
   public double setDistance(){
    double yTarget = Limelight.getTargetY();
-   double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + yTarget)));
-    if (ShooterConstants.FRONT_OF_HUB_DISTANCE <= yDistance && yDistance >= ShooterConstants.BEHIND_TARMAC_DISTANCE){
-      double yFrontOfHub = yDistance - ShooterConstants.FRONT_OF_HUB_DISTANCE;
-      double yBehindTarmac = yDistance - ShooterConstants.BEHIND_TARMAC_DISTANCE;
-      if (Math.abs(yFrontOfHub) > Math.abs(yBehindTarmac)){
-        shooterState = ShooterState.Tarmac;
-        yDestination = ShooterConstants.BEHIND_TARMAC_DISTANCE;
-      } else if (Math.abs(yFrontOfHub) < Math.abs(yBehindTarmac)){
-        shooterState = ShooterState.Hub;
-        yDestination = ShooterConstants.FRONT_OF_HUB_DISTANCE;
-      }
-    } else if (shooterState == ShooterState.Tarmac){
-      yDestination = ShooterConstants.BEHIND_TARMAC_DISTANCE;
-    } else if (shooterState == ShooterState.LaunchPad){
-      yDestination = ShooterConstants.LAUNCH_PAD_DISTANCE;
-    } else if (shooterState == ShooterState.ChuckIt){
-      yDestination = ShooterConstants.CHUCK_IT_DISTANCE;
+   double getRadians = Math.toRadians(yTarget);
+   double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + getRadians)));
+   double yFrontOfHub = ShooterConstants.FRONT_OF_HUB_DISTANCE;
+   double yBehindTarmac = ShooterConstants.BEHIND_TARMAC_DISTANCE;
+   double yLaunchPad = ShooterConstants.LAUNCH_PAD_DISTANCE;
+   double yChuckIt = ShooterConstants.CHUCK_IT_DISTANCE;
+
+    if (ShooterConstants.FRONT_OF_HUB_DISTANCE <= yDistance && yDistance <= ShooterConstants.BEHIND_TARMAC_DISTANCE){
+      closestPoint = howCloseToPoints(yFrontOfHub, yBehindTarmac, yDistance);
+      determineShooterState = determineShooterState(yFrontOfHub, yBehindTarmac, yDistance, ShooterState.Hub, ShooterState.Tarmac);
+    } else if (ShooterConstants.BEHIND_TARMAC_DISTANCE <= yDistance && yDistance <= ShooterConstants.LAUNCH_PAD_DISTANCE){
+      closestPoint = howCloseToPoints(yBehindTarmac, yLaunchPad, yDistance);
+      determineShooterState = determineShooterState(yBehindTarmac, yLaunchPad, yDistance, ShooterState.Tarmac, ShooterState.LaunchPad);
+    } else if (ShooterConstants.LAUNCH_PAD_DISTANCE <= yDistance && yDistance <= ShooterConstants.CHUCK_IT_DISTANCE){
+      closestPoint = howCloseToPoints(yLaunchPad, yChuckIt, yDistance);
+      determineShooterState = determineShooterState(yLaunchPad, yChuckIt, yDistance, ShooterState.LaunchPad, ShooterState.ChuckIt);
     }
+    yDestination = closestPoint;
     return yDestination;
   }
 
@@ -59,10 +73,11 @@ public class VisionAlignCommand extends CommandBase {
   public boolean isFinished() {
     double xTarget = Limelight.getTargetX();
     double yTarget = Limelight.getTargetY();
-    double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + yTarget)));
+    double getRadians = Math.toRadians(yTarget);
+    double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + getRadians)));
     double yInbetween = setDistance();
     double yposition = yDistance - yInbetween;
-    return Math.abs(xTarget) + Math.abs(yDistance) <= 2;
+    return Math.abs(xTarget) + Math.abs(yposition) <= 2;
   }
 
   private static double getError() {
@@ -73,7 +88,8 @@ public class VisionAlignCommand extends CommandBase {
   public void execute() {
     double xTarget = Limelight.getTargetX();
     double yTarget = Limelight.getTargetY();
-    double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + yTarget)));
+    double getRadians = Math.toRadians(yTarget);
+    double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + getRadians)));
     double pidAngularVelocity = pid.calculate(0, -xTarget);
     double yInbetween = setDistance();
     double yposition = yDistance - yInbetween;

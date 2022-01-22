@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXFeedbackDevice;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.fasterxml.jackson.core.sym.Name;
 
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -18,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PIDNTValue;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ShooterConstants.ShooterState;
+import frc.robot.Record.ShooterSpeeds;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -78,6 +80,14 @@ public class ShooterSubsystem extends SubsystemBase {
     new PIDNTValue(ShooterConstants.UPPER_P, ShooterConstants.UPPER_I, ShooterConstants.UPPER_D, ShooterConstants.UPPER_F, upperMotor, "Upper Shooter"); 
     new PIDNTValue(ShooterConstants.LOWER_P, ShooterConstants.LOWER_I, ShooterConstants.LOWER_D, ShooterConstants.LOWER_F, lowerMotor, "Lower Shooter"); 
    }
+
+
+  // private void setShooterSpeedRecords() {
+  //   ShooterSpeeds[] shooterSpeeds = new ShooterSpeeds[4];
+
+  //   shooterSpeeds[0] = new ShooterSpeeds("Hub", ShooterConstants.FRONT_OF_HUB_DISTANCE, ShooterConstants.FRONT_OF_HUB_UPPER.value, ShooterConstants.FRONT_OF_HUB_LOWER.value);
+    
+  // }
 
   public static double encToRPM(double enc) {
     return enc / 100 * 1000 / 2048 * 60;
