@@ -25,6 +25,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX lowerMotor = new TalonFX(ShooterConstants.LOWER_MOTOR_ID);
   private double lowerTargetSpeed = 0;
   private double upperTargetSpeed = 0;
+  double lowerShooterSpeed = 0;
+  double upperShooterSpeed = 0;
 
   public enum ShooterDistances {
     BEHIND_TRENCH, FRONT_OF_TRENCH, BEHIND_LINE
@@ -106,16 +108,20 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void shootFromBehindTarmac() {
-    setVelocity(ShooterConstants.BEHIND_TARMAC_UPPER.value, ShooterConstants.BEHIND_TARMAC_LOWER.value);
+    lowerShooterSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
+    upperShooterSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
   }
   public void shootFromFrontOfHub() {
-    setVelocity(ShooterConstants.FRONT_OF_HUB_UPPER.value, ShooterConstants.FRONT_OF_HUB_LOWER.value);
+    lowerShooterSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
+    upperShooterSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
   }
   public void shootFromLaunchPad(){
-    setVelocity(ShooterConstants.LAUNCH_PAD_UPPER.value, ShooterConstants.LAUNCH_PAD_LOWER.value);
+    lowerShooterSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
+    upperShooterSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
   }
   public void shootChuckIt() {
-    setVelocity(ShooterConstants.CHUCK_IT_UPPER.value, ShooterConstants.CHUCK_IT_LOWER.value);
+    lowerShooterSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
+    upperShooterSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
   }
   // Lower_Motor Velocity will always take longer to get on target... so only needs lower velocity
   public boolean isOnTarget() {

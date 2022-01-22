@@ -12,44 +12,46 @@ public class IndexerSubsystem extends SubsystemBase {
     private AnalogInput irHopper = new AnalogInput(IndexerConstants.HOPPER_IR_ID);
     TalonFX indexerMotor = new TalonFX(IndexerConstants.INDEXER_MOTOR_ID); 
     TalonFX hopperMotor = new TalonFX(IndexerConstants.HOPPER_MOTOR_ID);
+    double indexerSpeed = 0;
+    double hopperSpeed = 0;
 
         public void stopIndexer(){
-            indexerMotor.set(ControlMode.Velocity, 0);
+            indexerSpeed = 0;
         }
     
         public void stopHopper(){
-            hopperMotor.set(ControlMode.Velocity, 0);
+            hopperSpeed = 0;
         }
 
         public void runIndexer(){
-            indexerMotor.set(ControlMode.Velocity, IndexerConstants.INDEXER_MOTOR_SPEED);
+            indexerSpeed = IndexerConstants.INDEXER_MOTOR_SPEED;
         }
 
         public void runHopper(){
-            hopperMotor.set(ControlMode.Velocity, IndexerConstants.HOPPER_MOTOR_SPEED);
+            hopperSpeed = IndexerConstants.HOPPER_MOTOR_SPEED;
         }
 
         public void inverseIndexer(){
-            indexerMotor.set(ControlMode.Velocity, -IndexerConstants.INDEXER_MOTOR_SPEED);
+            indexerSpeed = -IndexerConstants.INDEXER_MOTOR_SPEED;
         }
 
         public void inverseHopper(){
-            hopperMotor.set(ControlMode.Velocity, -IndexerConstants.HOPPER_MOTOR_SPEED);
+           hopperSpeed = -IndexerConstants.HOPPER_MOTOR_SPEED;
         }
 
         public void manualIndexer(){
-            indexerMotor.set(ControlMode.Velocity, IndexerConstants.INDEXER_MOTOR_SPEED);
-            hopperMotor.set(ControlMode.Velocity, IndexerConstants.HOPPER_MOTOR_SPEED);
+            indexerSpeed = IndexerConstants.INDEXER_MOTOR_SPEED;
+            hopperSpeed = IndexerConstants.HOPPER_MOTOR_SPEED;
         }
 
         public void manualInverseIndexer(){
-            indexerMotor.set(ControlMode.Velocity, -IndexerConstants.INDEXER_MOTOR_SPEED);
-            hopperMotor.set(ControlMode.Velocity, -IndexerConstants.HOPPER_MOTOR_SPEED);
+            indexerSpeed = -IndexerConstants.INDEXER_MOTOR_SPEED;
+            hopperSpeed = -IndexerConstants.HOPPER_MOTOR_SPEED;
         }
 
         public void manualStopIndexer(){
-            indexerMotor.set(ControlMode.Velocity, 0);
-            hopperMotor.set(ControlMode.Velocity, 0);
+            indexerSpeed = 0;
+            hopperSpeed = 0;
         }
 
         public boolean isIndexerTriggered(){
@@ -62,6 +64,7 @@ public class IndexerSubsystem extends SubsystemBase {
 
         @Override
         public void periodic(){
-
+            indexerMotor.set(ControlMode.PercentOutput, indexerSpeed);
+            hopperMotor.set(ControlMode.PercentOutput, hopperSpeed);
         }
     }

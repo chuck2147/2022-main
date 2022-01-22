@@ -35,8 +35,5 @@ public final class ClimberConstants{
     public enum ClimberState {
         Up, Down
     }
-    public enum ClimberType {
-        Low, High
-    }
 } 
 

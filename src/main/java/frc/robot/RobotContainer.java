@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ClimberConstants.ClimberType;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.IntakeButtons;
@@ -29,8 +29,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
-  private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberType.Low);
-  private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberType.High);
+  private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
+  private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT);
   private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -65,8 +65,7 @@ public class RobotContainer {
     // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
     IntakeButtons.Configure(intake, operatorController);
-    ClimberButtons.Configure(lowClimber, ClimberType.Low, driverController);
-    ClimberButtons.Configure(highClimber, ClimberType.High, driverController);
+    ClimberButtons.Configure(lowClimber, highClimber, driverController);
     ShooterButtons.Configure(shooter, operatorController);
     IndexerButtons.Configure(indexer, driverController);
   }

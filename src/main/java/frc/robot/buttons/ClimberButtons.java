@@ -7,31 +7,22 @@ package frc.robot.buttons;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Controller;
 import frc.robot.Controller.Button;
-import frc.robot.Constants.ClimberConstants.ClimberState;
-import frc.robot.Constants.ClimberConstants.ClimberType;
-import frc.robot.commands.ClimberCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 
-/** Add your docs here. */
 public class ClimberButtons {
-    public static void Configure(ClimberSubsystem subsystem, ClimberType climberType, Controller controller) {
-        Button extendButton;
-        Button retractButton;
-        if (climberType == ClimberType.Low) {
-            extendButton = Controller.Button.A;
-            retractButton = Controller.Button.B;
-        }
-        else {
-            extendButton = Controller.Button.X;
-            retractButton = Controller.Button.Y;
-        }
-        final JoystickButton extendJoystickButton = controller.getButton(extendButton);
-        final JoystickButton retractJoystickButton = controller.getButton(retractButton);
+    public static void Configure(ClimberSubsystem lowClimber, ClimberSubsystem highClimber, Controller controller) {
+        //Low = Medium Bar
+        //High = High Bar
+        final JoystickButton extendLowJoystickButton = controller.getButton(Controller.Button.A);
+        final JoystickButton retractLowJoystickButton = controller.getButton(Controller.Button.B);
+        final JoystickButton extendHighJoystickButton = controller.getButton(Controller.Button.X);
+        final JoystickButton retractHighJoystickButton = controller.getButton(Controller.Button.Y);
 
-      
-
-        extendJoystickButton.whileHeld(new ClimberCommand(subsystem, ClimberState.Up));
-        retractJoystickButton.whileHeld(new ClimberCommand(subsystem, ClimberState.Down));
+        extendLowJoystickButton.whileHeld(lowClimber::extend, lowClimber);
+        retractLowJoystickButton.whileHeld(lowClimber::retract, lowClimber);
+        extendHighJoystickButton.whileHeld(highClimber::extend, highClimber);
+        retractHighJoystickButton.whileHeld(highClimber::retract, highClimber);
+        
      
     }
 }

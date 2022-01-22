@@ -11,38 +11,37 @@ import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase{
     TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_MOTOR_ID);
-    PneumaticsModuleType intakeLeftModuleType = PneumaticsModuleType.REVPH;
-    PneumaticsModuleType intakeRightModuleType = PneumaticsModuleType.REVPH;
-    private final DoubleSolenoid intakeLeftPiston = new DoubleSolenoid(intakeLeftModuleType, IntakeConstants.INTAKE_LEFT_AIR_IN, IntakeConstants.INTAKE_LEFT_AIR_OUT);
-    private final DoubleSolenoid intakeRightPiston = new DoubleSolenoid(intakeRightModuleType, IntakeConstants.INTAKE_RIGHT_AIR_IN, IntakeConstants.INTAKE_RIGHT_AIR_OUT);
+    double motorSpeed = 0;
+    // PneumaticsModuleType intakeLeftModuleType = PneumaticsModuleType.REVPH;
+    // PneumaticsModuleType intakeRightModuleType = PneumaticsModuleType.REVPH;
+    // private final DoubleSolenoid intakeLeftPiston = new DoubleSolenoid(intakeLeftModuleType, IntakeConstants.INTAKE_LEFT_AIR_IN, IntakeConstants.INTAKE_LEFT_AIR_OUT);
+    // private final DoubleSolenoid intakeRightPiston = new DoubleSolenoid(intakeRightModuleType, IntakeConstants.INTAKE_RIGHT_AIR_IN, IntakeConstants.INTAKE_RIGHT_AIR_OUT);
 
     public IntakeSubsystem() {
       intakeMotor.setInverted(false);
     }
 
     public void runIntake(){
-      intakeMotor.set(ControlMode.Velocity, IntakeConstants.INTAKE_MOTOR_SPEED);
-    }
-
-    public void reverseIntake(){
-      intakeMotor.set(ControlMode.Velocity, -IntakeConstants.INTAKE_MOTOR_SPEED);
-    }
-
-    public void stopIntake(){
-      intakeMotor.set(ControlMode.Velocity, 0);
+      motorSpeed = IntakeConstants.INTAKE_MOTOR_SPEED;
     }
     
-    public void extendIntake() {
-      intakeRightPiston.set(Value.kReverse);
-      intakeLeftPiston.set(Value.kReverse);
+    public void reverseIntake(){
+      motorSpeed = -IntakeConstants.INTAKE_MOTOR_SPEED;
     }
-  
-    public void retractIntake() {
-      intakeRightPiston.set(Value.kForward);
-      intakeLeftPiston.set(Value.kForward);
-    }
-
+    
+    // public void extendIntake() {
+      //   intakeRightPiston.set(Value.kReverse);
+      //   intakeLeftPiston.set(Value.kReverse);
+      // }
+      
+      // public void retractIntake() {
+        //   intakeRightPiston.set(Value.kForward);
+        //   intakeLeftPiston.set(Value.kForward);
+        // }
+        
     @Override
     public void periodic() { 
+      intakeMotor.set(ControlMode.PercentOutput, motorSpeed);
+      motorSpeed = 0;
     }
 }
