@@ -16,8 +16,18 @@ public final class DrivetrainConstants{
     //PIGEON ID
     public static final int DRIVETRAIN_PIGEON_ID = 0;
     //MOTOR ID
-    public static final int DRIVETRAIN_LEFT_MOTOR_ID = 1;
-    public static final int DRIVETRAIN_RIGHT_MOTOR_ID = 2;
+    public static final int DRIVETRAIN_FRONT_LEFT_DRIVE_MOTOR_ID = 1;
+    public static final int DRIVETRAIN_FRONT_LEFT_SWERVE_MOTOR_ID = 2;
+    public static final int DRIVETRAIN_FRONT_RIGHT_DRIVE_MOTOR_ID = 3;
+    public static final int DRIVETRAIN_FRONT_RIGHT_SWERVE_MOTOR_ID = 4;
+    public static final int DRIVETRAIN_BACK_LEFT_DRIVE_MOTOR_ID = 5;
+    public static final int DRIVETRAIN_BACK_LEFT_SWERVE_MOTOR_ID = 6;
+    public static final int DRIVETRAIN_BACK_RIGHT_DRIVE_MOTOR_ID = 7;
+    public static final int DRIVETRIAN_BACK_RIGHT_SWERVE_MOTOR_ID = 8;
+    public static final int DRIVETRAIN_FRONT_LEFT_ENCODER_ID = 9;
+    public static final int DRIVETRAIN_FRONT_RIGHT_ENCODER_ID = 10;
+    public static final int DRIVETRAIN_BACK_LEFT_ENCODER_ID = 11;
+    public static final int DRIVETRAIN_BACK_RIGHT_ENCODER_ID = 12;
     public static final double DRIVE_SPEED_SCALE = 0.8;
 } 
 

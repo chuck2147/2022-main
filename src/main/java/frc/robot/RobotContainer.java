@@ -31,8 +31,8 @@ public class RobotContainer {
   // private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
   // private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
   // private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT);
-  // private final IndexerSubsystem indexer = new IndexerSubsystem();
-  // private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final IndexerSubsystem indexer = new IndexerSubsystem();
+  private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
   private final Controller driverController = new Controller(0, 0.05);
@@ -64,10 +64,10 @@ public class RobotContainer {
     // shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
     // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
-    // IntakeButtons.Configure(intake, operatorController);
-    // ClimberButtons.Configure(lowClimber, highClimber, driverController);
-    ShooterButtons.Configure(shooter, operatorController);
-    // IndexerButtons.Configure(indexer, driverController);
+     IntakeButtons.Configure(intake, operatorController);
+     // ClimberButtons.Configure(lowClimber, highClimber, driverController);
+     ShooterButtons.Configure(shooter, operatorController);
+     IndexerButtons.Configure(indexer, driverController);
   }
 
   /**

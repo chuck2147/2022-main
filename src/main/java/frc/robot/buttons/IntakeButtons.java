@@ -13,5 +13,7 @@ public class IntakeButtons {
         final JoystickButton button = controller.getButton(Controller.Button.RightBumper);
 
         button.whileHeld(intake::runIntake, intake);
+        button.whileHeld(intake::retractIntake, intake);
+        button.whenReleased(intake::extendIntake, intake);
     }
 }

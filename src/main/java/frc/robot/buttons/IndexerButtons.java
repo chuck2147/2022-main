@@ -10,10 +10,13 @@ import frc.robot.subsystems.IndexerSubsystem;
 
 public class IndexerButtons {
     public static void Configure(IndexerSubsystem indexer, Controller controller) {
-        final JoystickButton button = controller.getButton(Controller.Button.LeftBumper);
+        final JoystickButton leftButton = controller.getButton(Controller.Button.LeftBumper);
+        final JoystickButton rightButton = controller.getButton(Controller.Button.RightBumper);
 
-        button.whileHeld(indexer::runIndexer, indexer );
-        button.whileHeld(indexer::runHopper, indexer );
+        leftButton.whileHeld(indexer::manualIndexer, indexer );
+        rightButton.whileHeld(indexer::manualInverseIndexer, indexer );
+        leftButton.whenReleased(indexer::manualStopIndexer, indexer);
+        rightButton.whenReleased(indexer::manualStopIndexer, indexer);
     }
     
 }
