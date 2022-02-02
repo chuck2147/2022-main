@@ -9,10 +9,12 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.IntakeButtons;
 import frc.robot.buttons.ShooterButtons;
+import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -28,25 +30,24 @@ import frc.robot.subsystems.ShooterSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  // private final DrivetrainSubsystem Drivetrain = DrivetrainSubsystem.getInstance();
-  // private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
-  // private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT);
+  private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
+  private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
+  private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT);
   private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
 
   private final Controller driverController = new Controller(0, 0.05);
   private final Controller operatorController = new Controller(1, 0.05);
-
-
-  //private final JoystickButton climberUpButton = driverController.getButton(Controller.Button.A);
-  // private final JoystickButton shooterFrontOfHubButton = operatorController.getButton(Controller.Button.X);
-  // private final JoystickButton shooterBehindTarmacButton = operatorController.getButton(Controller.Button.A);
-  // private final JoystickButton shooterChuckItButton = operatorController.getButton(Controller.Button.B);
-  // private final JoystickButton shooterLaunchPadButton = operatorController.getButton(Controller.Button.Y);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    drivetrain.setDefaultCommand(new DefaultDriveCommand(
+            drivetrain,
+            () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
+            () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+    ));
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -64,10 +65,10 @@ public class RobotContainer {
     // shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
     // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
-     IntakeButtons.Configure(intake, operatorController);
+     IntakeButtons.Configure(intake);
      // ClimberButtons.Configure(lowClimber, highClimber, driverController);
-     ShooterButtons.Configure(shooter, operatorController);
-     IndexerButtons.Configure(indexer, driverController);
+     ShooterButtons.Configure(shooter);
+     IndexerButtons.Configure(indexer);
   }
 
   /**
@@ -77,5 +78,27 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new DriveForwardCommand();
+  }
+
+  private static double deadband(double value, double deadband) {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
+  }
+
+  private static double modifyAxis(double value) {
+    // Deadband
+    value = deadband(value, 0.1);
+
+    // Square the axis
+    value = Math.copySign(value * value, value);
+
+    return value;
   }
 }

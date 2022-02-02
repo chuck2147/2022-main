@@ -1,16 +1,15 @@
 package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Controller;
-import frc.robot.Constants.ShooterConstants.ShooterState;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterButtons {
-    public static void Configure(ShooterSubsystem shooter, Controller controller) {
-        final JoystickButton tarmacButton = controller.getButton(Controller.Button.A);
-        final JoystickButton hubButton = controller.getButton(Controller.Button.B);
-        final JoystickButton launchPadButton = controller.getButton(Controller.Button.X);
-        final JoystickButton chuckButton = controller.getButton(Controller.Button.Y);
+    public static void Configure(ShooterSubsystem shooter) {
+        final JoystickButton tarmacButton = ControllerConstants.BEHIND_TARMAC_SHOT;
+        final JoystickButton hubButton = ControllerConstants.FRONT_OF_HUB_SHOT;
+        final JoystickButton launchPadButton = ControllerConstants.LAUNCH_PAD_SHOT;
+        final JoystickButton chuckButton = ControllerConstants.CHUCK_IT_SHOT;
 
         tarmacButton.whileHeld(shooter::shootFromBehindTarmac, shooter);
         hubButton.whileHeld(shooter::shootFromFrontOfHub, shooter);
