@@ -5,18 +5,17 @@
 package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Controller;
-import frc.robot.Controller.Button;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberButtons {
-    public static void Configure(ClimberSubsystem lowClimber, ClimberSubsystem highClimber, Controller controller) {
+    public static void Configure(ClimberSubsystem lowClimber, ClimberSubsystem highClimber) {
         //Low = Medium Bar
         //High = High Bar
-        final JoystickButton extendLowJoystickButton = controller.getButton(Controller.Button.A);
-        final JoystickButton retractLowJoystickButton = controller.getButton(Controller.Button.B);
-        final JoystickButton extendHighJoystickButton = controller.getButton(Controller.Button.X);
-        final JoystickButton retractHighJoystickButton = controller.getButton(Controller.Button.Y);
+        final JoystickButton extendLowJoystickButton = ControllerConstants.CLIMB_LOW_UP_BUTTON;
+        final JoystickButton retractLowJoystickButton = ControllerConstants.CLIMB_LOW_DOWN_BUTTON;
+        final JoystickButton extendHighJoystickButton = ControllerConstants.CLIMB_HIGH_UP_BUTTON;
+        final JoystickButton retractHighJoystickButton = ControllerConstants.CLIMB_HIGH_DOWN_BUTTON;
 
         extendLowJoystickButton.whileHeld(lowClimber::extend, lowClimber);
         retractLowJoystickButton.whileHeld(lowClimber::retract, lowClimber);

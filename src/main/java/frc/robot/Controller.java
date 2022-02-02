@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 public class Controller extends XboxController {
-  Controller(int port, double deadband) {
+  public Controller(int port, double deadband) {
     super(port);
     this.deadband = deadband;
   }

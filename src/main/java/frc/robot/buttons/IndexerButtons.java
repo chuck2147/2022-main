@@ -5,15 +5,15 @@
 package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.Controller;
+import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 
 public class IndexerButtons {
-    public static void Configure(IndexerSubsystem indexer, Controller controller) {
-        final JoystickButton button = controller.getButton(Controller.Button.LeftBumper);
+    public static void Configure(IndexerSubsystem indexer) {
+        final JoystickButton indexButton = ControllerConstants.INDEX_IN;
 
-        button.whileHeld(indexer::runIndexer, indexer );
-        button.whileHeld(indexer::runHopper, indexer );
+        indexButton.whileHeld(indexer::runIndexer, indexer );
+        indexButton.whileHeld(indexer::runHopper, indexer );
     }
     
 }
