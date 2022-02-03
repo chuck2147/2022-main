@@ -13,8 +13,8 @@ public class IndexerButtons {
         final JoystickButton leftButton = ControllerConstants.INDEX_OUT;
         final JoystickButton rightButton = ControllerConstants.INDEX_IN;
 
-        leftButton.whileHeld(indexer::manualIndexer, indexer );
-        rightButton.whileHeld(indexer::manualInverseIndexer, indexer );
+        leftButton.whileHeld(indexer::manualIndexer, indexer);
+        rightButton.whileHeld(indexer::manualInverseIndexer, indexer);
         leftButton.whenReleased(indexer::manualStopIndexer, indexer);
         rightButton.whenReleased(indexer::manualStopIndexer, indexer);
     }

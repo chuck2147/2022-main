@@ -33,7 +33,7 @@ public final class DrivetrainConstants{
     public static final int FRONT_RIGHT_MODULE_DRIVE_MOTOR = 3; 
     public static final int FRONT_RIGHT_MODULE_STEER_MOTOR = 4; 
     public static final int FRONT_RIGHT_MODULE_STEER_ENCODER = 10; 
-    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(-85); 
+    public static final double FRONT_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(-75); 
 
     public static final int BACK_LEFT_MODULE_DRIVE_MOTOR = 5; 
     public static final int BACK_LEFT_MODULE_STEER_MOTOR = 6; 
@@ -43,7 +43,7 @@ public final class DrivetrainConstants{
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 7; 
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 8; 
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12; 
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(0); 
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(174); 
 
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecond = 3;
