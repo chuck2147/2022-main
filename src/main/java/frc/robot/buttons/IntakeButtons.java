@@ -5,12 +5,13 @@
 package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.AxisTrigger;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.subsystems.IntakeSubsystem;
 
 public class IntakeButtons {
     public static void Configure(IntakeSubsystem intake) {
-        final JoystickButton intakeButton = ControllerConstants.INTAKE_IN_BUTTON;
+        final AxisTrigger intakeButton = ControllerConstants.INTAKE_IN_BUTTON;
 
         intakeButton.whileHeld(intake::runIntake, intake);
         intakeButton.whileHeld(intake::retractIntake, intake);

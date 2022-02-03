@@ -63,7 +63,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
           Math.hypot(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
-  public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+  public final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
           // Front left
           new Translation2d(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0),
           // Front right
@@ -110,17 +110,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public DrivetrainSubsystem() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+
+    resetGyroscope();
+    resetPose(new Vector2d(0,0), new Rotation2d(0));
     // Run resetPost on another Thread and delay for 1 second so Gyroscope is done calibrating on startup.
-    new Thread(() -> {
-      try {
-        Thread.sleep(1000);
-        resetGyroscope();
-        resetPose(new Vector2d(0,0), new Rotation2d(0));
-      }
-      catch (Exception ex) {
-        System.out.println(ex.toString());
-      }
-    }).start();
+    // new Thread(() -> {
+    //   try {
+    //     Thread.sleep(1000);
+    //     resetGyroscope();
+    //     resetPose(new Vector2d(0,0), new Rotation2d(0));
+    //   }
+    //   catch (Exception ex) {
+    //     // System.out.println(ex.toString());
+    //   }
+    // }).start();
     
     //resetGyroscope(offsetDegrees);
    //resetOdometry(m_pose);
