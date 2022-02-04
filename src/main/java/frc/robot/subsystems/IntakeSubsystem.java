@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakeSubsystem extends SubsystemBase{
@@ -23,6 +24,8 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public void runIntake(){
       motorSpeed = IntakeConstants.INTAKE_MOTOR_SPEED;
+      motorSpeed = IndexerConstants.HOPPER_MOTOR_SPEED;
+      motorSpeed = IndexerConstants.INDEXER_MOTOR_SPEED;
     }
     
     public void reverseIntake(){

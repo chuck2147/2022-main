@@ -22,8 +22,8 @@ public class ControllerConstants {
     public static JoystickButton LAUNCH_PAD_SHOT = operatorController.getButton(Controller.Button.Y);
     public static JoystickButton CHUCK_IT_SHOT = operatorController.getButton(Controller.Button.B);
     //INDEXER BUTTONS
-    public static JoystickButton INDEX_IN = operatorController.getButton(Controller.Button.RightBumper);
-    public static JoystickButton INDEX_OUT = operatorController.getButton(Controller.Button.LeftBumper);
+    public static JoystickButton INDEX_IN = operatorController.getButton(Controller.Button.LeftBumper);
+    public static JoystickButton INDEX_OUT = operatorController.getButton(Controller.Button.RightBumper);
     //MISC BUTTONS
     public static JoystickButton RESET_GYRO = driverController.getButton(Controller.Button.Start);
 }
