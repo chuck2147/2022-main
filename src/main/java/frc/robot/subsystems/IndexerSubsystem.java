@@ -12,23 +12,16 @@ public class IndexerSubsystem extends SubsystemBase {
     private AnalogInput irHopper = new AnalogInput(IndexerConstants.HOPPER_IR_ID);
     TalonFX indexerMotor = new TalonFX(IndexerConstants.INDEXER_MOTOR_ID); 
     TalonFX hopperMotor = new TalonFX(IndexerConstants.HOPPER_MOTOR_ID);
-    double indexerSpeed = 0;
-    double hopperSpeed = 0;
+    double indexerSpeed = IndexerConstants.INDEXER_MOTOR_SPEED;
+    double hopperSpeed = IndexerConstants.HOPPER_MOTOR_SPEED;
 
-        public void stopIndexer(){
-            indexerSpeed = 0;
+        public void stopIndexerAll(){
+            indexerMotor.set(ControlMode.PercentOutput, 0);
+            hopperMotor.set(ControlMode.PercentOutput, 0);
         }
     
         public void stopHopper(){
             hopperSpeed = 0;
-        }
-
-        public void runIndexer(){
-            indexerSpeed = IndexerConstants.INDEXER_MOTOR_SPEED;
-        }
-
-        public void runHopper(){
-            hopperSpeed = IndexerConstants.HOPPER_MOTOR_SPEED;
         }
 
         public void inverseIndexer(){
@@ -44,9 +37,9 @@ public class IndexerSubsystem extends SubsystemBase {
             hopperSpeed = IndexerConstants.HOPPER_MOTOR_SPEED;
         }
 
-        public void manualInverseIndexer(){
-            indexerSpeed = -IndexerConstants.INDEXER_MOTOR_SPEED;
-            hopperSpeed = -IndexerConstants.HOPPER_MOTOR_SPEED;
+        public void runIndexerReverse(){
+            indexerMotor.set(ControlMode.PercentOutput, -indexerSpeed);
+            hopperMotor.set(ControlMode.PercentOutput, -hopperSpeed);
         }
 
         public void manualStopIndexer(){
@@ -54,6 +47,10 @@ public class IndexerSubsystem extends SubsystemBase {
             hopperSpeed = 0;
         }
 
+        public void runIndexer(){
+            indexerMotor.set(ControlMode.PercentOutput, indexerSpeed);
+            hopperMotor.set(ControlMode.PercentOutput, hopperSpeed);
+        }
         public boolean isIndexerTriggered(){
             return irIndexer.getVoltage() > IndexerConstants.INDEXER_IR_VOLTAGE; 
         }
@@ -64,7 +61,5 @@ public class IndexerSubsystem extends SubsystemBase {
 
         @Override
         public void periodic(){
-            indexerMotor.set(ControlMode.PercentOutput, indexerSpeed);
-            hopperMotor.set(ControlMode.PercentOutput, hopperSpeed);
         }
     }
