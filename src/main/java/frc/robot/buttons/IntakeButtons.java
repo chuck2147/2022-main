@@ -5,21 +5,23 @@
 package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.AxisTrigger;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 
 public class IntakeButtons {
     public static void Configure(IntakeSubsystem intake) {
-        final JoystickButton intakeForwardButton = ControllerConstants.INTAKE_IN_BUTTON;
-        final JoystickButton intakeBackwardButton = ControllerConstants.INTAKE_OUT_BUTTON;
+        final AxisTrigger intakeButton = ControllerConstants.INTAKE_IN_BUTTON;
+        final AxisTrigger reverseintakeButton = ControllerConstants.INTAKE_OUT_BUTTON;
 
-        // intakeButton.whileHeld(intake::runIntake, intake);
-        // intakeButton.whileHeld(intake::retractIntake, intake);
-        // intakeButton.whenReleased(intake::extendIntake, intake);
-        intakeForwardButton.whileHeld(new IntakeCommand(intake, IntakeStates.forward));
-        intakeBackwardButton.whileHeld(new IntakeCommand(intake, IntakeStates.backward));
-
+        intakeButton.whileHeld(intake::runIntake, intake);
+        intakeButton.whileHeld(intake::retractIntake, intake);
+        reverseintakeButton.whileHeld(intake::reverseIntake, intake);
+        reverseintakeButton.whileHeld(intake::retractIntake, intake);
+        intakeButton.whenReleased(intake::extendIntake, intake);
+        reverseintakeButton.whenReleased(intake::extendIntake, intake);
     }
 }

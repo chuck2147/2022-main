@@ -17,7 +17,7 @@ public final class IntakeConstants{
     public static int INTAKE_MOTOR_ID = 15;
 
     //MOTOR SPEED
-    public static double INTAKE_MOTOR_SPEED = .75;
+    public static double INTAKE_MOTOR_SPEED = -.75;
 
     //PNEUMATIC ID
     public static int INTAKE_RIGHT_AIR_IN = 0;

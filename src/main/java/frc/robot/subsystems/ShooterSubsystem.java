@@ -170,7 +170,6 @@ public class ShooterSubsystem extends SubsystemBase {
 
     upperMotor.set(TalonFXControlMode.Velocity, -upperTargetSpeed);
     lowerMotor.set(TalonFXControlMode.Velocity, lowerTargetSpeed);
-    System.out.println(upperTargetSpeed);
 
     lowerTargetSpeed = 0;
     upperTargetSpeed = 0;
