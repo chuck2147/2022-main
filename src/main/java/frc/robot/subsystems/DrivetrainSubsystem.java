@@ -218,6 +218,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public double getHeading() {
     return Math.IEEEremainder(m_pigeon.getFusedHeading(), 360);
   }
+  
   public void resetGyroscope() {
     m_pigeon.setFusedHeading(0.0);
   }

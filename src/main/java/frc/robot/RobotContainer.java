@@ -4,8 +4,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.Vector2d;
+import edu.wpi.first.wpilibj2.command.button.Button;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
@@ -69,6 +72,12 @@ public class RobotContainer {
      // ClimberButtons.Configure(lowClimber, highClimber, driverController);
      ShooterButtons.Configure(shooter);
      IndexerButtons.Configure(indexer);
+     // Back button zeros the gyroscope
+    new Button(driverController::getBackButton)
+    // No requirements because we don't need to interrupt anything
+    .whenPressed(()->drivetrain.resetGyroscope());
+    new Button(driverController::getStartButton)
+    .whenPressed(()->drivetrain.resetPose(new Vector2d(0, 0), new Rotation2d(0)));
   }
 
   /**
