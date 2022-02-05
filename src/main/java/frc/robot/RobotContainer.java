@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -15,8 +16,8 @@ import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.IndexerButtons;
-import frc.robot.buttons.IntakeButtons;
 import frc.robot.buttons.ShooterButtons;
+import frc.robot.commands.CollectCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
 import frc.robot.subsystems.ClimberSubsystem;
@@ -42,6 +43,7 @@ public class RobotContainer {
 
   private final Controller driverController = new Controller(0, 0.05);
   private final Controller operatorController = new Controller(1, 0.05);
+  private final SlewRateLimiter filter = new SlewRateLimiter(1.5);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -50,7 +52,11 @@ public class RobotContainer {
             () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND,
             () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND
+            //filter
     ));
+    indexer.setDefaultCommand(
+      new CollectCommand(indexer, intake, shooter, new AxisTrigger(operatorController, 3))
+    );
     // Configure the button bindings
     configureButtonBindings();
   }
@@ -68,16 +74,14 @@ public class RobotContainer {
     // shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
     // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
-     IntakeButtons.Configure(intake);
      // ClimberButtons.Configure(lowClimber, highClimber, driverController);
      ShooterButtons.Configure(shooter);
      IndexerButtons.Configure(indexer);
-     // Back button zeros the gyroscope
-    new Button(driverController::getBackButton)
-    // No requirements because we don't need to interrupt anything
-    .whenPressed(()->drivetrain.resetGyroscope());
-    new Button(driverController::getStartButton)
-    .whenPressed(()->drivetrain.resetPose(new Vector2d(0, 0), new Rotation2d(0)));
+
+    driverController.getButton(Controller.Button.Start)
+      .whenPressed(()->drivetrain.resetGyroscope());
+    driverController.getButton(Controller.Button.Back)
+      .whenPressed(()->drivetrain.resetPose(new Vector2d(0, 0), new Rotation2d(0)));
   }
 
   /**

@@ -25,8 +25,7 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX lowerMotor = new TalonFX(ShooterConstants.LOWER_MOTOR_ID);
   private double lowerTargetSpeed = 0;
   private double upperTargetSpeed = 0;
-  double lowerShooterSpeed = 0;
-  double upperShooterSpeed = 0;
+  private boolean isShooterAtSpeed = false;
 
   public enum ShooterDistances {
     BEHIND_TRENCH, FRONT_OF_TRENCH, BEHIND_LINE
@@ -49,9 +48,6 @@ public class ShooterSubsystem extends SubsystemBase {
     .withSize(2, 1)
     .withWidget(BuiltInWidgets.kTextView)
     .getEntry();
-
-  private int rollingAvg = 0;
-  
   
   public ShooterSubsystem() {
     upperMotor.configFactoryDefault();
@@ -95,16 +91,11 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getVelocityLower() {
-    return lowerMotor.getSelectedSensorVelocity();
+    return -lowerMotor.getSelectedSensorVelocity();
   } 
   public void stopShooter(){
     upperMotor.set(ControlMode.PercentOutput, 0);
     lowerMotor.set(ControlMode.PercentOutput, 0);
-  }
-
-  public void setVelocity(double velocityUpper, double velocityLower) {
-    lowerTargetSpeed = velocityLower;
-    upperTargetSpeed = velocityUpper;
   }
 
   public void shootFromBehindTarmac() {
@@ -116,61 +107,44 @@ public class ShooterSubsystem extends SubsystemBase {
     upperTargetSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
   }
   public void shootFromLaunchPad(){
-    lowerTargetSpeed = -ShooterConstants.LAUNCH_PAD_LOWER.value;
-    upperTargetSpeed = -ShooterConstants.LAUNCH_PAD_UPPER.value;
+    lowerTargetSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
+    upperTargetSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
   }
   public void shootChuckIt() {
     lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
     upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
   }
   // Lower_Motor Velocity will always take longer to get on target... so only needs lower velocity
-  public boolean isOnTarget() {
-    boolean lowerOnTarget = Math.abs(lowerTargetSpeed - getVelocityLower()) <= ShooterConstants.velocityPIDTolerance;
-    //If statement needed because, will read true on startup.
-    if (getVelocityLower() <50) {
-      return false;
-      } else {      
-      return (lowerOnTarget);
-      } 
+  public boolean isUpToSpeed() {
+    return isShooterAtSpeed;
   }
-//Make sure velocity isOnTarget more than once
-  public boolean isOnTargetAverage(int percent) {
-    if(percent > 10) {
-      percent = 10;
-    } else if(percent < 0) {
-      percent = 0;
-    }
-
-    if(rollingAvg >= percent) {
-      return true;
-    }
-    return false;
-  }
-
-  public static double distanceToVelocity(double distance) {
-    //TODO tune distance convertion .... use if camera distance to goal is known
-    return 0.0;
-  }
-
  
   @Override
   public void periodic() {
-    if (isOnTarget()) {
-      if(rollingAvg < 10) {
-        rollingAvg++;
-      }
-    } else if(rollingAvg > 0) {
-      if(rollingAvg > 0) {
-        rollingAvg--;
-      }
-    }
     upperVelocityEntry.setValue(upperMotor.getSelectedSensorVelocity());
     upperVelocityGraphEntry.setValue(lowerMotor.getSelectedSensorVelocity());
     lowerVelocityEntry.setValue(lowerMotor.getSelectedSensorVelocity());
 
-    upperMotor.set(TalonFXControlMode.Velocity, -upperTargetSpeed);
-    lowerMotor.set(TalonFXControlMode.Velocity, lowerTargetSpeed);
+    if(lowerTargetSpeed == 0){
+      lowerMotor.set(TalonFXControlMode.PercentOutput, 0);
+    }else {
+      lowerMotor.set(TalonFXControlMode.Velocity, -lowerTargetSpeed);
+    }
 
+    if (upperTargetSpeed == 0) {
+      upperMotor.set(TalonFXControlMode.PercentOutput, 0);
+    } else {
+      upperMotor.set(TalonFXControlMode.Velocity, upperTargetSpeed);
+    }
+    boolean isShooting = lowerTargetSpeed != 0 || upperTargetSpeed != 0;
+    if (!isShooting) {
+      isShooterAtSpeed = false;
+    } else {
+      System.out.println(lowerTargetSpeed + ", " + getVelocityLower());
+      boolean lowerOnTarget = Math.abs(lowerTargetSpeed - getVelocityLower()) <= ShooterConstants.velocityPIDTolerance;
+      boolean upperOnTarget = Math.abs(upperTargetSpeed - getVelocityUpper()) <= ShooterConstants.velocityPIDTolerance;
+      isShooterAtSpeed = lowerOnTarget && upperOnTarget;
+    }
     lowerTargetSpeed = 0;
     upperTargetSpeed = 0;
   }

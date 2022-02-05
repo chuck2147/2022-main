@@ -28,16 +28,10 @@ public class IndexerCommand extends CommandBase {
   @Override
   public void execute() {
     if (indexerStates == IndexerStates.forward) {
-      indexer.runIndexer();
+      indexer.manualIndexerForward();
     } else if (indexerStates == IndexerStates.backward){
-      indexer.runIndexerReverse();
+      indexer.manualIndexerReverse();
     } 
-  }
-
-  // Called once the command ends or is interrupted.
-  @Override
-  public void end(boolean interrupted) {
-    indexer.stopIndexerAll();
   }
 
   // Returns true when the command should end.

@@ -220,11 +220,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
   
   public void resetGyroscope() {
-    m_pigeon.setFusedHeading(0.0);
+    resetGyroscope(0.0);
   }
-
+  
   public void resetGyroscope(double angle) {
     m_pigeon.setFusedHeading(angle);
+    System.out.println("Resesting Gyroscope");
     // Use Degrees
   }
 
@@ -277,6 +278,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     setModuleStates(states);
     updatePoseNT();
     m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
-    System.out.println(getGyroscopeRotation());
+    //System.out.println(getGyroscopeRotation());
   }
 }

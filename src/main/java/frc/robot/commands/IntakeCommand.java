@@ -27,10 +27,10 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (intakeStates == IntakeStates.forward) {
-      intake.runIntake();
-    } else if (intakeStates == IntakeStates.backward){
-      intake.reverseIntake();
+    if (intakeStates == IntakeStates.Forward) {
+      intake.runIntakeForward();
+    } else if (intakeStates == IntakeStates.Reverse){
+      intake.runIntakeReverse();
     }
   }
 

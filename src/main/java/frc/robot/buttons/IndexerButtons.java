@@ -19,8 +19,8 @@ public class IndexerButtons {
         // rightButton.whileHeld(indexer::manualInverseIndexer, indexer );
         // leftButton.whenReleased(indexer::manualStopIndexer, indexer);
         // rightButton.whenReleased(indexer::manualStopIndexer, indexer);
-        bottomButton.whileHeld(new IndexerCommand(indexer, IndexerStates.backward));
-        topButton.whileHeld(new IndexerCommand(indexer, IndexerStates.forward));
+        // bottomButton.whileHeld(new IndexerCommand(indexer, IndexerStates.backward));
+        // topButton.whileHeld(new IndexerCommand(indexer, IndexerStates.forward));
     }
     
 }
