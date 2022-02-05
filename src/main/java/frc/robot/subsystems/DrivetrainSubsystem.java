@@ -215,6 +215,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
    * 'forwards' direction.
    */
+  public double getHeading() {
+    return Math.IEEEremainder(m_pigeon.getFusedHeading(), 360);
+  }
   public void resetGyroscope() {
     m_pigeon.setFusedHeading(0.0);
   }
@@ -225,7 +228,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public Rotation2d getGyroscopeRotation() {
-    return Rotation2d.fromDegrees(-m_pigeon.getFusedHeading());
+    return Rotation2d.fromDegrees(getHeading());
   }
 
   private void updatePoseNT() {
@@ -273,5 +276,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     setModuleStates(states);
     updatePoseNT();
     m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
+    System.out.println(getGyroscopeRotation());
   }
 }
