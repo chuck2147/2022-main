@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.ClimberConstants.ClimberType;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.ShooterButtons;
@@ -35,8 +36,8 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
-  // private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
-  // private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT);
+  //private final ClimberSubsystem lowClimber = new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
+  //private final ClimberSubsystem highClimber = new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT);
   private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -74,7 +75,9 @@ public class RobotContainer {
     // shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
     // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
     
-     // ClimberButtons.Configure(lowClimber, highClimber, driverController);
+     //ClimberButtons.Configure(lowClimber, ClimberType.Right);
+     //ClimberButtons.Configure(highClimber, ClimberType.Left);
+
      ShooterButtons.Configure(shooter);
      IndexerButtons.Configure(indexer);
 

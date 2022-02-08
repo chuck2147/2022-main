@@ -8,10 +8,13 @@ import edu.wpi.first.wpilibj.PS4Controller.Axis;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.AxisTrigger;
 import frc.robot.Constants.ControllerConstants;
+import frc.robot.Constants.ClimberConstants.ClimberState;
+import frc.robot.Constants.ClimberConstants.ClimberType;
+import frc.robot.commands.ClimberCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberButtons {
-    public static void Configure(ClimberSubsystem lowClimber, ClimberSubsystem highClimber) {
+    public static void Configure(ClimberSubsystem subsystem, ClimberType climberType) {
         //Low = Medium Bar
         //High = High Bar
         // final JoystickButton extendLowJoystickButton = ControllerConstants.CLIMB_RIGHT_UP_BUTTON;
@@ -24,6 +27,10 @@ public class ClimberButtons {
         // extendHighJoystickButton.whileHeld(highClimber::extend, highClimber);
         // retractHighJoystickButton.whileHeld(highClimber::retract, highClimber);
         
-     
+        final JoystickButton extendJoystickButton = (climberType == ClimberType.Right) ? ControllerConstants.CLIMB_RIGHT_UP_BUTTON : ControllerConstants.CLIMB_LEFT_UP_BUTTON;
+        final AxisTrigger retractJoystickButton = (climberType == ClimberType.Right) ? ControllerConstants.CLIMB_RIGHT_DOWN_BUTTON : ControllerConstants.CLIMB_LEFT_DOWN_BUTTON;
+
+        extendJoystickButton.whileHeld(new ClimberCommand(subsystem, ClimberState.Up));
+        retractJoystickButton.whileHeld(new ClimberCommand(subsystem, ClimberState.Down));
     }
 }
