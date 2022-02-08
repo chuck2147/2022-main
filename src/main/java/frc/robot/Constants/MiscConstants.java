@@ -6,4 +6,5 @@ public class MiscConstants {
     public static final double VISION_ALIGN_I = 0;
     public static final double VISION_ALIGN_D = 0.005;
     public static final double VISION_ALIGN_F = 0;
+    //LIMELIGHT IP: 169.254.66.52
 }
