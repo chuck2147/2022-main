@@ -29,12 +29,6 @@ public final class ClimberConstants{
     public static double CLIMBER_MOTOR_D = 0;
     public static double CLIMBER_MOTOR_F = 0;
     
-    public enum ClimberState {
-        Up, Down
-    }
-
-    public enum ClimberType {
-        Right, Left
-    }
+    
 } 
 

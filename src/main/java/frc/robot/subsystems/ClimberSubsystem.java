@@ -14,26 +14,34 @@ public class ClimberSubsystem extends SubsystemBase {
   public TalonFX climberMotor;
   private final PneumaticsModuleType moduleType = PneumaticsModuleType.REVPH;
   private DoubleSolenoid climbPiston;
-  private DoubleSupplier climbSpeedSupplier;
     
-  public ClimberSubsystem(int motorID, int forwardPistonID, int reversePistonID, DoubleSupplier climbSpeedSupplier) {
+  public ClimberSubsystem(int motorID, int forwardPistonID, int reversePistonID) {
     climberMotor = new TalonFX(motorID);
     climbPiston = new DoubleSolenoid(moduleType, forwardPistonID, reversePistonID);
 
     climberMotor.setInverted(false);
-    this.climbSpeedSupplier = climbSpeedSupplier;
-
   }
 
-  @Override
-  public void periodic() { 
-    double climbSpeed = climbSpeedSupplier.getAsDouble();
+  public void runClimber(double climbSpeed) {
     climberMotor.set(ControlMode.PercentOutput, climbSpeed);
+
     if (climbSpeed == 0) {
       climbPiston.set(Value.kReverse);
     }
     else {
       climbPiston.set(Value.kForward);
     }
+  }
+
+  @Override
+  public void periodic() { 
+    // double climbSpeed = climbSpeedSupplier.getAsDouble();
+    // climberMotor.set(ControlMode.PercentOutput, climbSpeed);
+    // if (climbSpeed == 0) {
+    //   climbPiston.set(Value.kReverse);
+    // }
+    // else {
+    //   climbPiston.set(Value.kForward);
+    // }
   }
 }

@@ -4,28 +4,14 @@
 
 package frc.robot.buttons;
 
-import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.PS4Controller.Axis;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.AxisTrigger;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.ClimberConstants.ClimberState;
-import frc.robot.Constants.ClimberConstants.ClimberType;
+import frc.robot.commands.ClimberCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberButtons {
-    public static void Configure(ClimberSubsystem leftSubsystem, ClimberSubsystem righSubsystem) {
-        //Low = Medium Bar
-        //High = High Bar
-        // final JoystickButton extendLowJoystickButton = ControllerConstants.CLIMB_RIGHT_UP_BUTTON;
-        // final AxisTrigger retractLowJoystickButton = ControllerConstants.CLIMB_RIGHT_DOWN_BUTTON;
-        // final JoystickButton extendHighJoystickButton = ControllerConstants.CLIMB_LEFT_UP_BUTTON;
-        // final AxisTrigger retractHighJoystickButton = ControllerConstants.CLIMB_LEFT_DOWN_BUTTON;
-
-        // extendLowJoystickButton.whileHeld(lowClimber::extend, lowClimber);
-        // retractLowJoystickButton.whileHeld(lowClimber::retract, lowClimber);
-        // extendHighJoystickButton.whileHeld(highClimber::extend, highClimber);
-        // retractHighJoystickButton.whileHeld(highClimber::retract, highClimber);
+    public static void Configure(ClimberSubsystem leftSubsystem, ClimberSubsystem rightSubsystem) {
+        new ClimberCommand(rightSubsystem, ControllerConstants.CLIMB_RIGHT_AXIS);
+        new ClimberCommand(leftSubsystem, ControllerConstants.CLIMB_LEFT_AXIS);
     }
 }
