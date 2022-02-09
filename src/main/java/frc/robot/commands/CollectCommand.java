@@ -13,21 +13,24 @@ import frc.robot.subsystems.ShooterSubsystem;
 
 public class CollectCommand extends CommandBase {
   private final IndexerSubsystem indexer;
-  private final IntakeSubsystem intake; 
+  private final IntakeSubsystem intake;
   private final ShooterSubsystem shooter;
   private final Button extendIntakeButton;
+
   private enum CollectState {
     Stopped, WaitingForBalls, WaitingForOneBall, FeedToShooter
   }
+
   private CollectState collectState = CollectState.Stopped;
 
-  public CollectCommand(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter, Button extendIntakeButton) {
+  public CollectCommand(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter,
+      Button extendIntakeButton) {
     this.indexer = indexer;
     this.intake = intake;
     this.shooter = shooter;
     this.extendIntakeButton = extendIntakeButton;
-    //Only using shooter to get values of motors, not setting anything to it.
-    //So we aren't passing it to addRequirements()
+    // Only using shooter to get values of motors, not setting anything to it.
+    // So we aren't passing it to addRequirements()
     addRequirements(intake, indexer);
   }
 
@@ -35,32 +38,41 @@ public class CollectCommand extends CommandBase {
   @Override
   public void execute() {
     if (collectState == CollectState.Stopped) {
-      if (extendIntakeButton.get()){
+      if (extendIntakeButton.get()) {
         collectState = CollectState.WaitingForBalls;
-      }
-    } else if (collectState == CollectState.WaitingForBalls) {
-      if(indexer.isUpperTriggered()) {
-        collectState = CollectState.WaitingForOneBall;
-      }
-    } else if (collectState == CollectState.WaitingForOneBall) {
-      if(indexer.isLowerTriggered()) {
-        collectState = CollectState.Stopped;
-      }
-    } else if (collectState == CollectState.FeedToShooter) {
-      if(!shooter.isUpToSpeed()) {
-        //Wait until we get up to speed
-        collectState = CollectState.Stopped;
       }
     }
     
-    
-    //seperate because we can get to this via any state above
-    if(shooter.isUpToSpeed()) {
+    if (collectState == CollectState.WaitingForBalls) {
+      if (indexer.isUpperTriggered()) {
+        collectState = CollectState.WaitingForOneBall;
+      }
+    }
+
+    if (collectState == CollectState.WaitingForOneBall) {
+      if (indexer.isLowerTriggered()) {
+        collectState = CollectState.Stopped;
+      }
+    }
+
+    if (collectState == CollectState.FeedToShooter) {
+      if (!shooter.isUpToSpeed()) {
+        // Wait until we get up to speed
+        if (indexer.isUpperTriggered()) {
+          collectState = CollectState.Stopped;
+        } else {
+          collectState = CollectState.WaitingForBalls;
+        }
+
+      }
+    }
+
+    // seperate because we can get to this via any state above
+    if (shooter.isUpToSpeed()) {
       collectState = CollectState.FeedToShooter;
     }
 
     System.out.println(collectState);
-
 
     switch (collectState) {
       case Stopped:

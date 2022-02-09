@@ -14,11 +14,8 @@ package frc.robot.Constants;
  */
 public final class ClimberConstants{
     //MOTOR ID
-    public static int LOW_CLIMBER_MOTOR_ID = 18;
-    public static int HIGH_CLIMBER_MOTOR_ID = 19;
-
-    //MOTOR SPEED
-    public static double CLIMBER_MOTOR_SPEED = .5;
+    public static int LEFT_CLIMBER_MOTOR_ID = 18;
+    public static int RIGHT_CLIMBER_MOTOR_ID = 19;
 
     // PNEUMATIC ID
     public static int CLIMBER_HIGH_AIR_IN = 4;

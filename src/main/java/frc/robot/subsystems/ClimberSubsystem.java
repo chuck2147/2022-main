@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
@@ -7,30 +9,25 @@ import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.ClimberConstants;
 
 public class ClimberSubsystem extends SubsystemBase {
   public TalonFX climberMotor;
   private final PneumaticsModuleType moduleType = PneumaticsModuleType.REVPH;
   private DoubleSolenoid climbPiston;
-  double climbSpeed = 0;
+  private DoubleSupplier climbSpeedSupplier;
     
-  public ClimberSubsystem(int motorID, int forwardPistonID, int reversePistonID) {
+  public ClimberSubsystem(int motorID, int forwardPistonID, int reversePistonID, DoubleSupplier climbSpeedSupplier) {
     climberMotor = new TalonFX(motorID);
     climbPiston = new DoubleSolenoid(moduleType, forwardPistonID, reversePistonID);
 
     climberMotor.setInverted(false);
-  }
-  public void extend() {
-    climbSpeed = ClimberConstants.CLIMBER_MOTOR_SPEED;
-  }
+    this.climbSpeedSupplier = climbSpeedSupplier;
 
-  public void retract() {
-    climbSpeed = -ClimberConstants.CLIMBER_MOTOR_SPEED;
   }
 
   @Override
   public void periodic() { 
+    double climbSpeed = climbSpeedSupplier.getAsDouble();
     climberMotor.set(ControlMode.PercentOutput, climbSpeed);
     if (climbSpeed == 0) {
       climbPiston.set(Value.kReverse);
@@ -38,6 +35,5 @@ public class ClimberSubsystem extends SubsystemBase {
     else {
       climbPiston.set(Value.kForward);
     }
-    climbSpeed = 0;
   }
 }
