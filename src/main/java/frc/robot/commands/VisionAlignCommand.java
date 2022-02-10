@@ -8,7 +8,6 @@ import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ShooterConstants.ShooterState;
 import frc.robot.Limelight;
 import frc.robot.subsystems.DrivetrainSubsystem;
-import frc.robot.subsystems.ShooterSubsystem;
 
 public class VisionAlignCommand extends CommandBase {
   DrivetrainSubsystem drivetrain;
