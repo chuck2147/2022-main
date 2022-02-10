@@ -233,6 +233,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     return Rotation2d.fromDegrees(getHeading());
   }
 
+  public double getAngularVelocity() {
+    double[] angularVelocities = new double[3];
+    m_pigeon.getRawGyro(angularVelocities); 
+    return angularVelocities[2];
+  }
+
   private void updatePoseNT() {
     final var pose = getScaledPose();
 

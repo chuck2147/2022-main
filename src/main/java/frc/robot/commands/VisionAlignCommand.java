@@ -16,7 +16,7 @@ public class VisionAlignCommand extends CommandBase {
   double yDestination = 0;
   double closestPoint = 0;
   ShooterState determineShooterState;
-  private PIDController pid = null; // new PIDController(DrivetrainConstants.VISION_ALIGN_P, DrivetrainConstants.VISION_ALIGN_I, DrivetrainConstants.VISION_ALIGN_D, 0.01);
+  private PIDController pid = new PIDController(DrivetrainConstants.VISION_ALIGN_P, DrivetrainConstants.VISION_ALIGN_I, DrivetrainConstants.VISION_ALIGN_D, 0.01);
 
   public VisionAlignCommand(DrivetrainSubsystem drivetrain, ShooterState shooterState) {
     addRequirements(drivetrain);
@@ -104,6 +104,6 @@ public class VisionAlignCommand extends CommandBase {
     final var error = getError();
     // If it is facing the goal and done rotating
     System.out.println(error);
-    return error < 0.1 && error != 0; // && DrivetrainSubsystem.getInstance().getAngularVelocity() < 0.5;
+    return error < 0.1 && error != 0 && DrivetrainSubsystem.getInstance().getAngularVelocity() < 0.5;
   }
 }
