@@ -8,10 +8,11 @@ package frc.robot.buttons;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class ClimberButtons {
-    public static void Configure(ClimberSubsystem leftSubsystem, ClimberSubsystem rightSubsystem) {
-        new ClimberCommand(rightSubsystem, ControllerConstants.CLIMB_RIGHT_AXIS);
-        new ClimberCommand(leftSubsystem, ControllerConstants.CLIMB_LEFT_AXIS);
+    public static void Configure(ClimberSubsystem leftSubsystem, ClimberSubsystem rightSubsystem, IntakeSubsystem intakeSubsystem) {
+        new ClimberCommand(rightSubsystem, intakeSubsystem, ControllerConstants.CLIMB_RIGHT_AXIS);
+        new ClimberCommand(leftSubsystem, intakeSubsystem, ControllerConstants.CLIMB_LEFT_AXIS);
     }
 }

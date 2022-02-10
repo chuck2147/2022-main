@@ -74,7 +74,7 @@ public class RobotContainer {
     // shooterLaunchPadButton.whileHeld(shooter::shootFromLaunchPad, shooter);
     // shooterChuckItButton.whileHeld(shooter::shootChuckIt, shooter);
 
-    ClimberButtons.Configure(leftClimber, rightClimber);
+    ClimberButtons.Configure(leftClimber, rightClimber, intake);
     ShooterButtons.Configure(shooter);
     IndexerButtons.Configure(indexer);
 

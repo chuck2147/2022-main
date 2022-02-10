@@ -8,15 +8,18 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
   private final ClimberSubsystem climberSubsystem;
   private final DoubleSupplier climbSpeedSupplier;
+  private final IntakeSubsystem intakeSubsystem;
 
-  public ClimberCommand(ClimberSubsystem subsystem, DoubleSupplier speedSupplier) {
+  public ClimberCommand(ClimberSubsystem subsystem, IntakeSubsystem intake, DoubleSupplier speedSupplier) {
     climberSubsystem = subsystem;
     climbSpeedSupplier = speedSupplier;
+    intakeSubsystem = intake;
     addRequirements(climberSubsystem);
   }
 
@@ -27,7 +30,11 @@ public class ClimberCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    climberSubsystem.runClimber(climbSpeedSupplier.getAsDouble());
+    var speed = climbSpeedSupplier.getAsDouble();
+    if (speed != 0) {
+      intakeSubsystem.retractIntake();
+    }
+    climberSubsystem.runClimber(speed);
   }
 
   // Called once the command ends or is interrupted.

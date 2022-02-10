@@ -30,8 +30,8 @@ public final class ShooterConstants{
     public static final double LOWER_F = 0.0487;
 
     //MOTORSPEEDs
-    public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(1000, "Front of Hub Upper");
-    public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(18000, "Front of Hub Lower");
+    public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(-500, "Front of Hub Upper");
+    public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(13000, "Front of Hub Lower");
 
     public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(3000, "Behind Tarmac Upper");
     public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(13000, "Behind Tarmac Lower");
@@ -43,7 +43,7 @@ public final class ShooterConstants{
     public static final NTValue CHUCK_IT_UPPER = new NTValue(19000, "Chuck it Upper"); 
     public static final NTValue CHUCK_IT_LOWER = new NTValue(19000, "Chuck it Lower"); 
 
-    public static final double velocityPIDTolerance = 1000;
+    public static final double velocityPIDTolerance = 500;
 
     //SHOOTER STATES 
     public enum ShooterState {
