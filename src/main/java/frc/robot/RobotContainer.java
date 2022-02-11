@@ -19,6 +19,7 @@ import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.ShooterButtons;
 import frc.robot.commands.CollectCommand;
 import frc.robot.commands.DefaultDriveCommand;
+import frc.robot.commands.ReverseCollectCommand;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -76,7 +77,7 @@ public class RobotContainer {
 
     ClimberButtons.Configure(leftClimber, rightClimber, intake);
     ShooterButtons.Configure(shooter);
-    IndexerButtons.Configure(indexer);
+    IndexerButtons.Configure(intake, indexer);
 
     driverController.getButton(Controller.Button.Start)
       .whenPressed(()->drivetrain.resetGyroscope());
