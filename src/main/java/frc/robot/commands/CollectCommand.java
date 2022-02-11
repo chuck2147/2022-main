@@ -72,8 +72,6 @@ public class CollectCommand extends CommandBase {
       collectState = CollectState.FeedToShooter;
     }
 
-    System.out.println(collectState);
-
     switch (collectState) {
       case Stopped:
         intake.retractIntake();
@@ -82,7 +80,7 @@ public class CollectCommand extends CommandBase {
       case WaitingForBalls:
         intake.extendIntake();
         intake.runIntakeForward();
-        indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, IndexerConstants.UPPER_MOTOR_SPEED);
+        indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, IndexerConstants.UPPER_MOTOR_SPEED_PLACING);
         break;
       case WaitingForOneBall:
         intake.extendIntake();
@@ -91,7 +89,7 @@ public class CollectCommand extends CommandBase {
         break;
       case FeedToShooter:
         intake.retractIntake();
-        indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, IndexerConstants.UPPER_MOTOR_SPEED);
+        indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, IndexerConstants.UPPER_MOTOR_SPEED_SHOOTING);
         break;
     }
   }

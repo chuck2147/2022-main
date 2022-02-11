@@ -33,11 +33,11 @@ public final class ShooterConstants{
     public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(-500, "Front of Hub Upper");
     public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(13000, "Front of Hub Lower");
 
-    public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(3000, "Behind Tarmac Upper");
-    public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(13000, "Behind Tarmac Lower");
+    public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(9000, "Behind Tarmac Upper");
+    public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(6000, "Behind Tarmac Lower");
     
-    public static final NTValue LAUNCH_PAD_UPPER = new NTValue(15000, "Launch Pad Upper"); 
-    public static final NTValue LAUNCH_PAD_LOWER = new NTValue(15000, "Launch Pad Lower"); 
+    public static final NTValue LAUNCH_PAD_UPPER = new NTValue(18000, "Launch Pad Upper"); 
+    public static final NTValue LAUNCH_PAD_LOWER = new NTValue(4000, "Launch Pad Lower"); 
    
 
     public static final NTValue CHUCK_IT_UPPER = new NTValue(19000, "Chuck it Upper"); 

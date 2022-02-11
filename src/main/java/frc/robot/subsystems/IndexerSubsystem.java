@@ -23,12 +23,12 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public void manualIndexerReverse() {
     lowerSpeed = -IndexerConstants.LOWER_MOTOR_SPEED;
-    upperSpeed = -IndexerConstants.UPPER_MOTOR_SPEED;
+    upperSpeed = -IndexerConstants.UPPER_MOTOR_SPEED_PLACING;
   }
 
   public void manualIndexerForward() {
     lowerSpeed = IndexerConstants.LOWER_MOTOR_SPEED;
-    upperSpeed = IndexerConstants.UPPER_MOTOR_SPEED;
+    upperSpeed = IndexerConstants.UPPER_MOTOR_SPEED_PLACING;
   }
 
   public void run(double lower, double upper){

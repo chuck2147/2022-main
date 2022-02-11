@@ -19,7 +19,9 @@ public final class IndexerConstants{
 
     //MOTOR SPEED
     public static double LOWER_MOTOR_SPEED = -.75;
-    public static double UPPER_MOTOR_SPEED = .5;
+    //Using different speeds for upper indexer because we want the balls to be moving faster when shooting and slower when we are not.
+    public static double UPPER_MOTOR_SPEED_PLACING = .5;
+    public static double UPPER_MOTOR_SPEED_SHOOTING = .5;
 
     //IR ID
     public static int LOWER_IR_ID = 0;
