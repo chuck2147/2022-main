@@ -5,22 +5,17 @@
 package frc.robot.buttons;
 
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.AxisTrigger;
 import frc.robot.Constants.ControllerConstants;
-import frc.robot.Constants.IndexerConstants.IndexerStates;
-import frc.robot.commands.IndexerCommand;
+import frc.robot.commands.ReverseCollectCommand;
 import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class IndexerButtons {
-    public static void Configure(IndexerSubsystem indexer) {
-        final JoystickButton bottomButton = ControllerConstants.INDEX_OUT;
-        final JoystickButton topButton = ControllerConstants.INDEX_IN;
+    public static void Configure(IntakeSubsystem intake, IndexerSubsystem indexer) {
+        final AxisTrigger reverseButton = ControllerConstants.RUN_INTAKE_REVERSE;
 
-        // leftButton.whileHeld(indexer::manualIndexer, indexer );
-        // rightButton.whileHeld(indexer::manualInverseIndexer, indexer );
-        // leftButton.whenReleased(indexer::manualStopIndexer, indexer);
-        // rightButton.whenReleased(indexer::manualStopIndexer, indexer);
-        // bottomButton.whileHeld(new IndexerCommand(indexer, IndexerStates.backward));
-        // topButton.whileHeld(new IndexerCommand(indexer, IndexerStates.forward));
+        reverseButton.whileHeld(new ReverseCollectCommand(intake, indexer));
     }
     
 }

@@ -31,8 +31,7 @@ public class ControllerConstants {
     public static DoubleSupplier CLIMB_RIGHT_AXIS = () -> operatorController.getRightY();
     public static DoubleSupplier CLIMB_LEFT_AXIS = () -> operatorController.getLeftY();
     //INTAKE BUTTONS
-    public static AxisTrigger INTAKE_IN_BUTTON = new AxisTrigger(operatorController, 2);
-    public static AxisTrigger INTAKE_OUT_BUTTON = new AxisTrigger(operatorController, 3);
+    public static AxisTrigger RUN_INTAKE_REVERSE = new AxisTrigger(operatorController, 2);
     
     //INDEXER BUTTONS
     public static JoystickButton INDEX_IN = operatorController.getButton(Controller.Button.RightBumper);
