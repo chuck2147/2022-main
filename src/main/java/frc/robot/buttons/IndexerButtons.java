@@ -18,7 +18,7 @@ public class IndexerButtons {
         final AxisTrigger reverseButton = ControllerConstants.RUN_INTAKE_REVERSE;
 
         reverseButton.whileHeld(new ReverseCollectCommand(intake, indexer));
-        collectButton.whileHeld(new CollectCommand(indexer, intake, shooter, collectButton));
+        indexer.setDefaultCommand(new CollectCommand(indexer, intake, shooter, collectButton));
     }
     
 }

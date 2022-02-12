@@ -23,6 +23,8 @@ public class AlignShooterSideCommand extends CommandBase {
     addRequirements(drivetrain);
     // new PIDNTValue(Constants.VISION_ALIGN_P, Constants.VISION_ALIGN_I, Constants.VISION_ALIGN_D, pid, "Vision Align");
     this.drivetrain = drivetrain;
+    this.speedXSupplier = speedXSupplier;
+    this.speedYSupplier = speedYSupplier;
   }
   
   @Override
@@ -40,6 +42,7 @@ public class AlignShooterSideCommand extends CommandBase {
     double xTarget = Limelight.getTargetX();
     double pidAngularVelocity = pid.calculate(0, -xTarget);
     drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidAngularVelocity, drivetrain.getGyroscopeRotation()));
+    //drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, pidAngularVelocity, drivetrain.getGyroscopeRotation()));
   }
 
   public static boolean isAligned() {
