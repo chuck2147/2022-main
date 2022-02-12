@@ -140,7 +140,6 @@ public class ShooterSubsystem extends SubsystemBase {
     if (!isShooting) {
       isShooterAtSpeed = false;
     } else {
-      System.out.println(lowerTargetSpeed + ", " + getVelocityLower());
       boolean lowerOnTarget = Math.abs(lowerTargetSpeed - getVelocityLower()) <= ShooterConstants.velocityPIDTolerance;
       boolean upperOnTarget = Math.abs(upperTargetSpeed - getVelocityUpper()) <= ShooterConstants.velocityPIDTolerance;
       isShooterAtSpeed = lowerOnTarget && upperOnTarget;
