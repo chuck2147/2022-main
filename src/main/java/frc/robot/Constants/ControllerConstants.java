@@ -20,6 +20,7 @@ public class ControllerConstants {
     public static JoystickButton BEHIND_TARMAC_SHOT = driverController.getButton(Controller.Button.X);
     public static JoystickButton LAUNCH_PAD_SHOT = driverController.getButton(Controller.Button.Y);
     //public static JoystickButton CHUCK_IT_SHOT = driverController.getButton(Controller.Button.B);
+    public static JoystickButton VISION_ALIGN = driverController.getButton(Controller.Button.B);
 
     //MISC BUTTONS
     public static JoystickButton RESET_GYRO = driverController.getButton(Controller.Button.Start);
