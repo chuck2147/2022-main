@@ -45,6 +45,12 @@ public final class DrivetrainConstants{
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12; 
     public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(174); 
 
+    //LIMELIGHT PIDs 
+    public static final double VISION_ALIGN_P = 0.185;
+    public static final double VISION_ALIGN_I = 0;
+    public static final double VISION_ALIGN_D = 0.005;
+    public static final double VISION_ALIGN_F = 0;
+
     public static final class AutoConstants {
         public static final double kMaxSpeedMetersPerSecond = 3;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
