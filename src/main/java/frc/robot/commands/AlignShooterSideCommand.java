@@ -31,9 +31,9 @@ public class AlignShooterSideCommand extends CommandBase {
     return Math.abs(xTarget) <= 1;
   }
 
-  private static double getError() {
-    return Limelight.getTargetX();
-  }
+  // private static double getError() {
+  //   return Limelight.getTargetX();
+  // }
 
   @Override
   public void execute() {
@@ -42,10 +42,10 @@ public class AlignShooterSideCommand extends CommandBase {
     drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidAngularVelocity, drivetrain.getGyroscopeRotation()));
   }
 
-  public static boolean isAligned() {
-    final var error = getError();
-    // If it is facing the goal and done rotating
-    System.out.println(error);
-    return error < 0.1 && error != 0 && DrivetrainSubsystem.getInstance().getAngularVelocity() < 0.5;
-  }
+  // public static boolean isAligned() {
+  //   final var error = getError();
+  //   // If it is facing the goal and done rotating
+  //   System.out.println(error);
+  //   return error < 0.1 && error != 0 && DrivetrainSubsystem.getInstance().getAngularVelocity() < 0.5;
+  // }
 }
