@@ -45,14 +45,15 @@ public final class ShooterConstants{
 
     public static final double velocityPIDTolerance = 100;
 
-    //SHOOTER DISTANCE 
-    public static final double FRONT_OF_HUB_DISTANCE = 0;
-    public static final double BEHIND_TARMAC_DISTANCE = 0;
-    public static final double LAUNCH_PAD_DISTANCE = 0;
+    //SHOOTER DISTANCE - from edge of Hub to Limelight - in Inches
+    public static final double FRONT_OF_HUB_DISTANCE = 36;
+    public static final double BEHIND_TARMAC_DISTANCE = 95;
+    public static final double LAUNCH_PAD_DISTANCE = 170;
     public static final double CHUCK_IT_DISTANCE = 0;
-    public static final double HUB_HEIGHT = 8 + (2/3); // in feet 
+
+    public static final double HUB_HEIGHT = 12 * (8 + (2/3)); // in inches 
     public static final double LIMELIGHT_HEIGHT = 0;
-    public static final double LIMELIGHT_ANGLE = 0;
+    public static final double LIMELIGHT_ANGLE = 0.588002603548; // in Radians
     
     //SHOOTER STATES 
     public enum ShooterState {
