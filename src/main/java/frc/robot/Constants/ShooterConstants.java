@@ -5,6 +5,8 @@
 package frc.robot.Constants;
 
 import frc.robot.NTValue;
+import frc.robot.util.InterpolatingDouble;
+import frc.robot.util.InterpolatingTreeMap;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -54,6 +56,37 @@ public final class ShooterConstants{
     public static final double HUB_HEIGHT = 12 * (8 + (2/3)); // in inches 
     public static final double LIMELIGHT_HEIGHT = 0;
     public static final double LIMELIGHT_ANGLE = 0.588002603548; // in Radians
+
+    // Setup the map of distances to shooter speeds.
+    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> UPPER_SHOOTER_SPEED_MAP = new InterpolatingTreeMap<>();
+    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> LOWER_SHOOTER_SPEED_MAP = new InterpolatingTreeMap<>();
+
+    // Add to shooter speed map known distances.
+    static {
+        //----------
+        // Add in standard shots.
+        var hubDistance = new InterpolatingDouble(FRONT_OF_HUB_DISTANCE);
+        UPPER_SHOOTER_SPEED_MAP.put(hubDistance, new InterpolatingDouble(FRONT_OF_HUB_UPPER.value));
+        LOWER_SHOOTER_SPEED_MAP.put(hubDistance, new InterpolatingDouble(FRONT_OF_HUB_LOWER.value));
+
+        var tarmacDistance = new InterpolatingDouble(BEHIND_TARMAC_DISTANCE);
+        UPPER_SHOOTER_SPEED_MAP.put(tarmacDistance, new InterpolatingDouble(BEHIND_TARMAC_UPPER.value));
+        LOWER_SHOOTER_SPEED_MAP.put(tarmacDistance, new InterpolatingDouble(BEHIND_TARMAC_LOWER.value));
+
+        var launchPadDistance = new InterpolatingDouble(LAUNCH_PAD_DISTANCE);
+        UPPER_SHOOTER_SPEED_MAP.put(launchPadDistance, new InterpolatingDouble(LAUNCH_PAD_UPPER.value));
+        LOWER_SHOOTER_SPEED_MAP.put(launchPadDistance, new InterpolatingDouble(LAUNCH_PAD_LOWER.value));
+
+        //---------------
+        // Add more shot points here.
+        var pointDistance1 = new InterpolatingDouble(125.0);
+        UPPER_SHOOTER_SPEED_MAP.put(pointDistance1, new InterpolatingDouble(12000.0));
+        LOWER_SHOOTER_SPEED_MAP.put(pointDistance1, new InterpolatingDouble(5500.0));
+
+        var pointDistance2 = new InterpolatingDouble(150.0);
+        UPPER_SHOOTER_SPEED_MAP.put(pointDistance2, new InterpolatingDouble(15200.0));
+        LOWER_SHOOTER_SPEED_MAP.put(pointDistance2, new InterpolatingDouble(4500.0));
+    }
     
     //SHOOTER STATES 
     public enum ShooterState {

@@ -17,38 +17,33 @@ public class AlignShooterSideCommand extends CommandBase {
   DrivetrainSubsystem drivetrain;
   DoubleSupplier speedXSupplier;
   DoubleSupplier speedYSupplier;
-  private PIDController pid = new PIDController(MiscConstants.VISION_ALIGN_P, MiscConstants.VISION_ALIGN_I, MiscConstants.VISION_ALIGN_D, 0.01);
   
   public AlignShooterSideCommand(DrivetrainSubsystem drivetrain, DoubleSupplier speedXSupplier, DoubleSupplier speedYSupplier) {
     addRequirements(drivetrain);
-    // new PIDNTValue(Constants.VISION_ALIGN_P, Constants.VISION_ALIGN_I, Constants.VISION_ALIGN_D, pid, "Vision Align");
     this.drivetrain = drivetrain;
     this.speedXSupplier = speedXSupplier;
     this.speedYSupplier = speedYSupplier;
   }
-  
+
+  // Called when the command is initially scheduled.
+  @Override
+  public void initialize() {}  
+
+  @Override
+  public void execute() {
+    double xTarget = Limelight.getTargetX();
+    double pidAngularVelocity = MiscConstants.VISION_PID.calculate(0, -xTarget);
+    drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidAngularVelocity, drivetrain.getGyroscopeRotation()));
+  }
+
+  // Called once the command ends or is interrupted.
+  @Override
+  public void end(boolean interrupted) {}
+
   @Override
   public boolean isFinished() {
     double xTarget = Limelight.getTargetX();
     return Math.abs(xTarget) <= 1;
   }
 
-  // private static double getError() {
-  //   return Limelight.getTargetX();
-  // }
-
-  @Override
-  public void execute() {
-    double xTarget = Limelight.getTargetX();
-    double pidAngularVelocity = pid.calculate(0, -xTarget);
-    drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidAngularVelocity, drivetrain.getGyroscopeRotation()));
-    //drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(0, 0, pidAngularVelocity, drivetrain.getGyroscopeRotation()));
-  }
-
-  // public static boolean isAligned() {
-  //   final var error = getError();
-  //   // If it is facing the goal and done rotating
-  //   System.out.println(error);
-  //   return error < 0.1 && error != 0 && DrivetrainSubsystem.getInstance().getAngularVelocity() < 0.5;
-  // }
 }
