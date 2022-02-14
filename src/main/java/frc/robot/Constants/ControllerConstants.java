@@ -46,24 +46,24 @@ public class ControllerConstants {
     public static JoystickButton INDEX_OUT = operatorController.getButton(Controller.Button.LeftBumper);
     
     private static double deadband(double value, double deadband) {
-        if (Math.abs(value) > deadband) {
-          if (value > 0.0) {
-            return (value - deadband) / (1.0 - deadband);
-          } else {
-            return (value + deadband) / (1.0 - deadband);
-          }
+      if (Math.abs(value) > deadband) {
+        if (value > 0.0) {
+          return (value - deadband) / (1.0 - deadband);
         } else {
-          return 0.0;
+          return (value + deadband) / (1.0 - deadband);
         }
+      } else {
+        return 0.0;
       }
-    
-      private static double modifyAxis(double value) {
-        // Deadband
-        value = deadband(value, 0.1);
-    
-        // Square the axis
-        value = Math.copySign(value * value, value);
-    
-        return value;
-      }
+    }
+  
+    private static double modifyAxis(double value) {
+      // Deadband
+      value = deadband(value, 0.1);
+  
+      // Square the axis
+      value = Math.copySign(value * value, value);
+  
+      return value;
+    }
 }

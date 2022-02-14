@@ -22,15 +22,6 @@ public class ShooterSubsystem extends SubsystemBase {
   private final TalonFX lowerMotor = new TalonFX(ShooterConstants.LOWER_MOTOR_ID);
   private double lowerTargetSpeed = 0;
   private double upperTargetSpeed = 0;
-  private boolean isShooterAtSpeed = false;
-
-  public enum ShooterDistances {
-    BEHIND_TRENCH, FRONT_OF_TRENCH, BEHIND_LINE
-  }
-
-  public enum HoodMovements {
-    UP, DOWN
-  }
 
   ShuffleboardTab tab = Shuffleboard.getTab("NTValues");
   NetworkTableEntry upperVelocityGraphEntry = tab.add("Upper Current Velocity Graph", 0)
@@ -54,7 +45,7 @@ public class ShooterSubsystem extends SubsystemBase {
     lowerMotor.setNeutralMode(NeutralMode.Coast);
   
     upperMotor.setInverted(TalonFXInvertType.CounterClockwise);
-    lowerMotor.setInverted(TalonFXInvertType.Clockwise);
+    lowerMotor.setInverted(TalonFXInvertType.CounterClockwise);
 
     // "full output" will now scale to 12 Volts for all control modes when enabled.
     upperMotor.configVoltageCompSaturation(12);
@@ -73,7 +64,7 @@ public class ShooterSubsystem extends SubsystemBase {
     // PIDF
     new PIDNTValue(ShooterConstants.UPPER_P, ShooterConstants.UPPER_I, ShooterConstants.UPPER_D, ShooterConstants.UPPER_F, upperMotor, "Upper Shooter"); 
     new PIDNTValue(ShooterConstants.LOWER_P, ShooterConstants.LOWER_I, ShooterConstants.LOWER_D, ShooterConstants.LOWER_F, lowerMotor, "Lower Shooter"); 
-   }
+  }
 
   public static double encToRPM(double enc) {
     return enc / 100 * 1000 / 2048 * 60;
@@ -88,32 +79,31 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public double getVelocityLower() {
-    return -lowerMotor.getSelectedSensorVelocity();
-  } 
+    return lowerMotor.getSelectedSensorVelocity();
+  }
+
   public void stopShooter(){
     upperMotor.set(ControlMode.PercentOutput, 0);
     lowerMotor.set(ControlMode.PercentOutput, 0);
   }
 
-  public void shootFromBehindTarmac() {
-    lowerTargetSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-    upperTargetSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
-  }
-  public void shootFromFrontOfHub() {
-    lowerTargetSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
-    upperTargetSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
-  }
-  public void shootFromLaunchPad(){
-    lowerTargetSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
-    upperTargetSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
-  }
-  public void shootChuckIt() {
-    lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
-    upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
-  }
   // Lower_Motor Velocity will always take longer to get on target... so only needs lower velocity
   public boolean isUpToSpeed() {
+    boolean isShooterAtSpeed = false;
+    boolean isShooting = lowerTargetSpeed != 0 || upperTargetSpeed != 0;
+
+    if (isShooting) {
+      boolean lowerOnTarget = withinTolerance(lowerTargetSpeed, getVelocityLower(), ShooterConstants.velocityPIDTolerance);
+      boolean upperOnTarget = withinTolerance(upperTargetSpeed, getVelocityUpper(), ShooterConstants.velocityPIDTolerance);
+      isShooterAtSpeed = lowerOnTarget && upperOnTarget;
+    }
+
     return isShooterAtSpeed;
+  }
+
+  public void setSpeeds(double lowerSpeed, double upperSpeed) {
+    lowerMotor.set(TalonFXControlMode.Velocity, lowerSpeed);
+    upperMotor.set(TalonFXControlMode.Velocity, upperSpeed);
   }
  
   @Override
@@ -121,27 +111,9 @@ public class ShooterSubsystem extends SubsystemBase {
     upperVelocityEntry.setValue(upperMotor.getSelectedSensorVelocity());
     upperVelocityGraphEntry.setValue(lowerMotor.getSelectedSensorVelocity());
     lowerVelocityEntry.setValue(lowerMotor.getSelectedSensorVelocity());
+  }
 
-    if(lowerTargetSpeed == 0){
-      lowerMotor.set(TalonFXControlMode.PercentOutput, 0);
-    }else {
-      lowerMotor.set(TalonFXControlMode.Velocity, -lowerTargetSpeed);
-    }
-
-    if (upperTargetSpeed == 0) {
-      upperMotor.set(TalonFXControlMode.PercentOutput, 0);
-    } else {
-      upperMotor.set(TalonFXControlMode.Velocity, upperTargetSpeed);
-    }
-    boolean isShooting = lowerTargetSpeed != 0 || upperTargetSpeed != 0;
-    if (!isShooting) {
-      isShooterAtSpeed = false;
-    } else {
-      boolean lowerOnTarget = Math.abs(lowerTargetSpeed - getVelocityLower()) <= ShooterConstants.velocityPIDTolerance;
-      boolean upperOnTarget = Math.abs(upperTargetSpeed - getVelocityUpper()) <= ShooterConstants.velocityPIDTolerance;
-      isShooterAtSpeed = lowerOnTarget && upperOnTarget;
-    }
-    lowerTargetSpeed = 0;
-    upperTargetSpeed = 0;
+  private boolean withinTolerance(double firstValue, double secondValue, double acceptedTolerance) {
+    return Math.abs(firstValue - secondValue) <= acceptedTolerance;
   }
 }

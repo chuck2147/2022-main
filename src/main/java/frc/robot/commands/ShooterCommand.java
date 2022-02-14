@@ -12,6 +12,10 @@ import frc.robot.subsystems.ShooterSubsystem;
 public class ShooterCommand extends CommandBase {
   private final ShooterSubsystem shooter;
   private final ShooterConstants.ShooterState shooterState;
+  
+  private double lowerTargetSpeed = 0;
+  private double upperTargetSpeed = 0;
+
   /** Creates a new ShooterCommand. */
   public ShooterCommand(ShooterSubsystem shooter, ShooterState shooterState) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -22,25 +26,49 @@ public class ShooterCommand extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    if (shooterState == ShooterState.Hub) {
+      shootFromFrontOfHub();
+    } else if (shooterState == ShooterState.Tarmac){
+      shootFromBehindTarmac();
+    } else if (shooterState == ShooterState.LaunchPad){
+      shootFromLaunchPad();
+    } else if (shooterState == ShooterState.ChuckIt) {
+      shootChuckIt();
+    }
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (shooterState == ShooterState.Hub) {
-      shooter.shootFromFrontOfHub();
-    } else if (shooterState == ShooterState.Tarmac){
-      shooter.shootFromBehindTarmac();
-    } else if (shooterState == ShooterState.LaunchPad){
-      shooter.shootFromLaunchPad();
-    } else if (shooterState == ShooterState.ChuckIt) {
-      shooter.shootChuckIt();
-    }
+    shooter.setSpeeds(lowerTargetSpeed, upperTargetSpeed);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+      shooter.stopShooter();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  private void shootFromBehindTarmac() {
+    lowerTargetSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
+    upperTargetSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+  }
+  private void shootFromFrontOfHub() {
+    lowerTargetSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
+    upperTargetSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
+  }
+  private void shootFromLaunchPad(){
+    lowerTargetSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
+    upperTargetSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
+  }
+  private void shootChuckIt() {
+    lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
+    upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
   }
 }
