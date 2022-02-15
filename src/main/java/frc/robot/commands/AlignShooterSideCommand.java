@@ -6,21 +6,21 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Limelight;
-import frc.robot.Constants.MiscConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class AlignShooterSideCommand extends CommandBase {
   DrivetrainSubsystem drivetrain;
+  VisionSubsystem visionSubsystem;
   DoubleSupplier speedXSupplier;
   DoubleSupplier speedYSupplier;
   
-  public AlignShooterSideCommand(DrivetrainSubsystem drivetrain, DoubleSupplier speedXSupplier, DoubleSupplier speedYSupplier) {
-    addRequirements(drivetrain);
+  public AlignShooterSideCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, DoubleSupplier speedXSupplier, DoubleSupplier speedYSupplier) {
+    addRequirements(drivetrain, visionSubsystem);
     this.drivetrain = drivetrain;
+    this.visionSubsystem = visionSubsystem;
     this.speedXSupplier = speedXSupplier;
     this.speedYSupplier = speedYSupplier;
   }
@@ -31,8 +31,7 @@ public class AlignShooterSideCommand extends CommandBase {
 
   @Override
   public void execute() {
-    double xTarget = Limelight.getTargetX();
-    double pidAngularVelocity = MiscConstants.VISION_PID.calculate(0, -xTarget);
+    double pidAngularVelocity = visionSubsystem.GetRotationVelocityToTarget();
     drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidAngularVelocity, drivetrain.getGyroscopeRotation()));
   }
 
@@ -42,8 +41,7 @@ public class AlignShooterSideCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    double xTarget = Limelight.getTargetX();
-    return Math.abs(xTarget) <= 1;
+    return visionSubsystem.IsOnTarget();
   }
 
 }

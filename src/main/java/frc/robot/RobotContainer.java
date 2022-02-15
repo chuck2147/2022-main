@@ -18,6 +18,7 @@ import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,6 +34,7 @@ public class RobotContainer {
   private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
+  private final VisionSubsystem vision = new VisionSubsystem();
   
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -51,7 +53,7 @@ public class RobotContainer {
     ClimberButtons.Configure(leftClimber, rightClimber, intake);
     ShooterButtons.Configure(shooter);
     IndexerButtons.Configure(intake, indexer, shooter);
-    DriverButtons.Configure(drivetrain);
+    DriverButtons.Configure(drivetrain, vision);
   }
 
   /**

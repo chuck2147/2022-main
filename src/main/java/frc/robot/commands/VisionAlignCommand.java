@@ -5,9 +5,10 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.ShooterConstants.ShooterState;
-import frc.robot.Limelight;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.util.vision.Limelight;
 
 public class VisionAlignCommand extends CommandBase {
   DrivetrainSubsystem drivetrain;
@@ -50,7 +51,7 @@ public class VisionAlignCommand extends CommandBase {
   public double setDistance(){
    double yTarget = Limelight.getTargetY();
    double getRadians = Math.toRadians(yTarget);
-   double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + getRadians)));
+   double yDistance = (VisionConstants.HUB_HEIGHT - VisionConstants.LIMELIGHT_HEIGHT)/(Math.tan((VisionConstants.LIMELIGHT_ANGLE + getRadians)));
    double yFrontOfHub = ShooterConstants.FRONT_OF_HUB_DISTANCE;
    double yBehindTarmac = ShooterConstants.BEHIND_TARMAC_DISTANCE;
    double yLaunchPad = ShooterConstants.LAUNCH_PAD_DISTANCE;
@@ -75,7 +76,7 @@ public class VisionAlignCommand extends CommandBase {
     double xTarget = Limelight.getTargetX();
     double yTarget = Limelight.getTargetY();
     double getRadians = Math.toRadians(yTarget);
-    double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + getRadians)));
+    double yDistance = (VisionConstants.HUB_HEIGHT - VisionConstants.LIMELIGHT_HEIGHT)/(Math.tan((VisionConstants.LIMELIGHT_ANGLE + getRadians)));
     double yInbetween = setDistance();
     double yposition = yDistance - yInbetween;
     return Math.abs(xTarget) + Math.abs(yposition) <= 2;
@@ -90,7 +91,7 @@ public class VisionAlignCommand extends CommandBase {
     double xTarget = Limelight.getTargetX();
     double yTarget = Limelight.getTargetY();
     double getRadians = Math.toRadians(yTarget);
-    double yDistance = (ShooterConstants.HUB_HEIGHT - ShooterConstants.LIMELIGHT_HEIGHT)/(Math.tan((ShooterConstants.LIMELIGHT_ANGLE + getRadians)));
+    double yDistance = (VisionConstants.HUB_HEIGHT - VisionConstants.LIMELIGHT_HEIGHT)/(Math.tan((VisionConstants.LIMELIGHT_ANGLE + getRadians)));
     double pidAngularVelocity = pid.calculate(0, -xTarget);
     double yInbetween = setDistance();
     double yposition = yDistance - yInbetween;

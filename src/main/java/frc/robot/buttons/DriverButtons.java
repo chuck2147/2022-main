@@ -9,9 +9,10 @@ import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.AlignShooterSideCommand;
 import frc.robot.commands.DefaultDriveCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class DriverButtons {
-    public static void Configure(DrivetrainSubsystem drivetrain) {
+    public static void Configure(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem) {
         final JoystickButton visionAlign = ControllerConstants.VISION_ALIGN;
         final JoystickButton resetGyro = ControllerConstants.RESET_GYRO;
         final JoystickButton resetPose = ControllerConstants.RESET_POSE;
@@ -22,7 +23,7 @@ public class DriverButtons {
         drivetrain.setDefaultCommand(new DefaultDriveCommand(
             drivetrain, driveY, driveX, driveRotation));
 
-        visionAlign.whileHeld(new AlignShooterSideCommand(drivetrain, driveX, driveY));
+        visionAlign.whileHeld(new AlignShooterSideCommand(drivetrain, visionSubsystem, driveX, driveY));
         resetGyro.whenPressed(()->drivetrain.resetGyroscope());
         resetPose.whenPressed(()->drivetrain.resetPose(new Vector2d(0, 0), new Rotation2d(0)));
         // private final SlewRateLimiter filter = new SlewRateLimiter(1.5);

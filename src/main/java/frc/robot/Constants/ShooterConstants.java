@@ -5,8 +5,8 @@
 package frc.robot.Constants;
 
 import frc.robot.NTValue;
-import frc.robot.util.InterpolatingDouble;
-import frc.robot.util.InterpolatingTreeMap;
+import frc.robot.util.interpolableMap.InterpolatingDouble;
+import frc.robot.util.interpolableMap.InterpolatingTreeMap;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -58,13 +58,9 @@ public final class ShooterConstants{
     public static final double LAUNCH_PAD_DISTANCE = 170;
     public static final double CHUCK_IT_DISTANCE = 0;
 
-    public static final double HUB_HEIGHT = 12 * (8 + (2/3)); // in inches 
-    public static final double LIMELIGHT_HEIGHT = 0;
-    public static final double LIMELIGHT_ANGLE = 0.588002603548; // in Radians
-
     private static void setShooterSpeedMap(double distance, double lowerSpeed, double upperSpeed) {
         var pointDistance = new InterpolatingDouble(distance);
-        
+
         LOWER_SHOOTER_SPEED_MAP.put(pointDistance, new InterpolatingDouble(lowerSpeed));
         UPPER_SHOOTER_SPEED_MAP.put(pointDistance, new InterpolatingDouble(upperSpeed));
     }  
