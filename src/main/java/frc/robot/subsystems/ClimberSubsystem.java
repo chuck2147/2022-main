@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -19,6 +20,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
     climberMotor.setInverted(false);
   }
+  
+  public ClimberSubsystem() {
+    climberMotor.setNeutralMode(NeutralMode.Brake);
+  }
 
   public void runClimber(double climbSpeed) {
     climberMotor.set(ControlMode.PercentOutput, climbSpeed);
@@ -30,7 +35,10 @@ public class ClimberSubsystem extends SubsystemBase {
       climbPiston.set(Value.kForward);
     }
   }
-
+  public double getClimberEncoderValue(){
+    return climberMotor.getSelectedSensorPosition();
+  }
+  
   @Override
   public void periodic() { 
     // double climbSpeed = climbSpeedSupplier.getAsDouble();

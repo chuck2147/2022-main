@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -20,6 +21,8 @@ public class IntakeSubsystem extends SubsystemBase {
       IntakeConstants.INTAKE_RIGHT_AIR_IN, IntakeConstants.INTAKE_RIGHT_AIR_OUT);
 
   public IntakeSubsystem() {
+    intakeMotor.setNeutralMode(NeutralMode.Coast);
+
     intakeMotor.setInverted(false);
   }
 
