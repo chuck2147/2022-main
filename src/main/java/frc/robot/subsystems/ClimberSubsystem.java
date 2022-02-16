@@ -35,7 +35,10 @@ public class ClimberSubsystem extends SubsystemBase {
       climbPiston.set(Value.kForward);
     }
   }
-
+  public double getClimberEncoderValue(){
+    return climberMotor.getSelectedSensorPosition();
+  }
+  
   @Override
   public void periodic() { 
     // double climbSpeed = climbSpeedSupplier.getAsDouble();
