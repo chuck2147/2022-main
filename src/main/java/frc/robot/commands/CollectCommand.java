@@ -16,6 +16,7 @@ public class CollectCommand extends CommandBase {
   private final IntakeSubsystem intake;
   private final ShooterSubsystem shooter;
   private final Button extendIntakeButton;
+  private final Button stopIntake;
 
   private enum CollectState {
     Stopped, WaitingForBalls, WaitingForOneBall, FeedToShooter
@@ -24,11 +25,12 @@ public class CollectCommand extends CommandBase {
   private CollectState collectState = CollectState.Stopped;
 
   public CollectCommand(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter,
-      Button extendIntakeButton) {
+      Button extendIntakeButton, Button stopIntake) {
     this.indexer = indexer;
     this.intake = intake;
     this.shooter = shooter;
     this.extendIntakeButton = extendIntakeButton;
+    this.stopIntake = stopIntake;
     // Only using shooter to get values of motors, not setting anything to it.
     // So we aren't passing it to addRequirements()
     addRequirements(intake, indexer);
@@ -67,6 +69,9 @@ public class CollectCommand extends CommandBase {
       }
     }
 
+    if (stopIntake.get()) {
+      collectState = CollectState.Stopped;
+    }
     // seperate because we can get to this via any state above
     if (shooter.isUpToSpeed()) {
       collectState = CollectState.FeedToShooter;
