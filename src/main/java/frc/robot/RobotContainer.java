@@ -53,7 +53,7 @@ public class RobotContainer {
     ClimberButtons.Configure(leftClimber, rightClimber, intake);
     ShooterButtons.Configure(shooter);
     IndexerButtons.Configure(intake, indexer, shooter);
-    DriverButtons.Configure(drivetrain, vision);
+    DriverButtons.Configure(drivetrain, vision, shooter);
   }
 
   /**
