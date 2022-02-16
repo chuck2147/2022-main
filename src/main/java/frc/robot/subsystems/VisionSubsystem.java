@@ -5,6 +5,10 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.util.vision.Limelight;
@@ -12,6 +16,13 @@ import frc.robot.util.vision.Limelight;
 public class VisionSubsystem extends SubsystemBase {
 
   public static final PIDController visionPID = new PIDController(VisionConstants.VISION_ALIGN_P, VisionConstants.VISION_ALIGN_I, VisionConstants.VISION_ALIGN_D, 0.01);
+
+  ShuffleboardTab tab = Shuffleboard.getTab("NTValues");
+  NetworkTableEntry distanceToTarget = tab.add("Distance To Target", 0)
+    .withSize(2, 1)
+    .withWidget(BuiltInWidgets.kTextView)
+    .getEntry();
+
   /** Creates a new VisionSubsystem. */
   public VisionSubsystem() {}
 
@@ -24,14 +35,27 @@ public class VisionSubsystem extends SubsystemBase {
 
     return Math.abs(horizontalOffset) <= VisionConstants.HORIZONTAL_TOLERANCE_IN_DEGREES;
   }
+  
+  public double GetDistanceToTarget() {
+    double getRadians = Math.toRadians(GetVerticalOffset());
+    double yDistance = (VisionConstants.HUB_HEIGHT - VisionConstants.LIMELIGHT_HEIGHT)/(Math.tan((VisionConstants.LIMELIGHT_ANGLE + getRadians)));
+
+    return yDistance;
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    distanceToTarget.setValue(GetDistanceToTarget());
+
   }
 
   private double GetHorizontalOffset() {
     return Limelight.getTargetX();
   }
+
+  private double GetVerticalOffset() {
+    return Limelight.getTargetY(); 
+  }
+
 }

@@ -58,16 +58,16 @@ public final class ShooterConstants{
     public static final double LAUNCH_PAD_DISTANCE = 170;
     public static final double CHUCK_IT_DISTANCE = 0;
 
+    // Setup the map of distances to shooter speeds.
+    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> UPPER_SHOOTER_SPEED_MAP = new InterpolatingTreeMap<>();
+    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> LOWER_SHOOTER_SPEED_MAP = new InterpolatingTreeMap<>();
+ 
     private static void setShooterSpeedMap(double distance, double lowerSpeed, double upperSpeed) {
         var pointDistance = new InterpolatingDouble(distance);
 
         LOWER_SHOOTER_SPEED_MAP.put(pointDistance, new InterpolatingDouble(lowerSpeed));
         UPPER_SHOOTER_SPEED_MAP.put(pointDistance, new InterpolatingDouble(upperSpeed));
     }  
-
-    // Setup the map of distances to shooter speeds.
-    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> UPPER_SHOOTER_SPEED_MAP = new InterpolatingTreeMap<>();
-    public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> LOWER_SHOOTER_SPEED_MAP = new InterpolatingTreeMap<>();
 
     // Add to shooter speed map known distances.
     static {
