@@ -23,6 +23,8 @@ public class ShooterSubsystem extends SubsystemBase {
   private double lowerTargetSpeed = 0;
   private double upperTargetSpeed = 0;
 
+  private boolean overrideVision = false;
+
   ShuffleboardTab tab = Shuffleboard.getTab("NTValues");
   NetworkTableEntry upperVelocityGraphEntry = tab.add("Upper Current Velocity Graph", 0)
     .withSize(2, 1)
@@ -64,6 +66,14 @@ public class ShooterSubsystem extends SubsystemBase {
     // PIDF
     new PIDNTValue(ShooterConstants.UPPER_P, ShooterConstants.UPPER_I, ShooterConstants.UPPER_D, ShooterConstants.UPPER_F, upperMotor, "Upper Shooter"); 
     new PIDNTValue(ShooterConstants.LOWER_P, ShooterConstants.LOWER_I, ShooterConstants.LOWER_D, ShooterConstants.LOWER_F, lowerMotor, "Lower Shooter"); 
+  }
+
+  public void SetOverrideVision(boolean override) {
+    overrideVision = override;
+  }
+
+  public boolean OverrideVision() {
+    return overrideVision;
   }
 
   public static double encToRPM(double enc) {

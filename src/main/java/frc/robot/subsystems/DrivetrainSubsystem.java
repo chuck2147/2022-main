@@ -4,7 +4,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
@@ -146,7 +145,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     // By default we will use Falcon 500s in standard configuration. But if you use a different configuration or motors
     // you MUST change it. If you do not, your code will crash on startup.
-    // FIXME Setup motor configuration
     m_frontLeftModule = Mk3SwerveModuleHelper.createFalcon500(
             // This parameter is optional, but will allow you to see the current state of the module on the dashboard.
             tab.getLayout("Front Left Module", BuiltInLayouts.kList)
@@ -263,8 +261,14 @@ public class DrivetrainSubsystem extends SubsystemBase {
     updatePoseNT();
   }
 
-  public void drive(ChassisSpeeds chassisSpeeds) {
-    m_chassisSpeeds = chassisSpeeds;
+  public void drive(double xDriveSpeed, double yDriveSpeed, double rotationSpeed) {
+    // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
+    m_chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+      xDriveSpeed,
+      yDriveSpeed,
+      rotationSpeed,
+      getGyroscopeRotation()
+    );
   }
 
   public void setModuleStates(SwerveModuleState[] states) {

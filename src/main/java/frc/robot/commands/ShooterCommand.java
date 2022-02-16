@@ -27,6 +27,8 @@ public class ShooterCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    shooter.SetOverrideVision(true);
+
     if (shooterState == ShooterState.Hub) {
       shootFromFrontOfHub();
     } else if (shooterState == ShooterState.Tarmac){
@@ -46,7 +48,8 @@ public class ShooterCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-      shooter.stopShooter();
+    shooter.SetOverrideVision(false);
+    shooter.stopShooter();
   }
 
   // Returns true when the command should end.
@@ -59,14 +62,17 @@ public class ShooterCommand extends CommandBase {
     lowerTargetSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
     upperTargetSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
   }
+
   private void shootFromFrontOfHub() {
     lowerTargetSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
     upperTargetSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
   }
+
   private void shootFromLaunchPad(){
     lowerTargetSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
     upperTargetSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
   }
+  
   private void shootChuckIt() {
     lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
     upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;

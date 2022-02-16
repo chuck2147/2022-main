@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -97,7 +96,7 @@ public class VisionAlignCommand extends CommandBase {
     double yposition = yDistance - yInbetween;
 
     double pidForwardVelocity = pid.calculate(0, yposition);
-    drivetrain.drive(new ChassisSpeeds(pidForwardVelocity, 0, pidAngularVelocity));
+    drivetrain.drive(pidForwardVelocity, 0, pidAngularVelocity);
   }
 
   public static boolean isAligned() {

@@ -6,10 +6,8 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
@@ -34,7 +32,7 @@ public class ShootByVisionCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    shooterSubsystem.SetOverrideVision(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -63,8 +61,8 @@ public class ShootByVisionCommand extends CommandBase {
   }
 
   private void AlignHorizontal() {
-    double pidAngularVelocity = visionSubsystem.GetRotationVelocityToTarget();
-    drivetrain.drive(ChassisSpeeds.fromFieldRelativeSpeeds(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidAngularVelocity, drivetrain.getGyroscopeRotation()));
+    double pidRotationVelocity = visionSubsystem.GetRotationVelocityToTarget();
+    drivetrain.drive(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidRotationVelocity);
   }
 
 }

@@ -10,11 +10,13 @@ import frc.robot.Constants.IndexerConstants;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class CollectCommand extends CommandBase {
   private final IndexerSubsystem indexer;
   private final IntakeSubsystem intake;
   private final ShooterSubsystem shooter;
+  private final VisionSubsystem visionSubsystem;
   private final Button extendIntakeButton;
   private final Button stopIntake;
 
@@ -24,11 +26,12 @@ public class CollectCommand extends CommandBase {
 
   private CollectState collectState = CollectState.Stopped;
 
-  public CollectCommand(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter,
+  public CollectCommand(IndexerSubsystem indexer, IntakeSubsystem intake, ShooterSubsystem shooter, VisionSubsystem vision,
       Button extendIntakeButton, Button stopIntake) {
     this.indexer = indexer;
     this.intake = intake;
     this.shooter = shooter;
+    this.visionSubsystem = vision;
     this.extendIntakeButton = extendIntakeButton;
     this.stopIntake = stopIntake;
     // Only using shooter to get values of motors, not setting anything to it.
@@ -58,7 +61,7 @@ public class CollectCommand extends CommandBase {
     }
 
     if (collectState == CollectState.FeedToShooter) {
-      if (!shooter.isUpToSpeed()) {
+      if (!ReadyToShoot()) {
         // Wait until we get up to speed
         if (indexer.isUpperTriggered()) {
           collectState = CollectState.Stopped;
@@ -73,7 +76,7 @@ public class CollectCommand extends CommandBase {
       collectState = CollectState.Stopped;
     }
     // seperate because we can get to this via any state above
-    if (shooter.isUpToSpeed()) {
+    if (ReadyToShoot()) {
       collectState = CollectState.FeedToShooter;
     }
 
@@ -102,5 +105,9 @@ public class CollectCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  private boolean ReadyToShoot() {
+    return shooter.isUpToSpeed() && (shooter.OverrideVision() || visionSubsystem.IsOnTarget());
   }
 }

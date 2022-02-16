@@ -12,15 +12,16 @@ import frc.robot.commands.ReverseCollectCommand;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 
 public class IndexerButtons {
-    public static void Configure(IntakeSubsystem intake, IndexerSubsystem indexer, ShooterSubsystem shooter) {
+    public static void Configure(IntakeSubsystem intake, IndexerSubsystem indexer, ShooterSubsystem shooter, VisionSubsystem vision) {
         final AxisTrigger collectButton = ControllerConstants.RUN_COLLECT_INTAKE;
         final AxisTrigger reverseButton = ControllerConstants.RUN_INTAKE_REVERSE;
         final JoystickButton stopButton = ControllerConstants.STOP_INTAKE;
 
         reverseButton.whileHeld(new ReverseCollectCommand(intake, indexer));
-        indexer.setDefaultCommand(new CollectCommand(indexer, intake, shooter, collectButton, stopButton));
+        indexer.setDefaultCommand(new CollectCommand(indexer, intake, shooter, vision, collectButton, stopButton));
     }
     
 }
