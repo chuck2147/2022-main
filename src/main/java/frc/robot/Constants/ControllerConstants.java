@@ -40,6 +40,7 @@ public class ControllerConstants {
     //INTAKE BUTTONS
     public static AxisTrigger RUN_INTAKE_REVERSE = new AxisTrigger(operatorController, 2);
     public static AxisTrigger RUN_COLLECT_INTAKE = new AxisTrigger(operatorController, 3);
+    public static JoystickButton STOP_INTAKE = operatorController.getButton(Controller.Button.A);
     
     //INDEXER BUTTONS
     public static JoystickButton INDEX_IN = operatorController.getButton(Controller.Button.RightBumper);
