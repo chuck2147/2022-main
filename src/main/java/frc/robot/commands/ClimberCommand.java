@@ -35,18 +35,18 @@ public class ClimberCommand extends CommandBase {
       intakeSubsystem.retractIntake();
     }
 
-  //   if (climberSubsystem.getClimberEncoderValue() >= 10000){
-  //     speed = 0;
-  //     if (climbSpeedSupplier.getAsDouble() < 0) {
-  //       speed = climbSpeedSupplier.getAsDouble();
-  //     }
-  //   }
-  //   if (climberSubsystem.getClimberEncoderValue() <= 0) {
-  //     speed = 0;
-  //     if (climbSpeedSupplier.getAsDouble() > 0) {
-  //       speed = climbSpeedSupplier.getAsDouble();
-  //     }
-  // }
+    // if (climberSubsystem.getClimberEncoderValue() >= 10000){
+    //   speed = 0;
+    //   if (climbSpeedSupplier.getAsDouble() < 0) {
+    //     speed = climbSpeedSupplier.getAsDouble();
+    //   }
+    // }
+    // if (climberSubsystem.getClimberEncoderValue() <= 0) {
+    //   speed = 0;
+    //   if (climbSpeedSupplier.getAsDouble() > 0) {
+    //     speed = climbSpeedSupplier.getAsDouble();
+    //   }
+    // }
     System.out.println(climberSubsystem.getClimberEncoderValue());
     climberSubsystem.runClimber(speed);
   }
