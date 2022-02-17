@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.PIDNTValue;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.util.MathCommon;
 
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -26,18 +27,29 @@ public class ShooterSubsystem extends SubsystemBase {
   private boolean overrideVision = false;
 
   ShuffleboardTab tab = Shuffleboard.getTab("NTValues");
+
+  NetworkTableEntry lowerTargetVelocityEntry = tab.add("Lower Target Velocity", 0)
+    .withSize(2, 1)
+    .withWidget(BuiltInWidgets.kTextView)
+    .getEntry();
+
+  NetworkTableEntry upperTargetVelocityEntry = tab.add("Upper Target Velocity", 0)
+    .withSize(2, 1)
+    .withWidget(BuiltInWidgets.kTextView)
+    .getEntry();
+
   NetworkTableEntry upperVelocityGraphEntry = tab.add("Upper Current Velocity Graph", 0)
     .withSize(2, 1)
     .withWidget(BuiltInWidgets.kGraph)
     .getEntry();
-    NetworkTableEntry upperVelocityEntry = tab.add("Upper Current Velocity", 0)
+  NetworkTableEntry upperCurrentVelocityEntry = tab.add("Upper Current Velocity", 0)
     .withSize(2, 1)
     .withWidget(BuiltInWidgets.kTextView)
     .getEntry();
-  NetworkTableEntry lowerVelocityEntry = tab.add("Lower Current Velocity", 0)
+  NetworkTableEntry lowerCurrentVelocityEntry = tab.add("Lower Current Velocity", 0)
     .withSize(2, 1)
     .withWidget(BuiltInWidgets.kTextView)
-    .getEntry();
+    .getEntry();  
   
   public ShooterSubsystem() {
     upperMotor.configFactoryDefault();
@@ -93,6 +105,9 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void stopShooter(){
+    lowerTargetSpeed = 0;
+    upperTargetSpeed = 0;
+
     upperMotor.set(ControlMode.PercentOutput, 0);
     lowerMotor.set(ControlMode.PercentOutput, 0);
   }
@@ -103,8 +118,8 @@ public class ShooterSubsystem extends SubsystemBase {
     boolean isShooting = lowerTargetSpeed != 0 || upperTargetSpeed != 0;
 
     if (isShooting) {
-      boolean lowerOnTarget = withinTolerance(lowerTargetSpeed, getVelocityLower(), ShooterConstants.velocityPIDTolerance);
-      boolean upperOnTarget = withinTolerance(upperTargetSpeed, getVelocityUpper(), ShooterConstants.velocityPIDTolerance);
+      boolean lowerOnTarget = MathCommon.WithinTolerance(lowerTargetSpeed, getVelocityLower(), ShooterConstants.velocityPIDTolerance);
+      boolean upperOnTarget = MathCommon.WithinTolerance(upperTargetSpeed, getVelocityUpper(), ShooterConstants.velocityPIDTolerance);
       isShooterAtSpeed = lowerOnTarget && upperOnTarget;
     }
 
@@ -112,20 +127,26 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setSpeeds(double lowerSpeed, double upperSpeed) {
-    lowerTargetSpeed = lowerSpeed;
-    upperTargetSpeed = upperSpeed;
-    lowerMotor.set(TalonFXControlMode.Velocity, lowerSpeed);
-    upperMotor.set(TalonFXControlMode.Velocity, upperSpeed);
+    if (lowerSpeed != lowerTargetSpeed || upperSpeed != upperTargetSpeed) {
+      lowerTargetSpeed = lowerSpeed;
+      upperTargetSpeed = upperSpeed;
+
+      lowerMotor.set(TalonFXControlMode.Velocity, lowerTargetSpeed);
+      upperMotor.set(TalonFXControlMode.Velocity, upperTargetSpeed);
+    }
   }
  
   @Override
   public void periodic() {
-    upperVelocityEntry.setValue(upperMotor.getSelectedSensorVelocity());
+    upperTargetVelocityEntry.setValue(lowerTargetSpeed);
+    lowerTargetVelocityEntry.setValue(upperTargetSpeed);
+
+    upperCurrentVelocityEntry.setValue(upperMotor.getSelectedSensorVelocity());
+    lowerCurrentVelocityEntry.setValue(lowerMotor.getSelectedSensorVelocity());
+    
     upperVelocityGraphEntry.setValue(lowerMotor.getSelectedSensorVelocity());
-    lowerVelocityEntry.setValue(lowerMotor.getSelectedSensorVelocity());
+
+
   }
 
-  private boolean withinTolerance(double firstValue, double secondValue, double acceptedTolerance) {
-    return Math.abs(firstValue - secondValue) <= acceptedTolerance;
-  }
 }

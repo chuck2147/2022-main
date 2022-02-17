@@ -8,17 +8,22 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.util.MathCommon;
 import frc.robot.util.interpolableMap.InterpolatingDouble;
+import frc.robot.util.vision.VisionDrive;
 
 public class ShootByVisionCommand extends CommandBase {
-  DrivetrainSubsystem drivetrain;
-  VisionSubsystem visionSubsystem;
-  ShooterSubsystem shooterSubsystem;
-  DoubleSupplier speedXSupplier;
-  DoubleSupplier speedYSupplier;
+  private DrivetrainSubsystem drivetrain;
+  private VisionSubsystem visionSubsystem;
+  private ShooterSubsystem shooterSubsystem;
+  private DoubleSupplier speedXSupplier;
+  private DoubleSupplier speedYSupplier;
+
+  private double setDistance;
   
   public ShootByVisionCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, DoubleSupplier speedXSupplier, DoubleSupplier speedYSupplier) {
     addRequirements(drivetrain, visionSubsystem, shooter);
@@ -33,20 +38,30 @@ public class ShootByVisionCommand extends CommandBase {
   @Override
   public void initialize() {
     shooterSubsystem.SetOverrideVision(false);
+    setDistance = Double.MIN_NORMAL;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    AlignHorizontal();
+    VisionDrive.AlignAndDrive(drivetrain, visionSubsystem, speedXSupplier, speedYSupplier);
 
     var distanceToTarget = visionSubsystem.GetDistanceToTarget();
-    var interpolatedDistance = new InterpolatingDouble(distanceToTarget);
-    
-    var lowerTargetSpeed = ShooterConstants.LOWER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance).value;
-    var upperTargetSpeed = ShooterConstants.UPPER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance).value;
 
-    shooterSubsystem.setSpeeds(lowerTargetSpeed, upperTargetSpeed);
+    // See if the distance has changed before setting the wheel speeds.
+    // A tolerance for variability is needed since the distance can change within inches from the Limelight even though it is standing still.
+    if (setDistance == Double.MIN_VALUE || !MathCommon.WithinTolerance(distanceToTarget, setDistance, VisionConstants.DISTANCE_FROM_TARGET_TOLERANCE_IN_INCHES)) {
+      setDistance = distanceToTarget;
+
+      var interpolatedDistance = new InterpolatingDouble(setDistance);
+    
+      var lowerTargetSpeed = ShooterConstants.LOWER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance);
+      var upperTargetSpeed = ShooterConstants.UPPER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance);
+
+      if (lowerTargetSpeed != null && upperTargetSpeed != null) {
+        shooterSubsystem.setSpeeds(lowerTargetSpeed.value, upperTargetSpeed.value);
+      }
+    }
   }
 
   // Called once the command ends or is interrupted.
@@ -59,13 +74,6 @@ public class ShootByVisionCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  private void AlignHorizontal() {
-    if (!visionSubsystem.IsOnTarget()) {
-      double pidRotationVelocity = visionSubsystem.GetRotationVelocityToTarget();
-      drivetrain.drive(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidRotationVelocity);
-    }
   }
 
 }

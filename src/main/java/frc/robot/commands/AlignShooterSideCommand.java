@@ -9,6 +9,7 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
+import frc.robot.util.vision.VisionDrive;
 
 public class AlignShooterSideCommand extends CommandBase {
   DrivetrainSubsystem drivetrain;
@@ -30,7 +31,7 @@ public class AlignShooterSideCommand extends CommandBase {
 
   @Override
   public void execute() {
-    AlignHorizontal();
+    VisionDrive.AlignAndDrive(drivetrain, visionSubsystem, speedXSupplier, speedYSupplier);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,11 +41,6 @@ public class AlignShooterSideCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     return visionSubsystem.IsOnTarget();
-  }
-
-  private void AlignHorizontal() {
-    double pidRotationVelocity = visionSubsystem.GetRotationVelocityToTarget();
-    drivetrain.drive(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidRotationVelocity);
   }
 
 }
