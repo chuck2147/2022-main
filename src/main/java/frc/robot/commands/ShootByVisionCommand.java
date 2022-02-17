@@ -41,9 +41,10 @@ public class ShootByVisionCommand extends CommandBase {
     AlignHorizontal();
 
     var distanceToTarget = visionSubsystem.GetDistanceToTarget();
+    var interpolatedDistance = new InterpolatingDouble(distanceToTarget);
     
-    var lowerTargetSpeed = ShooterConstants.LOWER_SHOOTER_SPEED_MAP.getInterpolated(new InterpolatingDouble(distanceToTarget)).value;
-    var upperTargetSpeed = ShooterConstants.UPPER_SHOOTER_SPEED_MAP.getInterpolated(new InterpolatingDouble(distanceToTarget)).value;
+    var lowerTargetSpeed = ShooterConstants.LOWER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance).value;
+    var upperTargetSpeed = ShooterConstants.UPPER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance).value;
 
     shooterSubsystem.setSpeeds(lowerTargetSpeed, upperTargetSpeed);
   }
@@ -61,8 +62,10 @@ public class ShootByVisionCommand extends CommandBase {
   }
 
   private void AlignHorizontal() {
-    double pidRotationVelocity = visionSubsystem.GetRotationVelocityToTarget();
-    drivetrain.drive(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidRotationVelocity);
+    if (!visionSubsystem.IsOnTarget()) {
+      double pidRotationVelocity = visionSubsystem.GetRotationVelocityToTarget();
+      drivetrain.drive(speedXSupplier.getAsDouble(), speedYSupplier.getAsDouble(), pidRotationVelocity);
+    }
   }
 
 }

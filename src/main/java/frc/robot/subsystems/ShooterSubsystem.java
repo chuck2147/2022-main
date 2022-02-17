@@ -112,6 +112,8 @@ public class ShooterSubsystem extends SubsystemBase {
   }
 
   public void setSpeeds(double lowerSpeed, double upperSpeed) {
+    lowerTargetSpeed = lowerSpeed;
+    upperTargetSpeed = upperSpeed;
     lowerMotor.set(TalonFXControlMode.Velocity, lowerSpeed);
     upperMotor.set(TalonFXControlMode.Velocity, upperSpeed);
   }
