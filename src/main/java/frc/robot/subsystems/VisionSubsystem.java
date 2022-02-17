@@ -27,7 +27,7 @@ public class VisionSubsystem extends SubsystemBase {
   public VisionSubsystem() {}
 
   public double GetRotationVelocityToTarget() {
-    return visionPID.calculate(0, -GetHorizontalOffset());
+    return (IsOnTarget()) ? 0.0 : visionPID.calculate(0, -GetHorizontalOffset());
   }
 
   public boolean IsOnTarget() {
