@@ -4,6 +4,7 @@
 
 package frc.robot.commands.Autonomous;
 
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.TrajectoryConstants;
 import frc.robot.commands.ShootByVisionCommand;
@@ -21,7 +22,9 @@ public class ShootAndTaxiCommand extends SequentialCommandGroup {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
     addCommands(
-      new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0)
+      new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
+      new InstantCommand(() -> drivetrain.resetOdometry(TrajectoryConstants.GO_BACKWARDS_TRAJECTORY.getInitialPose())),
+      AutoDriveBaseCommand.GetCommand(drivetrain, TrajectoryConstants.GO_BACKWARDS_TRAJECTORY)
     );
   }
 }
