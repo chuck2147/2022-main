@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.Constants.ShooterConstants.ShooterState;
@@ -15,7 +14,7 @@ public class VisionAlignCommand extends CommandBase {
   double yDestination = 0;
   double closestPoint = 0;
   ShooterState determineShooterState;
-  private PIDController pid = new PIDController(DrivetrainConstants.VISION_ALIGN_P, DrivetrainConstants.VISION_ALIGN_I, DrivetrainConstants.VISION_ALIGN_D, 0.01);
+  private PIDController pid = new PIDController(VisionConstants.VISION_ALIGN_P, VisionConstants.VISION_ALIGN_I, VisionConstants.VISION_ALIGN_D, 0.01);
 
   public VisionAlignCommand(DrivetrainSubsystem drivetrain, ShooterState shooterState) {
     addRequirements(drivetrain);

@@ -5,7 +5,6 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.AxisTrigger;
 import frc.robot.Controller;
-import frc.robot.subsystems.DrivetrainSubsystem;
 
 
 public class ControllerConstants {
@@ -16,9 +15,9 @@ public class ControllerConstants {
     //---------------------------
     // Driver Controller
     //DRIVER JOYSTICKS
-    public static DoubleSupplier DRIVE_Y = () -> -modifyAxis(driverController.getLeftY()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND;
-    public static DoubleSupplier DRIVE_X =  () -> -modifyAxis(driverController.getLeftX()) * DrivetrainSubsystem.MAX_VELOCITY_METERS_PER_SECOND;
-    public static DoubleSupplier DRIVE_ROTATION = () -> -modifyAxis(driverController.getRightX()) * DrivetrainSubsystem.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+    public static DoubleSupplier DRIVE_Y = () -> -modifyAxis(driverController.getLeftY()) * DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND;
+    public static DoubleSupplier DRIVE_X =  () -> -modifyAxis(driverController.getLeftX()) * DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND;
+    public static DoubleSupplier DRIVE_ROTATION = () -> -modifyAxis(driverController.getRightX()) * DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
 
     //SHOOTER BUTTONS
     public static JoystickButton FRONT_OF_HUB_SHOT = driverController.getButton(Controller.Button.A);

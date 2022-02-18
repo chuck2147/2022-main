@@ -7,7 +7,11 @@ package frc.robot.util;
 /** Add your docs here. */
 public class MathCommon {
 
+    public static boolean WithinTolerance(double checkValue, double acceptedTolerance) {
+        return Math.abs(checkValue) <= acceptedTolerance;
+    }
+
     public static boolean WithinTolerance(double firstValue, double secondValue, double acceptedTolerance) {
-        return Math.abs(firstValue - secondValue) <= acceptedTolerance;
+        return WithinTolerance(firstValue - secondValue, acceptedTolerance);
     }
 }
