@@ -15,6 +15,10 @@ public class VisionConstants {
     // TOLERANCES
     public static final double HORIZONTAL_TOLERANCE_IN_DEGREES = 1;
     public static final double DISTANCE_FROM_TARGET_TOLERANCE_IN_INCHES = 2.0;
+
+    // SPEEDS
+    public static final double FIND_TARGET_SPEED = 0.8;
+
     
     //LIMELIGHT IP: 169.254.66.52
 }
