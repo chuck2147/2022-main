@@ -108,6 +108,6 @@ public class CollectCommand extends CommandBase {
   }
 
   private boolean ReadyToShoot() {
-    return shooter.isUpToSpeed() && (shooter.OverrideVision() || visionSubsystem.IsOnTarget());
+    return shooter.isUpToSpeed();// && (shooter.OverrideVision() || visionSubsystem.IsOnTarget());
   }
 }
