@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -29,8 +30,8 @@ import frc.robot.subsystems.VisionSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
-  private final ClimberSubsystem rightClimber = new ClimberSubsystem(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
-  private final ClimberSubsystem leftClimber = new ClimberSubsystem(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT);
+  private final ClimberSubsystem rightClimber = new ClimberSubsystem(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT, new DigitalInput(ClimberConstants.RIGHT_CLIMBER_LIMITSWITCH_ID));
+  private final ClimberSubsystem leftClimber = new ClimberSubsystem(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT, new DigitalInput(ClimberConstants.LEFT_CLIMBER_LIMITSWITCH_ID));
   private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -62,6 +63,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return new DriveForwardCommand();
+    return new DriveForwardCommand(drivetrain);
   }
 }

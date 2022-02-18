@@ -16,6 +16,8 @@ public final class ClimberConstants{
     //MOTOR ID
     public static int LEFT_CLIMBER_MOTOR_ID = 19;
     public static int RIGHT_CLIMBER_MOTOR_ID = 18;
+    public static int RIGHT_CLIMBER_LIMITSWITCH_ID = 0;
+    public static int LEFT_CLIMBER_LIMITSWITCH_ID = 1;
 
     // PNEUMATIC ID
     public static int CLIMBER_HIGH_AIR_IN = 4;
@@ -29,6 +31,9 @@ public final class ClimberConstants{
     public static double CLIMBER_MOTOR_D = 0;
     public static double CLIMBER_MOTOR_F = 0;
     
+    //Encoder Stopper
+    public static double RIGHT_CLIMBER_ENCODER_TOP = 115801;
+    public static double LEFT_CLIMBER_ENCODER_TOP = -62000;
     
 } 
 
