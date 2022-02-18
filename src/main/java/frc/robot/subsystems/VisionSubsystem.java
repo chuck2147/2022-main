@@ -27,7 +27,23 @@ public class VisionSubsystem extends SubsystemBase {
   public VisionSubsystem() {}
 
   public double GetRotationVelocityToTarget() {
-    return (IsOnTarget()) ? 0.0 : visionPID.calculate(0, -GetHorizontalOffset());
+    var velocity = 0.0;
+    var setPoint = Double.NaN;
+
+    if (Limelight.hasTarget()) {
+      if (!IsOnTarget()) {
+        setPoint = -GetHorizontalOffset();
+      }
+    }
+    else {
+      setPoint = 306.0;
+    }
+
+    if (setPoint != Double.NaN) {
+      velocity = visionPID.calculate(0, setPoint);
+    }
+
+    return velocity;
   }
 
   public boolean IsOnTarget() {
