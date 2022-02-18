@@ -38,7 +38,7 @@ public class ShootByVisionCommand extends CommandBase {
   @Override
   public void initialize() {
     shooterSubsystem.SetOverrideVision(false);
-    setDistance = Double.MIN_NORMAL;
+    setDistance = Double.NaN;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -50,7 +50,7 @@ public class ShootByVisionCommand extends CommandBase {
 
     // See if the distance has changed before setting the wheel speeds.
     // A tolerance for variability is needed since the distance can change within inches from the Limelight even though it is standing still.
-    if (setDistance == Double.MIN_VALUE || !MathCommon.WithinTolerance(distanceToTarget, setDistance, VisionConstants.DISTANCE_FROM_TARGET_TOLERANCE_IN_INCHES)) {
+    if (setDistance == Double.NaN || !MathCommon.WithinTolerance(distanceToTarget, setDistance, VisionConstants.DISTANCE_FROM_TARGET_TOLERANCE_IN_INCHES)) {
       setDistance = distanceToTarget;
 
       var interpolatedDistance = new InterpolatingDouble(setDistance);
