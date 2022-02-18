@@ -7,6 +7,8 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.buttons.ClimberButtons;
@@ -14,6 +16,7 @@ import frc.robot.buttons.DriverButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.ShooterButtons;
 import frc.robot.commands.Autonomous.DriveForwardCommand;
+import frc.robot.commands.Autonomous.ShootAndTaxiCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -36,11 +39,21 @@ public class RobotContainer {
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final ShooterSubsystem shooter = new ShooterSubsystem();
   private final VisionSubsystem vision = new VisionSubsystem();
-  
+
+  private final SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    configureAutoSelector();
+  }
+
+  private void configureAutoSelector() {
+    autoChooser.setDefaultOption("Shoot and Taxi", new ShootAndTaxiCommand(drivetrain, vision, shooter));
+
+
+    SmartDashboard.putData("Auto Selector" , autoChooser);
   }
 
   /**
