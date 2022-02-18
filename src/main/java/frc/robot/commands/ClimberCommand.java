@@ -47,8 +47,8 @@ public class ClimberCommand extends CommandBase {
         }
         //need to continue testing left side of climber, it not working correctly
       } else if (encoderValueTop == ClimberConstants.LEFT_CLIMBER_ENCODER_TOP) {
-        if (-climbSpeedSupplier.getAsDouble() < 0) {
-          speed = -climbSpeedSupplier.getAsDouble();
+        if (climbSpeedSupplier.getAsDouble() < 0) {
+          speed = climbSpeedSupplier.getAsDouble();
         }
       }
     }
@@ -60,12 +60,12 @@ public class ClimberCommand extends CommandBase {
         }
         //need to continue testing left side of climber, it not working correctly
       } else if (encoderValueTop == ClimberConstants.LEFT_CLIMBER_ENCODER_TOP) {
-        if (-climbSpeedSupplier.getAsDouble() > 0) {
-          speed = -climbSpeedSupplier.getAsDouble();
+        if (climbSpeedSupplier.getAsDouble() > 0) {
+          speed = climbSpeedSupplier.getAsDouble();
         }
       }
     }
-    System.out.println(climbSpeedSupplier.getAsDouble());
+    //System.out.println(climbSpeedSupplier.getAsDouble());
     climberSubsystem.runClimber(speed);
   }
 
