@@ -16,8 +16,8 @@ import frc.robot.subsystems.VisionSubsystem;
 public class ShootAndTaxiCommand extends SequentialCommandGroup {
   /** Creates a new ShootAndTaxiCommand. */
   public ShootAndTaxiCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter) {
-    // Add your commands in the addCommands() call, e.g.
-    // addCommands(new FooCommand(), new BarCommand());
+    addRequirements(drivetrain, visionSubsystem, shooter);
+
     addCommands(
       new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0)
     );
