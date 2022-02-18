@@ -4,6 +4,10 @@
 
 package frc.robot.Constants;
 
+import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 /**
@@ -45,26 +49,39 @@ public final class DrivetrainConstants{
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12; 
     public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(135); 
 
-    //LIMELIGHT PIDs 
-    public static final double VISION_ALIGN_P = 0.185;
-    public static final double VISION_ALIGN_I = 0;
-    public static final double VISION_ALIGN_D = 0.005;
-    public static final double VISION_ALIGN_F = 0;
+    //  The formula for calculating the theoretical maximum velocity is:
+    //   <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> * pi
+    //  By default this value is setup for a Mk3 standard module using Falcon500s to drive.
+    //  An example of this constant for a Mk4 L2 module with NEOs to drive is:
+    //   5880.0 / 60.0 / SdsModuleConfigurations.MK4_L2.getDriveReduction() * SdsModuleConfigurations.MK4_L2.getWheelDiameter() * Math.PI
+    /**
+     * The maximum velocity of the robot in meters per second.
+     * <p>
+     * This is a measure of how fast the robot should be able to drive in a straight line.
+     */
+    public static final double MAX_VELOCITY_METERS_PER_SECOND = 6380.0 / 60.0 * //original number 6380/60
+        SdsModuleConfigurations.MK3_STANDARD.getDriveReduction() *
+        SdsModuleConfigurations.MK3_STANDARD.getWheelDiameter() * Math.PI;
+    
+    /**
+    * The maximum angular velocity of the robot in radians per second.
+    * <p>
+    * This is a measure of how fast the robot can rotate in place.
+    */
+    // Here we calculate the theoretical maximum angular velocity. You can also replace this with a measured amount.
+    public static final double MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND = MAX_VELOCITY_METERS_PER_SECOND /
+        Math.hypot(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0);
 
-    public static final class AutoConstants {
-        public static final double kMaxSpeedMetersPerSecond = 3;
-        public static final double kMaxAccelerationMetersPerSecondSquared = 3;
-        public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
-        public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-    
-        public static final double kPXController = 0;
-        public static final double kPYController = 0;
-        public static final double kPThetaController = 0;
-    
-        // Constraint for the motion profilied robot angle controller
-        public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
-            new TrapezoidProfile.Constraints(
-                kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
-      }
+    public static final SwerveDriveKinematics DRIVE_KINEMATICS = new SwerveDriveKinematics(
+        // Front left
+        new Translation2d(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        // Front right
+        new Translation2d(DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        // Back left
+        new Translation2d(-DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0),
+        // Back right
+        new Translation2d(-DrivetrainConstants.DRIVETRAIN_TRACKWIDTH_METERS / 2.0, -DrivetrainConstants.DRIVETRAIN_WHEELBASE_METERS / 2.0)
+    );
+
 } 
 

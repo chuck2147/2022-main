@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionConstants;
+import frc.robot.util.MathCommon;
 import frc.robot.util.vision.Limelight;
 
 public class VisionSubsystem extends SubsystemBase {
@@ -27,20 +28,19 @@ public class VisionSubsystem extends SubsystemBase {
   public VisionSubsystem() {}
 
   public double GetRotationVelocityToTarget() {
+    // When we have the target in sight, use PID to fine tune the turning.
+    // Otherwise, spin the robot at FIND_TARGET_SPEED until we get in range of the target.
+    // If we are on target, then set velocity to zero to stop moving.
+    
     var velocity = 0.0;
-    var setPoint = Double.NaN;
 
     if (Limelight.hasTarget()) {
       if (!IsOnTarget()) {
-        setPoint = -GetHorizontalOffset();
+        velocity = visionPID.calculate(0, -GetHorizontalOffset());
       }
     }
     else {
-      setPoint = 306.0;
-    }
-
-    if (setPoint != Double.NaN) {
-      velocity = visionPID.calculate(0, setPoint);
+      velocity = VisionConstants.FIND_TARGET_SPEED;
     }
 
     return velocity;
@@ -49,7 +49,7 @@ public class VisionSubsystem extends SubsystemBase {
   public boolean IsOnTarget() {
     double horizontalOffset = GetHorizontalOffset();
 
-    return Math.abs(horizontalOffset) <= VisionConstants.HORIZONTAL_TOLERANCE_IN_DEGREES;
+    return MathCommon.WithinTolerance(horizontalOffset, VisionConstants.HORIZONTAL_TOLERANCE_IN_DEGREES);
   }
   
   public double GetDistanceToTarget() {
