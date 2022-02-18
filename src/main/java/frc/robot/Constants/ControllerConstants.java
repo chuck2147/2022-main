@@ -36,7 +36,7 @@ public class ControllerConstants {
     // Operator Controller
 
     //CLIMBER BUTTONS
-    public static DoubleSupplier CLIMB_RIGHT_AXIS = () -> operatorController.getRightY();
+    public static DoubleSupplier CLIMB_RIGHT_AXIS = () -> -operatorController.getRightY();
     public static DoubleSupplier CLIMB_LEFT_AXIS = () -> operatorController.getLeftY();
     //INTAKE BUTTONS
     public static AxisTrigger RUN_INTAKE_REVERSE = new AxisTrigger(operatorController, 2);

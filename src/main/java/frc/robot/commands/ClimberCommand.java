@@ -7,6 +7,7 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 
@@ -15,11 +16,14 @@ public class ClimberCommand extends CommandBase {
   private final ClimberSubsystem climberSubsystem;
   private final DoubleSupplier climbSpeedSupplier;
   private final IntakeSubsystem intakeSubsystem;
+  private final double encoderValueTop;
+  
 
-  public ClimberCommand(ClimberSubsystem subsystem, IntakeSubsystem intake, DoubleSupplier speedSupplier) {
+  public ClimberCommand(ClimberSubsystem subsystem, IntakeSubsystem intake, DoubleSupplier speedSupplier, double encoderValueTop) {
     climberSubsystem = subsystem;
     climbSpeedSupplier = speedSupplier;
     intakeSubsystem = intake;
+    this.encoderValueTop = encoderValueTop;
     addRequirements(climberSubsystem);
   }
 
@@ -35,19 +39,33 @@ public class ClimberCommand extends CommandBase {
       intakeSubsystem.retractIntake();
     }
 
-    // if (climberSubsystem.getClimberEncoderValue() >= 10000){
-    //   speed = 0;
-    //   if (climbSpeedSupplier.getAsDouble() < 0) {
-    //     speed = climbSpeedSupplier.getAsDouble();
-    //   }
-    // }
-    // if (climberSubsystem.getClimberEncoderValue() <= 0) {
-    //   speed = 0;
-    //   if (climbSpeedSupplier.getAsDouble() > 0) {
-    //     speed = climbSpeedSupplier.getAsDouble();
-    //   }
-    // }
-    System.out.println(climberSubsystem.getClimberEncoderValue());
+    if (Math.abs(climberSubsystem.getEncoderValue()) >= Math.abs(encoderValueTop)){
+      speed = 0;
+      if(encoderValueTop == ClimberConstants.RIGHT_CLIMBER_ENCODER_TOP) {
+        if (climbSpeedSupplier.getAsDouble() < 0) {
+          speed = climbSpeedSupplier.getAsDouble();
+        }
+        //need to continue testing left side of climber, it not working correctly
+      } else if (encoderValueTop == ClimberConstants.LEFT_CLIMBER_ENCODER_TOP) {
+        if (-climbSpeedSupplier.getAsDouble() < 0) {
+          speed = -climbSpeedSupplier.getAsDouble();
+        }
+      }
+    }
+    if (Math.abs(climberSubsystem.getEncoderValue()) == 0) {
+      speed = 0;
+      if (encoderValueTop == ClimberConstants.RIGHT_CLIMBER_ENCODER_TOP) {
+        if (climbSpeedSupplier.getAsDouble() > 0) {
+          speed = climbSpeedSupplier.getAsDouble();
+        }
+        //need to continue testing left side of climber, it not working correctly
+      } else if (encoderValueTop == ClimberConstants.LEFT_CLIMBER_ENCODER_TOP) {
+        if (-climbSpeedSupplier.getAsDouble() > 0) {
+          speed = -climbSpeedSupplier.getAsDouble();
+        }
+      }
+    }
+    System.out.println(climbSpeedSupplier.getAsDouble());
     climberSubsystem.runClimber(speed);
   }
 
