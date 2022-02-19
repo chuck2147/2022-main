@@ -6,6 +6,8 @@ package frc.robot.Constants;
 
 import java.util.List;
 
+import org.opencv.core.Mat;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -25,9 +27,9 @@ public class TrajectoryConstants {
     public static final Trajectory GO_BACKWARDS_TRAJECTORY = TrajectoryGenerator.generateTrajectory(
         new Pose2d(0, 0, new Rotation2d(0)),
         List.of(
-                new Translation2d(-0.75, 0)
+                new Translation2d(-2, 0)
         ),
-        new Pose2d(-0.75, 0, new Rotation2d(0)),
+        new Pose2d(-2, 0, new Rotation2d(Math.PI/2)),
         trajectoryConfig);
 
 
