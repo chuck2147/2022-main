@@ -22,6 +22,8 @@ public class ShootAndTaxiCommand extends SequentialCommandGroup {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
     var trajectory = TrajectoryConstants.GO_BACKWARDS_TRAJECTORY;
+    var time = trajectory.getTotalTimeSeconds();
+    var states = trajectory.getStates();
 
     addCommands(
       //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
