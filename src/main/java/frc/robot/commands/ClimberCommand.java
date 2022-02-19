@@ -41,8 +41,6 @@ public class ClimberCommand extends CommandBase {
     if (speed != 0) {
       intakeSubsystem.retractIntake();
     }
-
-    climberSubsystem.setClimberPiston(speed);
     
     if (Math.abs(climberSubsystem.getEncoderValue()) >= Math.abs(encoderValueTop)){
       speed = 0;
@@ -72,6 +70,7 @@ public class ClimberCommand extends CommandBase {
     }
     //System.out.println(climbSpeedSupplier.getAsDouble());
     climberSubsystem.runClimber(speed);
+    climberSubsystem.setClimberPiston(speed);
   }
 
   // Called once the command ends or is interrupted.
