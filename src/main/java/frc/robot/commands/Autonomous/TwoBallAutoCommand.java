@@ -7,8 +7,10 @@ package frc.robot.commands.Autonomous;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.TrajectoryConstants;
+import frc.robot.commands.ExtendIntakeCommand;
 import frc.robot.commands.ShootByVisionCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -16,15 +18,18 @@ import frc.robot.subsystems.VisionSubsystem;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
-public class ShootAndTaxiCommand extends SequentialCommandGroup {
+
+public class TwoBallAutoCommand extends SequentialCommandGroup {
   /** Creates a new ShootAndTaxiCommand. */
-  public ShootAndTaxiCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter) {
+  public TwoBallAutoCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake) {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
     addCommands(
-      //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
-      new InstantCommand(() -> drivetrain.resetOdometry(TrajectoryConstants.GO_BACKWARDS_TRAJECTORY.getInitialPose())),
-      AutoDriveBaseCommand.GetCommand(drivetrain, TrajectoryConstants.GO_BACKWARDS_TRAJECTORY)
+      new ExtendIntakeCommand(intake),
+      new InstantCommand(() -> drivetrain.resetOdometry(TrajectoryConstants.TWO_BALL_AUTO_1_TRAJECTORY.getInitialPose())), 
+      AutoDriveBaseCommand.GetCommand(drivetrain, TrajectoryConstants.TWO_BALL_AUTO_1_TRAJECTORY),
+      AutoDriveBaseCommand.GetCommand(drivetrain, TrajectoryConstants.TWO_BALL_AUTO_2_TRAJECTORY),
+      new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0)
     );
   }
 }
