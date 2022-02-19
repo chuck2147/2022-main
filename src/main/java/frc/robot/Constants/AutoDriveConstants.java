@@ -8,8 +8,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 /** Add your docs here. */
 public class AutoDriveConstants {
-    public static final double kMaxSpeedMetersPerSecond = DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND / 4;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxSpeedMetersPerSecond = DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND / 3;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 3.5;
 
     public static final double kMaxAngularSpeedRadiansPerSecond = DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 10;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 4;
