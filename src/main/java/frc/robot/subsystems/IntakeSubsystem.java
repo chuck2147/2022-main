@@ -34,6 +34,15 @@ public class IntakeSubsystem extends SubsystemBase {
     motorSpeed = IntakeConstants.INTAKE_MOTOR_SPEED;
   }
 
+  public void stopIntake() {
+    motorSpeed = 0;
+  }
+
+  public void stopAndRetractIntake() {
+    stopIntake();
+    retractIntake();
+  }
+
   public void extendIntake() {
     intakeRightPiston.set(Value.kForward);
     intakeLeftPiston.set(Value.kForward);

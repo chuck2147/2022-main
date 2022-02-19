@@ -96,7 +96,7 @@ public class CollectCommand extends CommandBase {
         indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, 0);
         break;
       case FeedToShooter:
-        intake.retractIntake();
+        intake.stopAndRetractIntake();
         indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, IndexerConstants.UPPER_MOTOR_SPEED_SHOOTING);
         break;
     }

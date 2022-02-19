@@ -58,8 +58,8 @@ public class ShooterSubsystem extends SubsystemBase {
     upperMotor.setNeutralMode(NeutralMode.Coast);
     lowerMotor.setNeutralMode(NeutralMode.Coast);
   
-    upperMotor.setInverted(TalonFXInvertType.CounterClockwise);
-    lowerMotor.setInverted(TalonFXInvertType.CounterClockwise);
+    upperMotor.setInverted(TalonFXInvertType.Clockwise);
+    lowerMotor.setInverted(TalonFXInvertType.Clockwise);
 
     // "full output" will now scale to 12 Volts for all control modes when enabled.
     upperMotor.configVoltageCompSaturation(12);
