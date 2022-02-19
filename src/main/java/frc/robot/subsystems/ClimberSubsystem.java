@@ -43,6 +43,14 @@ public class ClimberSubsystem extends SubsystemBase {
     return climberMotor.getSelectedSensorPosition() - encoderOffset;
   }
   
+  public void setClimberPiston(double climbSpeed){
+    if (Math.abs(climbSpeed) < 0.01) {
+      climbPiston.set(Value.kReverse);
+    }
+    else {
+      climbPiston.set(Value.kForward);
+    }
+  }
   @Override
   public void periodic() { 
     if(!limitSwitch.get()) {
