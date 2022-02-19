@@ -13,6 +13,9 @@ import frc.robot.Constants.IntakeConstants;
 public class IntakeSubsystem extends SubsystemBase {
   TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_MOTOR_ID);
   double motorSpeed = 0;
+  boolean runIntake = false;
+
+
   PneumaticsModuleType intakeLeftModuleType = PneumaticsModuleType.REVPH;
   PneumaticsModuleType intakeRightModuleType = PneumaticsModuleType.REVPH;
   private final DoubleSolenoid intakeLeftPiston = new DoubleSolenoid(intakeLeftModuleType,
@@ -24,6 +27,18 @@ public class IntakeSubsystem extends SubsystemBase {
     intakeMotor.setNeutralMode(NeutralMode.Coast);
 
     intakeMotor.setInverted(false);
+  }
+
+  public boolean getRunIntake() {
+    return runIntake;
+  }
+
+  public void runIntake() {
+    runIntake = true;  
+}
+
+  public void stopIntake() {
+    runIntake = false; 
   }
 
   public void runIntakeForward() {
