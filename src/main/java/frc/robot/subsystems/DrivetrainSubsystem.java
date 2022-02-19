@@ -175,6 +175,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     
      return new Pose2d(translation.getX(), translation.getY(), rotation);
   }
+  public void resetOdometry(Pose2d pose){
+    m_odometry.resetPosition(pose, getGyroscopeRotation());
+  }
 
   /**
    * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
