@@ -37,10 +37,6 @@ public class IntakeSubsystem extends SubsystemBase {
     runIntake = true;  
 }
 
-  public void stopIntake() {
-    runIntake = false; 
-  }
-
   public void runIntakeForward() {
     motorSpeed = -IntakeConstants.INTAKE_MOTOR_SPEED;
   }
@@ -51,6 +47,7 @@ public class IntakeSubsystem extends SubsystemBase {
 
   public void stopIntake() {
     motorSpeed = 0;
+    runIntake = false; 
   }
 
   public void stopAndRetractIntake() {
