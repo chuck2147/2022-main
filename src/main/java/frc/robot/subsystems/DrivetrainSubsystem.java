@@ -6,8 +6,9 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
 import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
-import com.swervedrivespecialties.swervelib.SdsModuleConfigurations;
+import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
+import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -63,15 +64,12 @@ public class DrivetrainSubsystem extends SubsystemBase {
     //Starting Postition and Angle
     m_pose);
 
-  // FIXME Uncomment if you are using a NavX
-//  private final AHRS m_navx = new AHRS(SPI.Port.kMXP, (byte) 200); // NavX connected over MXP
 
   // These are our modules. We initialize them in the constructor.
   private final SwerveModule m_frontLeftModule;
   private final SwerveModule m_frontRightModule;
   private final SwerveModule m_backLeftModule;
   private final SwerveModule m_backRightModule;
-
 
   private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
 
@@ -112,13 +110,16 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     // By default we will use Falcon 500s in standard configuration. But if you use a different configuration or motors
     // you MUST change it. If you do not, your code will crash on startup.
-    m_frontLeftModule = Mk3SwerveModuleHelper.createFalcon500(
+
+    GearRatio swerveGearRatio = Mk4SwerveModuleHelper.GearRatio.L2; //Mk3SwerveModuleHelper.GearRatio.STANDARD
+
+    m_frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
             // This parameter is optional, but will allow you to see the current state of the module on the dashboard.
             tab.getLayout("Front Left Module", BuiltInLayouts.kList)
                     .withSize(2, 4)
                     .withPosition(0, 0),
             // This can either be STANDARD or FAST depending on your gear configuration
-            Mk3SwerveModuleHelper.GearRatio.STANDARD,
+            swerveGearRatio,
             // This is the ID of the drive motor
             DrivetrainConstants.FRONT_LEFT_MODULE_DRIVE_MOTOR,
             // This is the ID of the steer motor
@@ -130,33 +131,33 @@ public class DrivetrainSubsystem extends SubsystemBase {
     );
 
     // We will do the same for the other modules
-    m_frontRightModule = Mk3SwerveModuleHelper.createFalcon500(
+    m_frontRightModule = Mk4SwerveModuleHelper.createFalcon500(
             tab.getLayout("Front Right Module", BuiltInLayouts.kList)
                     .withSize(2, 4)
                     .withPosition(2, 0),
-            Mk3SwerveModuleHelper.GearRatio.STANDARD,
+            swerveGearRatio,
             DrivetrainConstants.FRONT_RIGHT_MODULE_DRIVE_MOTOR,
             DrivetrainConstants.FRONT_RIGHT_MODULE_STEER_MOTOR,
             DrivetrainConstants.FRONT_RIGHT_MODULE_STEER_ENCODER,
             DrivetrainConstants.FRONT_RIGHT_MODULE_STEER_OFFSET
     );
 
-    m_backLeftModule = Mk3SwerveModuleHelper.createFalcon500(
+    m_backLeftModule = Mk4SwerveModuleHelper.createFalcon500(
             tab.getLayout("Back Left Module", BuiltInLayouts.kList)
                     .withSize(2, 4)
                     .withPosition(4, 0),
-            Mk3SwerveModuleHelper.GearRatio.STANDARD,
+            swerveGearRatio,
             DrivetrainConstants.BACK_LEFT_MODULE_DRIVE_MOTOR,
             DrivetrainConstants.BACK_LEFT_MODULE_STEER_MOTOR,
             DrivetrainConstants.BACK_LEFT_MODULE_STEER_ENCODER,
             DrivetrainConstants.BACK_LEFT_MODULE_STEER_OFFSET
     );
 
-    m_backRightModule = Mk3SwerveModuleHelper.createFalcon500(
+    m_backRightModule = Mk4SwerveModuleHelper.createFalcon500(
             tab.getLayout("Back Right Module", BuiltInLayouts.kList)
                     .withSize(2, 4)
                     .withPosition(6, 0),
-            Mk3SwerveModuleHelper.GearRatio.STANDARD,
+            swerveGearRatio,
             DrivetrainConstants.BACK_RIGHT_MODULE_DRIVE_MOTOR,
             DrivetrainConstants.BACK_RIGHT_MODULE_STEER_MOTOR,
             DrivetrainConstants.BACK_RIGHT_MODULE_STEER_ENCODER,
