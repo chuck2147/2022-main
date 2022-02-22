@@ -47,8 +47,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   // FIXME Remove if you are using a Pigeon
   private final PigeonIMU m_pigeon = new PigeonIMU(DrivetrainConstants.DRIVETRAIN_PIGEON_ID);
   private Pose2d m_pose = new Pose2d(0, 0, new Rotation2d());
-  private final double SCALE_X = -1/0.9;
-  private final double SCALE_Y = -1/0.9;
+  private final double SCALE_X = 1; // -1/0.9;
+  private final double SCALE_Y = 1; // -1/0.9;
   double length = 19;
   double width = 20;
   private final NetworkTableInstance nt = NetworkTableInstance.getDefault();
@@ -177,6 +177,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
   public void resetOdometry(Pose2d pose){
     m_odometry.resetPosition(pose, getGyroscopeRotation());
+    m_pose = pose;
   }
 
   /**

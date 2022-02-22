@@ -46,7 +46,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    configureAutoSelector();
+    //configureAutoSelector();
   }
 
   private void configureAutoSelector() {
@@ -77,5 +77,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return new DriveForwardCommand(drivetrain);
+    //return autoChooser.getSelected();
   }
 }
