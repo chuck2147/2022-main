@@ -13,6 +13,9 @@
       "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
       "/LiveWindow/Ungrouped/PIDController[4]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[5]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[6]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[7]": "PIDController",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/VisionSubsystem": "Subsystem",
       "/SmartDashboard/Auto Selector": "String Chooser",
@@ -29,6 +32,14 @@
           "visible": true
         }
       }
+    }
+  },
+  "NetworkTables": {
+    "pathFollowing": {
+      "current": {
+        "open": true
+      },
+      "open": true
     }
   }
 }

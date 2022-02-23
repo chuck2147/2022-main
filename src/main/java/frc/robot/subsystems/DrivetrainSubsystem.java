@@ -82,6 +82,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     
     resetGyroscope();
     resetPose(new Vector2d(0,0), new Rotation2d(0));
+
     // Run resetPost on another Thread and delay for 1 second so Gyroscope is done calibrating on startup.
     // new Thread(() -> {
     //   try {
@@ -168,6 +169,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
             DrivetrainConstants.BACK_RIGHT_MODULE_STEER_ENCODER,
             DrivetrainConstants.BACK_RIGHT_MODULE_STEER_OFFSET
     );
+    
+    SetStateFromSpeeds(new ChassisSpeeds(0.0, 0.0, 0.0));
   }
 
   public Pose2d getPose() {
@@ -175,8 +178,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public Pose2d getScaledPose() {
-     m_pose = getPose();
      final var translation = new Translation2d(m_pose.getX() * SCALE_X, m_pose.getY() * SCALE_Y);
+     //final var translation = new Translation2d(m_pose.getY() * SCALE_Y, m_pose.getX() * SCALE_X);
      final var rotation = m_pose.getRotation().rotateBy(new Rotation2d(0));
     
      return new Pose2d(translation.getX(), translation.getY(), rotation);
@@ -239,21 +242,25 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void drive(double xDriveSpeed, double yDriveSpeed, double rotationSpeed) {
-    m_chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+    var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
       xDriveSpeed,
       yDriveSpeed,
       rotationSpeed,
       getGyroscopeRotation()
     );
+
+    SetStateFromSpeeds(chassisSpeeds);
   }
 
   public void driveRobotCentric(double xDriveSpeed, double yDriveSpeed, double rotationSpeed) {
     // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
-    m_chassisSpeeds = new ChassisSpeeds(
+    var chassisSpeeds = new ChassisSpeeds(
       xDriveSpeed,
       yDriveSpeed,
       rotationSpeed
     );
+
+    SetStateFromSpeeds(chassisSpeeds);
   }
 
   public void setModuleStates(SwerveModuleState[] states) {
@@ -267,15 +274,21 @@ public class DrivetrainSubsystem extends SubsystemBase {
     m_pose = m_odometry.update(getGyroscopeRotation(), states[0], states[1], states[2], states[3]);
   }
 
+
   @Override
   public void periodic() {
-    SwerveModuleState[] states = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(m_chassisSpeeds);
-    setModuleStates(states);
+    //SwerveModuleState[] states = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(m_chassisSpeeds);
+    //setModuleStates(states);
     updatePoseNT();
-    m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
+    //m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
     //System.out.println(getGyroscopeRotation());
 
     // Also update the Field2D object (so that we can visualize this in sim)
     field.setRobotPose(getPose());
+  }
+
+  private void SetStateFromSpeeds(ChassisSpeeds chassisSpeeds) {
+    SwerveModuleState[] states = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    setModuleStates(states);
   }
 }

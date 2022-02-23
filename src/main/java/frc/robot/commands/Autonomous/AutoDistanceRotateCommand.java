@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.AutoDriveConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.util.MathCommon;
 
 public class AutoDistanceRotateCommand extends CommandBase {
   
@@ -22,6 +23,7 @@ public class AutoDistanceRotateCommand extends CommandBase {
   private double xDistance;
   private double yDistance;
   private double rotationInDegrees;
+  private boolean doneDriving = false;
 
   private PIDController pid_X = new PIDController(AutoDriveConstants.kPXController, AutoDriveConstants.kIXController, AutoDriveConstants.kDXController);
   private PIDController pid_Y = new PIDController(AutoDriveConstants.kPYController, AutoDriveConstants.kIYController, AutoDriveConstants.kDYController);
@@ -42,6 +44,7 @@ public class AutoDistanceRotateCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    doneDriving = false;
     initialPose = drivetrain.getPose();
 
     finalPose = initialPose.plus(new Transform2d(new Translation2d(xDistance, yDistance), Rotation2d.fromDegrees(rotationInDegrees)));
@@ -58,6 +61,8 @@ public class AutoDistanceRotateCommand extends CommandBase {
     final var rotationResult = rotationController.calculate(currentPose.getRotation().getRadians(), finalPose.getRotation().getRadians());
 
     drivetrain.driveRobotCentric(setVelocityX, setVelocityY, rotationResult);
+
+    doneDriving = (setVelocityX == 0 && setVelocityY == 0 && rotationResult == 0);
   }
 
   // Called once the command ends or is interrupted.
@@ -69,16 +74,19 @@ public class AutoDistanceRotateCommand extends CommandBase {
   @Override
   public boolean isFinished() {
 
-    var done = finalPose.equals(drivetrain.getPose());
+    if (!doneDriving) {
+      doneDriving = finalPose.equals(drivetrain.getPose());
 
-    if (!done) {
-      var diff = finalPose.minus(drivetrain.getPose());
+      if (!doneDriving) {
+        var diff = finalPose.minus(drivetrain.getPose());
 
-      done = (Math.abs(diff.getX()) >= xDistance) &&
-              (Math.abs(diff.getY()) >= yDistance) &&
-              (Math.abs(diff.getRotation().getDegrees()) >= rotationInDegrees);
+        var tolerance = 0.005;
+        doneDriving = MathCommon.WithinTolerance(diff.getX(), tolerance) &&
+                      MathCommon.WithinTolerance(diff.getY(), tolerance) &&
+                      MathCommon.WithinTolerance(diff.getRotation().getDegrees(), 1);
+      }
     }
 
-    return done;
+    return doneDriving;
   }
 }
