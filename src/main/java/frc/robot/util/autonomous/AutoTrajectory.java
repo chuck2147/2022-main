@@ -31,6 +31,12 @@ public class AutoTrajectory {
     private static List<Translation2d> emptyWaypoints = List.of();
 
     public static Trajectory GoStraight(double startMeters, double endMeters) {
+        
+        if (endMeters < 0) {
+            trajectoryConfig.setReversed(true);
+            endMeters = Math.abs(endMeters);
+        }
+
         return TrajectoryGenerator.generateTrajectory(
             new Pose2d(startMeters, 0, new Rotation2d(0)),
             List.of(

@@ -4,13 +4,14 @@
 
 package frc.robot.commands.Autonomous;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ShootByVisionCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import frc.robot.util.autonomous.AutoTrajectory;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -21,12 +22,12 @@ public class ShootAndTaxiCommand extends SequentialCommandGroup {
   public ShootAndTaxiCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter) {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
-    var trajectory = AutoTrajectory.GoStraight(0, 2);
+    var startPose = new Pose2d(0, 0, new Rotation2d(0));
 
     addCommands(
       //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
-      new InstantCommand(() -> drivetrain.resetOdometry(trajectory.getInitialPose())),
-      AutoDriveBaseCommand.GetCommand(drivetrain, trajectory)
+      new InstantCommand(() -> drivetrain.resetOdometry(startPose)),
+      new AutoDistanceRotateCommand(drivetrain, 0, -2, 0)
     );
   }
 }
