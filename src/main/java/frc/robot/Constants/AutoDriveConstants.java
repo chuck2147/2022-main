@@ -14,15 +14,17 @@ public class AutoDriveConstants {
     public static final double kMaxAngularSpeedRadiansPerSecond = DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 10;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 4;
 
-    public static final double kPXController = 1.5;
+    public static final double kPXController = 0.1;
     public static final double kIXController = 0;
     public static final double kDXController = 0;
 
-    public static final double kPYController = 1.5;
+    public static final double kPYController = 0.1;
     public static final double kIYController = 0;
     public static final double kDYController = 0;
 
-    public static final double kPThetaController = 3;
+    public static final double kPThetaController = 0.185;
+    public static final double kIThetaController = 0;
+    public static final double kDThetaController = 0.005;
 
     // Constraint for the motion profilied robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
