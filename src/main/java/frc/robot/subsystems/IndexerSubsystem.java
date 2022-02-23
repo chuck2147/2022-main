@@ -7,6 +7,8 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
+import frc.robot.subsystems.ShooterSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class IndexerSubsystem extends SubsystemBase {
   private AnalogInput irLower = new AnalogInput(IndexerConstants.LOWER_IR_ID);
@@ -42,13 +44,5 @@ public class IndexerSubsystem extends SubsystemBase {
 
   public boolean isUpperTriggered() {
     return irUpper.getVoltage() > IndexerConstants.HOPPER_IR_VOLTAGE;
-  }
-
-  @Override
-  public void periodic() {
-    lowerMotor.set(ControlMode.PercentOutput, lowerSpeed);
-    upperMotor.set(ControlMode.PercentOutput, upperSpeed);
-    lowerSpeed = 0;
-    upperSpeed = 0;
   }
 }
