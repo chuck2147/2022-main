@@ -40,8 +40,8 @@ public final class ShooterConstants{
     public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(-250, "Front of Hub Upper");
     public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(13000, "Front of Hub Lower");
 
-    public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(5500, "Behind Tarmac Upper");
-    public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(5000, "Behind Tarmac Lower");
+    public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(6000, "Behind Tarmac Upper");
+    public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(4600, "Behind Tarmac Lower");
     
     public static final NTValue LAUNCH_PAD_UPPER = new NTValue(12000, "Launch Pad Upper"); 
     public static final NTValue LAUNCH_PAD_LOWER = new NTValue(3000, "Launch Pad Lower"); 
@@ -54,7 +54,7 @@ public final class ShooterConstants{
 
     //SHOOTER DISTANCE - from edge of Hub to Limelight - in Inches
     public static final double FRONT_OF_HUB_DISTANCE = 36;
-    public static final double BEHIND_TARMAC_DISTANCE = 106;
+    public static final double BEHIND_TARMAC_DISTANCE = 120.8;
     public static final double LAUNCH_PAD_DISTANCE = 203;
     public static final double CHUCK_IT_DISTANCE = 0;
 
@@ -78,8 +78,12 @@ public final class ShooterConstants{
         setShooterSpeedMap(LAUNCH_PAD_DISTANCE, LAUNCH_PAD_LOWER.value, LAUNCH_PAD_UPPER.value);
 
         //---------------
-        // Add more shot points here.        
-        setShooterSpeedMap(57.4, 7250.0, 3000.0);
+        // Add more shot points here.       
+        setShooterSpeedMap(67, 7250.0, 3000.0);  
+        setShooterSpeedMap(96.4, 5500, 5000);       
+        setShooterSpeedMap(169, 3900, 8750.0);
+
+
         setShooterSpeedMap(73.1, 6500.0, 3500.0);
         setShooterSpeedMap(173.4, 3250.0, 15000.0);
     }  

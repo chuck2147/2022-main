@@ -29,7 +29,7 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
 
     var endMeters = 2.0;
     var goStraightTrajectory = AutoTrajectory.GoStraight(0, endMeters);
-    var rotateTrajectory = AutoTrajectory.RotateInPlace(endMeters, 180);
+    //var rotateTrajectory = AutoTrajectory.RotateInPlace(endMeters, 180);
 
     addCommands(
       new ExtendIntakeCommand(intake),
@@ -38,7 +38,7 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
         new CollectCommand(indexer, intake, shooter, visionSubsystem),
         new SequentialCommandGroup(
           AutoDriveBaseCommand.GetCommand(drivetrain, goStraightTrajectory),
-          AutoDriveBaseCommand.GetCommand(drivetrain, rotateTrajectory),
+          //AutoDriveBaseCommand.GetCommand(drivetrain, rotateTrajectory),
           new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0)
         )
       )

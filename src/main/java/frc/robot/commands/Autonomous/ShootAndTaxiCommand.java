@@ -21,9 +21,7 @@ public class ShootAndTaxiCommand extends SequentialCommandGroup {
   public ShootAndTaxiCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter) {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
-    var trajectory = AutoTrajectory.GoStraight(0, -2);
-    var time = trajectory.getTotalTimeSeconds();
-    var states = trajectory.getStates();
+    var trajectory = AutoTrajectory.GoStraight(0, 2);
 
     addCommands(
       //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
