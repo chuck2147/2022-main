@@ -6,7 +6,6 @@ package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ShootByVisionCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -25,9 +24,9 @@ public class ShootAndTaxiCommand extends SequentialCommandGroup {
     var startPose = new Pose2d(0, 0, new Rotation2d(0));
 
     addCommands(
+      new ResetOdemetryCommand(drivetrain, startPose),
       //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
-      new InstantCommand(() -> drivetrain.resetOdometry(startPose)),
-      new AutoDistanceRotateCommand(drivetrain, 0, -2, 0)
+      new AutoDistanceRotateCommand(drivetrain, 0, -1.5, 0)
     );
   }
 }
