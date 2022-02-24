@@ -4,9 +4,13 @@
 
 package frc.robot.commands.Autonomous;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.PathPlannerTrajectory;
+
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.AutoPathConstants;
 import frc.robot.commands.CollectCommand;
 import frc.robot.commands.ExtendIntakeCommand;
 import frc.robot.commands.ShootByVisionCommand;
@@ -27,21 +31,24 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
   public TwoBallAutoCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake, IndexerSubsystem indexer) {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
-    var endMeters = 2.0;
-    var goStraightTrajectory = AutoTrajectory.GoStraight(0, endMeters);
-    var rotateTrajectory = AutoTrajectory.RotateInPlace(endMeters, 180);
+    PathPlannerTrajectory pathTrajectory = PathPlanner.loadPath("2 Ball", AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
     addCommands(
-      new ExtendIntakeCommand(intake),
-      new InstantCommand(() -> drivetrain.resetOdometry(goStraightTrajectory.getInitialPose())), 
-      new ParallelCommandGroup(
-        new CollectCommand(indexer, intake, shooter, visionSubsystem),
-        new SequentialCommandGroup(
-          AutoDriveBaseCommand.GetCommand(drivetrain, goStraightTrajectory),
-          AutoDriveBaseCommand.GetCommand(drivetrain, rotateTrajectory),
-          new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0)
-        )
-      )
+      new ResetOdemetryCommand(drivetrain, pathTrajectory.getInitialPose()),
+      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
     );
+
+    // addCommands(
+    //   new ExtendIntakeCommand(intake),
+    //   new InstantCommand(() -> drivetrain.resetOdometry(goStraightTrajectory.getInitialPose())), 
+    //   new ParallelCommandGroup(
+    //     new CollectCommand(indexer, intake, shooter, visionSubsystem),
+    //     new SequentialCommandGroup(
+    //       AutoDriveBaseCommand.GetCommand(drivetrain, goStraightTrajectory),
+    //       AutoDriveBaseCommand.GetCommand(drivetrain, rotateTrajectory),
+    //       new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0)
+    //     )
+    //   )
+    // );
   }
 }
