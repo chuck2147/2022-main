@@ -2,7 +2,7 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Autonomous.Routines;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
@@ -14,6 +14,8 @@ import frc.robot.Constants.AutoPathConstants;
 import frc.robot.commands.CollectCommand;
 import frc.robot.commands.ExtendIntakeCommand;
 import frc.robot.commands.ShootByVisionCommand;
+import frc.robot.commands.Autonomous.AutoPathPlanCommand;
+import frc.robot.commands.Autonomous.ResetOdometryCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;

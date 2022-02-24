@@ -2,14 +2,20 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Autonomous.Routines;
 
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
+import frc.robot.commands.ShootByVisionCommand;
+import frc.robot.commands.Autonomous.AutoPathPlanCommand;
+import frc.robot.commands.Autonomous.AutoShootCommand;
+import frc.robot.commands.Autonomous.ResetOdometryCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -19,14 +25,14 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class ShootAndTaxiPathCommand extends SequentialCommandGroup {
   /** Creates a new ShootAndTaxiCommand. */
-  public ShootAndTaxiPathCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter) {
+  public ShootAndTaxiPathCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake, IndexerSubsystem indexer) {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
     PathPlannerTrajectory pathTrajectory = PathPlanner.loadPath("Taxi", AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared, true);
     
     addCommands(
-      new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0),
+      new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),      
+      //new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
     );
   }
