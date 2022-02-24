@@ -23,10 +23,9 @@ public class ShootAndTaxiPathCommand extends SequentialCommandGroup {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
     PathPlannerTrajectory pathTrajectory = PathPlanner.loadPath("Taxi", AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared, true);
-    //drivetrain.resetOdometry(pathTrajectory.getInitialPose());
-
+    
     addCommands(
-      new ResetOdemetryCommand(drivetrain, pathTrajectory.getInitialPose()),
+      new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
       //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
     );

@@ -19,7 +19,6 @@ import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import frc.robot.util.autonomous.AutoTrajectory;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -34,7 +33,7 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
     PathPlannerTrajectory pathTrajectory = PathPlanner.loadPath("2 Ball", AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
     addCommands(
-      new ResetOdemetryCommand(drivetrain, pathTrajectory.getInitialPose()),
+      new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
     );
 
