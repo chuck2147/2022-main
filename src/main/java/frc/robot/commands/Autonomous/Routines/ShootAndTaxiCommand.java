@@ -2,13 +2,17 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands.Autonomous;
+package frc.robot.commands.Autonomous.Routines;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.ShootByVisionCommand;
+import frc.robot.commands.Autonomous.AutoDistanceRotateCommand;
+import frc.robot.commands.Autonomous.AutoShootCommand;
+import frc.robot.commands.Autonomous.ResetOdometryCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 
@@ -18,14 +22,13 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class ShootAndTaxiCommand extends SequentialCommandGroup {
   /** Creates a new ShootAndTaxiCommand. */
-  public ShootAndTaxiCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter) {
+  public ShootAndTaxiCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IndexerSubsystem indexer) {
     addRequirements(drivetrain, visionSubsystem, shooter);
 
     var startPose = new Pose2d(0, 0, new Rotation2d(0));
 
     addCommands(
       new ResetOdometryCommand(drivetrain, startPose),
-      //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
       new AutoDistanceRotateCommand(drivetrain, 0, -1.5, 0)
     );
   }

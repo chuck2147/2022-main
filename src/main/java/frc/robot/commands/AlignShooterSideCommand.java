@@ -9,20 +9,21 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
-import frc.robot.util.vision.VisionDrive;
+import frc.robot.util.vision.VisionShooting;
 
 public class AlignShooterSideCommand extends CommandBase {
+  VisionShooting visionShooting;
   DrivetrainSubsystem drivetrain;
-  VisionSubsystem visionSubsystem;
   DoubleSupplier speedXSupplier;
   DoubleSupplier speedYSupplier;
   
   public AlignShooterSideCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, DoubleSupplier speedXSupplier, DoubleSupplier speedYSupplier) {
     addRequirements(drivetrain, visionSubsystem);
     this.drivetrain = drivetrain;
-    this.visionSubsystem = visionSubsystem;
     this.speedXSupplier = speedXSupplier;
     this.speedYSupplier = speedYSupplier;
+
+    visionShooting = new VisionShooting(visionSubsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +32,7 @@ public class AlignShooterSideCommand extends CommandBase {
 
   @Override
   public void execute() {
-    VisionDrive.AlignAndDrive(drivetrain, visionSubsystem, speedXSupplier, speedYSupplier);
+    visionShooting.AlignAndDrive(drivetrain, speedXSupplier, speedYSupplier);
   }
 
   // Called once the command ends or is interrupted.
@@ -40,7 +41,7 @@ public class AlignShooterSideCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return visionSubsystem.IsOnTarget();
+    return visionShooting.IsOnTarget();
   }
 
 }
