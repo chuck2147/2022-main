@@ -199,10 +199,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
    * 'forwards' direction.
    */
   public double getGyroDegrees() {
-    //var gyroDegrees = m_pigeon.getFusedHeading();
-    var gyroDegrees = m_pigeon.getYaw();
-    return gyroDegrees;
-    //return Math.IEEEremainder(gyroDegrees, 360);
+    var gyroDegrees = m_pigeon.getFusedHeading();
+    //var gyroDegrees = m_pigeon.getYaw();
+    //return gyroDegrees;
+    return Math.IEEEremainder(gyroDegrees, 360);
   }
   
   public void resetGyroscope() {
@@ -214,9 +214,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // Use Degrees
     // var heading = angle * (23040 / 360); // Thjs maybe needed to use to set to an actual angle.
     // m_pigeon.setFusedHeading(heading);
-    // m_pigeon.setFusedHeading(angle);
+    m_pigeon.setFusedHeading(angle);
 
-    m_pigeon.setYaw(angle);    
+    //m_pigeon.setYaw(angle);    
 
     System.out.println("Resesting Gyroscope to " + angle);    
   }
