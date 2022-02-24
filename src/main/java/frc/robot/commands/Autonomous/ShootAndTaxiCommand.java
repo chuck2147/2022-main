@@ -24,7 +24,7 @@ public class ShootAndTaxiCommand extends SequentialCommandGroup {
     var startPose = new Pose2d(0, 0, new Rotation2d(0));
 
     addCommands(
-      new ResetOdemetryCommand(drivetrain, startPose),
+      new ResetOdometryCommand(drivetrain, startPose),
       //new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0), 
       new AutoDistanceRotateCommand(drivetrain, 0, -1.5, 0)
     );

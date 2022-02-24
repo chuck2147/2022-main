@@ -8,13 +8,13 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class ResetOdemetryCommand extends CommandBase {
+public class ResetOdometryCommand extends CommandBase {
   
   private Pose2d initializePose;
   private DrivetrainSubsystem drivetrain;
   private boolean isDone = false;
 
-  public ResetOdemetryCommand(DrivetrainSubsystem drivetrainSubsystem, Pose2d resetPose) {
+  public ResetOdometryCommand(DrivetrainSubsystem drivetrainSubsystem, Pose2d resetPose) {
     initializePose = resetPose;
     drivetrain = drivetrainSubsystem;
   }

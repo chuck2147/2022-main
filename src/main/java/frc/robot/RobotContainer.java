@@ -15,9 +15,9 @@ import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.DriverButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.ShooterButtons;
-import frc.robot.commands.Autonomous.DriveForwardCommand;
 import frc.robot.commands.Autonomous.ShootAndTaxiCommand;
 import frc.robot.commands.Autonomous.ShootAndTaxiPathCommand;
+import frc.robot.commands.Autonomous.TwoBallAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -51,9 +51,8 @@ public class RobotContainer {
   }
 
   private void configureAutoSelector() {
-    autoChooser.setDefaultOption("Shoot and Taxi", new ShootAndTaxiCommand(drivetrain, vision, shooter));
-    autoChooser.addOption("Path- Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter));
-
+    autoChooser.setDefaultOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter));
+    autoChooser.addOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
 
     SmartDashboard.putData("Auto Selector" , autoChooser);
   }
