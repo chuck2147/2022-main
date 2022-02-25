@@ -53,7 +53,7 @@ public final class ShooterConstants{
     public static final double velocityPIDTolerance = 100;
 
     //SHOOTER DISTANCE - from edge of Hub to Limelight - in Inches
-    public static final double FRONT_OF_HUB_DISTANCE = 36;
+    public static final double FRONT_OF_HUB_DISTANCE = 48;
     public static final double BEHIND_TARMAC_DISTANCE = 120.8;
     public static final double LAUNCH_PAD_DISTANCE = 245;
     public static final double CHUCK_IT_DISTANCE = 0;
@@ -80,14 +80,11 @@ public final class ShooterConstants{
         //---------------
         // Add more shot points here.    
         setShooterSpeedMap(54.8, 8500.0, 2500.0);   
-        setShooterSpeedMap(67, 7250.0, 3000.0); 
-        
+        setShooterSpeedMap(67, 7250.0, 3000.0);        
         setShooterSpeedMap(78, 6000.0, 5000.0);   
         setShooterSpeedMap(96.4, 5500, 5000);       
         setShooterSpeedMap(169, 3900, 8750.0);            
         setShooterSpeedMap(206.8, 3250, 10500.0);
-
-
     }  
     
 } 

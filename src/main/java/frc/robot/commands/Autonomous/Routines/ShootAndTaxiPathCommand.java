@@ -9,7 +9,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
-import frc.robot.commands.ShootByVisionCommand;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;

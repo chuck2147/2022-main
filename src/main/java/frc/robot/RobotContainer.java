@@ -15,7 +15,6 @@ import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.DriverButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.ShooterButtons;
-import frc.robot.commands.Autonomous.Routines.ShootAndTaxiCommand;
 import frc.robot.commands.Autonomous.Routines.ShootAndTaxiPathCommand;
 import frc.robot.commands.Autonomous.Routines.TwoBallAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
