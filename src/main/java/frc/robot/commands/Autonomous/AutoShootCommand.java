@@ -23,6 +23,10 @@ public class AutoShootCommand extends CommandBase {
   
   public AutoShootCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem, ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem) {
     addRequirements(visionSubsystem, shooterSubsystem, indexerSubsystem);
+    drivetrain = drivetrainSubsystem;
+    vision = visionSubsystem;
+    shooter = shooterSubsystem;
+    indexer = indexerSubsystem;
 
     visionShooting = new VisionShooting(visionSubsystem);
   }
