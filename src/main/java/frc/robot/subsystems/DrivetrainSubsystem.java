@@ -5,7 +5,6 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.sensors.PigeonIMU;
-import com.swervedrivespecialties.swervelib.Mk3SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper;
 import com.swervedrivespecialties.swervelib.SwerveModule;
 import com.swervedrivespecialties.swervelib.Mk4SwerveModuleHelper.GearRatio;
@@ -24,6 +23,8 @@ import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInLayouts;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.DrivetrainConstants;
@@ -58,6 +59,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final NetworkTableEntry currentYEntry = currentPoseTable.getEntry("y");
   private final NetworkTableEntry currentAngleEntry = currentPoseTable.getEntry("angle");
 
+  private final Field2d field = new Field2d();
+
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
     DrivetrainConstants.DRIVE_KINEMATICS, 
     new Rotation2d(0),
@@ -75,6 +78,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public DrivetrainSubsystem() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
+    SmartDashboard.putData("field", field);
+    
     resetGyroscope();
     resetPose(new Vector2d(0,0), new Rotation2d(0));
     // Run resetPost on another Thread and delay for 1 second so Gyroscope is done calibrating on startup.
@@ -234,12 +239,20 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void drive(double xDriveSpeed, double yDriveSpeed, double rotationSpeed) {
-    // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
     m_chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
       xDriveSpeed,
       yDriveSpeed,
       rotationSpeed,
       getGyroscopeRotation()
+    );
+  }
+
+  public void driveRobotCentric(double xDriveSpeed, double yDriveSpeed, double rotationSpeed) {
+    // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
+    m_chassisSpeeds = new ChassisSpeeds(
+      xDriveSpeed,
+      yDriveSpeed,
+      rotationSpeed
     );
   }
 
@@ -261,5 +274,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     updatePoseNT();
     m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
     //System.out.println(getGyroscopeRotation());
+
+    // Also update the Field2D object (so that we can visualize this in sim)
+    field.setRobotPose(getPose());
   }
 }
