@@ -41,16 +41,15 @@ public class ShooterCommand extends CommandBase {
     } else if (shooterState == ShooterState.ChuckIt) {
       shootChuckIt();
     }
-
-    if (shooter.isUpToSpeed()) {
-      indexer.feedToShooter();
-    }
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     shooter.setSpeeds(lowerTargetSpeed, upperTargetSpeed);
+    if (shooter.isUpToSpeed()) {
+      indexer.feedToShooter();
+    }
   }
 
   @Override
@@ -66,22 +65,22 @@ public class ShooterCommand extends CommandBase {
   }
 
   private void shootFromBehindTarmac() {
-    lowerTargetSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-    upperTargetSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.BEHIND_TARMAC_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.BEHIND_TARMAC_UPPER.value;
   }
 
   private void shootFromFrontOfHub() {
-    lowerTargetSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
-    upperTargetSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.FRONT_OF_HUB_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.FRONT_OF_HUB_UPPER.value;
   }
 
   private void shootFromLaunchPad(){
-    lowerTargetSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
-    upperTargetSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.LAUNCH_PAD_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.LAUNCH_PAD_UPPER.value;
   }
   
   private void shootChuckIt() {
-    lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
-    upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.CHUCK_IT_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.CHUCK_IT_UPPER.value;
   }
 }
