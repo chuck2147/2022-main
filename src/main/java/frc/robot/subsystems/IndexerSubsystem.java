@@ -55,7 +55,7 @@ public class IndexerSubsystem extends SubsystemBase {
   public void periodic() {
     double lowerSpeed = 0;
     double upperSpeed = 0;
-
+    System.out.println(intakeStateSupplier.getState());
     if (isFeedingToShooter) { //shooter is up to speed pass the balls in
       upperSpeed = IndexerConstants.UPPER_MOTOR_SPEED_SHOOTING;
       lowerSpeed = IndexerConstants.LOWER_MOTOR_SPEED;

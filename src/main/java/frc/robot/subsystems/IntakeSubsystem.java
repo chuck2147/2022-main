@@ -13,11 +13,12 @@ import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.subsystems.IndexerSubsystem.IntakeStateSupplier;
 
 public class IntakeSubsystem extends SubsystemBase implements IntakeStateSupplier {
-  TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_MOTOR_ID);
-  IntakeStates intakeState = IntakeStates.Stopped;
+  private TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_MOTOR_ID);
+  private IntakeStates intakeState = IntakeStates.Stopped;
+  private boolean wasStateSet = false;
 
-  PneumaticsModuleType intakeLeftModuleType = PneumaticsModuleType.REVPH;
-  PneumaticsModuleType intakeRightModuleType = PneumaticsModuleType.REVPH;
+  private PneumaticsModuleType intakeLeftModuleType = PneumaticsModuleType.REVPH;
+  private PneumaticsModuleType intakeRightModuleType = PneumaticsModuleType.REVPH;
   private final DoubleSolenoid intakeLeftPiston = new DoubleSolenoid(intakeLeftModuleType,
       IntakeConstants.INTAKE_LEFT_AIR_IN, IntakeConstants.INTAKE_LEFT_AIR_OUT);
   private final DoubleSolenoid intakeRightPiston = new DoubleSolenoid(intakeRightModuleType,
@@ -31,10 +32,12 @@ public class IntakeSubsystem extends SubsystemBase implements IntakeStateSupplie
 
   public void runIntakeForward() {
     intakeState = IntakeStates.Forward;
+    wasStateSet = true;
   }
 
   public void runIntakeReverse() {
     intakeState = IntakeStates.Reverse;
+    wasStateSet = true;
   }
 
   public IntakeStates getState() {
@@ -43,6 +46,10 @@ public class IntakeSubsystem extends SubsystemBase implements IntakeStateSupplie
 
   @Override
   public void periodic() {
+    if(!wasStateSet){
+      intakeState = IntakeStates.Stopped;
+    }
+
     double motorSpeed = 0;
     if (intakeState == IntakeStates.Forward) {
       motorSpeed = -IntakeConstants.INTAKE_MOTOR_SPEED;
@@ -59,6 +66,6 @@ public class IntakeSubsystem extends SubsystemBase implements IntakeStateSupplie
 
     intakeMotor.set(ControlMode.PercentOutput, motorSpeed);
 
-    intakeState = IntakeStates.Stopped;
+    wasStateSet = false;
   }
 }
