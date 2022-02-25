@@ -59,6 +59,9 @@ public class IndexerSubsystem extends SubsystemBase {
     if (isFeedingToShooter) { //shooter is up to speed pass the balls in
       upperSpeed = IndexerConstants.UPPER_MOTOR_SPEED_SHOOTING;
       lowerSpeed = IndexerConstants.LOWER_MOTOR_SPEED;
+    } else if (intakeStateSupplier.getState() == IntakeStates.Reverse) { //if intake is running in reverse we want indexer to also run in reverse
+      upperSpeed = -IndexerConstants.UPPER_MOTOR_SPEED_PLACING;
+      lowerSpeed = -IndexerConstants.LOWER_MOTOR_SPEED;
     } else if (isLowerTriggered() && !isUpperTriggered()) { //move ball into top position
       upperSpeed = IndexerConstants.UPPER_MOTOR_SPEED_PLACING;
       lowerSpeed = IndexerConstants.LOWER_MOTOR_SPEED;
@@ -73,15 +76,12 @@ public class IndexerSubsystem extends SubsystemBase {
         upperSpeed = 0;
         lowerSpeed = 0;
       }
-    } else if (intakeStateSupplier.getState() == IntakeStates.Reverse) { //if intake is running in reverse we want indexer to also run in reverse
-      upperSpeed = -IndexerConstants.UPPER_MOTOR_SPEED_PLACING;
-      lowerSpeed = -IndexerConstants.LOWER_MOTOR_SPEED;
     } else { //Otherwise do not run indexer
       upperSpeed = 0;
       lowerSpeed = 0;
     }
 
-    lowerMotor.set(ControlMode.PercentOutput, lowerSpeed);
+    lowerMotor.set(ControlMode.PercentOutput, -lowerSpeed);
     upperMotor.set(ControlMode.PercentOutput, upperSpeed);
     isFeedingToShooter = false;
   }
