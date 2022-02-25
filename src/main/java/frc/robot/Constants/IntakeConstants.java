@@ -26,7 +26,7 @@ public final class IntakeConstants{
     public static int INTAKE_LEFT_AIR_OUT = 3; 
 
     public enum IntakeStates {
-        Forward, Reverse
+        Forward, Reverse, Stopped
     }
 } 
 
