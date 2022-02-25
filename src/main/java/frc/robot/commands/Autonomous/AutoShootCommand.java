@@ -5,6 +5,7 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IndexerConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -38,17 +39,20 @@ public class AutoShootCommand extends CommandBase {
     visionShooting.ShootByDistance(shooter);
 
     if (visionShooting.IsOnTarget() && shooter.isUpToSpeed()) {
-      
+      indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, IndexerConstants.UPPER_MOTOR_SPEED_SHOOTING);
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    shooter.stopShooter();
+    indexer.run(0, 0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return !indexer.isUpperTriggered() && !indexer.isLowerTriggered();
   }
 }

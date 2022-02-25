@@ -264,7 +264,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
       getGyroscopeRotation()
     );
 
-    //chassisSpeeds = driftCorrection.correctSpeeds(chassisSpeeds, getPose());
+    chassisSpeeds = driftCorrection.correctSpeeds(chassisSpeeds, getPose());
 
     SetStateFromSpeeds(chassisSpeeds);
   }

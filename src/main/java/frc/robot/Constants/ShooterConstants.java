@@ -37,14 +37,14 @@ public final class ShooterConstants{
     public static final double LOWER_F = 0.0487;
 
     //MOTORSPEEDs
-    public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(-250, "Front of Hub Upper");
-    public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(13000, "Front of Hub Lower");
+    public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(2000, "Front of Hub Upper");
+    public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(9000, "Front of Hub Lower");
 
     public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(6000, "Behind Tarmac Upper");
     public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(4600, "Behind Tarmac Lower");
     
-    public static final NTValue LAUNCH_PAD_UPPER = new NTValue(12000, "Launch Pad Upper"); 
-    public static final NTValue LAUNCH_PAD_LOWER = new NTValue(3000, "Launch Pad Lower"); 
+    public static final NTValue LAUNCH_PAD_UPPER = new NTValue(13000, "Launch Pad Upper"); 
+    public static final NTValue LAUNCH_PAD_LOWER = new NTValue(2750, "Launch Pad Lower"); 
    
 
     public static final NTValue CHUCK_IT_UPPER = new NTValue(19000, "Chuck it Upper"); 
@@ -78,14 +78,16 @@ public final class ShooterConstants{
         setShooterSpeedMap(LAUNCH_PAD_DISTANCE, LAUNCH_PAD_LOWER.value, LAUNCH_PAD_UPPER.value);
 
         //---------------
-        // Add more shot points here.       
-        setShooterSpeedMap(67, 7250.0, 3000.0);  
+        // Add more shot points here.    
+        setShooterSpeedMap(54.8, 8500.0, 2500.0);   
+        setShooterSpeedMap(67, 7250.0, 3000.0); 
+        
+        setShooterSpeedMap(78, 6000.0, 5000.0);   
         setShooterSpeedMap(96.4, 5500, 5000);       
+        setShooterSpeedMap(169, 3900, 8750.0);               
         setShooterSpeedMap(169, 3900, 8750.0);
 
 
-        setShooterSpeedMap(73.1, 6500.0, 3500.0);
-        setShooterSpeedMap(173.4, 3250.0, 15000.0);
     }  
     
 } 
