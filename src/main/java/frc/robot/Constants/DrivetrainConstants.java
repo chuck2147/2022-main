@@ -46,7 +46,7 @@ public final class DrivetrainConstants{
     public static final int BACK_RIGHT_MODULE_DRIVE_MOTOR = 7; 
     public static final int BACK_RIGHT_MODULE_STEER_MOTOR = 8; 
     public static final int BACK_RIGHT_MODULE_STEER_ENCODER = 12; 
-    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(135); 
+    public static final double BACK_RIGHT_MODULE_STEER_OFFSET = -Math.toRadians(315); 
 
     //  The formula for calculating the theoretical maximum velocity is:
     //   <Motor free speed RPM> / 60 * <Drive reduction> * <Wheel diameter meters> * pi
