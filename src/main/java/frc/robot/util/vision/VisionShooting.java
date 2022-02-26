@@ -20,11 +20,13 @@ public class VisionShooting {
 
     VisionSubsystem visionSubsystem;
     private double setDistance;
+    private boolean speedSet;
 
     public VisionShooting(VisionSubsystem vision) {
         visionSubsystem = vision;
                 
         setDistance = Double.NaN;
+        speedSet = false;
     }
     
     public void AlignAndDrive(DrivetrainSubsystem drivetrain, DoubleSupplier speedXSupplier, DoubleSupplier speedYSupplier) {
@@ -56,10 +58,11 @@ public class VisionShooting {
 
             if (lowerTargetSpeed != null && upperTargetSpeed != null) {
                 shooter.setSpeeds(lowerTargetSpeed.value, upperTargetSpeed.value);
+                speedSet = true;
             }
         }
 
-        if (setDistance != Double.NaN && IsOnTarget() && shooter.isUpToSpeed()) {
+        if (speedSet && IsOnTarget() && shooter.isUpToSpeed()) {
             indexer.feedToShooter();
         }
     }    

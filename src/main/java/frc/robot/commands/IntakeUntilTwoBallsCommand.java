@@ -21,6 +21,6 @@ public class IntakeUntilTwoBallsCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return indexer.isLowerTriggered() && indexer.isUpperTriggered();
+    return indexer.isFull();
   }
 }

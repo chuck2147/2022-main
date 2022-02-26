@@ -47,6 +47,14 @@ public class IndexerSubsystem extends SubsystemBase {
     return irUpper.getVoltage() > IndexerConstants.HOPPER_IR_VOLTAGE;
   }
 
+  public boolean isFull() {
+    return isLowerTriggered() && isUpperTriggered();
+  }
+
+  public boolean isEmpty() {
+    return !isLowerTriggered() && !isUpperTriggered();
+  }
+
   public void feedToShooter() {
     isFeedingToShooter = true;
   }

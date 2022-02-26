@@ -9,7 +9,8 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
-import frc.robot.commands.IntakeUntilTwoBallsCommand;
+import frc.robot.Constants.IndexerConstants.BallCount;
+import frc.robot.commands.Autonomous.AutoCollectCommand;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;
@@ -33,7 +34,7 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory).deadlineWith(new IntakeUntilTwoBallsCommand(indexer, intake)),
+      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
       new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer).withTimeout(7)
     );
 

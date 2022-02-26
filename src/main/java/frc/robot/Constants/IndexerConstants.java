@@ -32,8 +32,12 @@ public final class IndexerConstants{
     public static double INDEXER_IR_VOLTAGE = 1.75;
     public static double HOPPER_IR_VOLTAGE = 1.2;
 
-  public enum IndexerStates {
-    forward, backward
-  }
+    public enum IndexerStates {
+      forward, backward
+    }
+
+    public enum BallCount {
+      One, Two
+    }
 } 
 

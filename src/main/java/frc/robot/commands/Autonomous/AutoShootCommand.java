@@ -5,7 +5,6 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.IndexerConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -16,15 +15,13 @@ public class AutoShootCommand extends CommandBase {
   
   private DrivetrainSubsystem drivetrain;
   private ShooterSubsystem shooter;
-  private IndexerSubsystem indexer; 
-  private VisionSubsystem vision;
+  private IndexerSubsystem indexer;
 
   private VisionShooting visionShooting;
   
   public AutoShootCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem, ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem) {
     addRequirements(visionSubsystem, shooterSubsystem, indexerSubsystem);
     drivetrain = drivetrainSubsystem;
-    vision = visionSubsystem;
     shooter = shooterSubsystem;
     indexer = indexerSubsystem;
 
@@ -52,6 +49,6 @@ public class AutoShootCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !indexer.isUpperTriggered() && !indexer.isLowerTriggered();
+    return indexer.isEmpty();
   }
 }

@@ -187,7 +187,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void resetOdometry(Pose2d pose) {
-    resetGyroscope(pose.getRotation().getDegrees());
+    //resetGyroscope(pose.getRotation().getDegrees());
 
     var vector = new Vector2d(pose.getX(), pose.getY());
     resetPose(vector, pose.getRotation());
@@ -217,7 +217,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
     //m_pigeon.setYaw(angle);    
 
-    System.out.println("Resesting Gyroscope to " + angle);    
+    System.out.println("Resesting Gyroscope to " + angle);  
   }
 
   public Rotation2d getGyroscopeRotation() {

@@ -5,11 +5,22 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IndexerConstants.BallCount;
+import frc.robot.subsystems.IndexerSubsystem;
+import frc.robot.subsystems.IntakeSubsystem;
 
 public class AutoCollectCommand extends CommandBase {
-  /** Creates a new AutoCollectCommand. */
-  public AutoCollectCommand() {
-    // Use addRequirements() here to declare subsystem dependencies.
+  private BallCount ballCount;
+  
+  private final IntakeSubsystem intake;
+  private final IndexerSubsystem indexer;
+
+  public AutoCollectCommand(BallCount ballCountToStopAt, IndexerSubsystem indexer, IntakeSubsystem intake) {
+    ballCount = ballCountToStopAt;
+
+    this.intake = intake;
+    this.indexer = indexer;
+    addRequirements(intake, indexer);
   }
 
   // Called when the command is initially scheduled.
@@ -18,7 +29,9 @@ public class AutoCollectCommand extends CommandBase {
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    intake.runIntakeForward();
+  }
 
   // Called once the command ends or is interrupted.
   @Override
@@ -27,6 +40,15 @@ public class AutoCollectCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    boolean done = false;
+
+    if (ballCount == BallCount.One) {
+      done = indexer.isUpperTriggered();
+    }
+    else {
+      done = indexer.isFull();
+    }
+
+    return done;
   }
 }
