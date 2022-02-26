@@ -200,8 +200,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   public double getGyroDegrees() {
     var gyroDegrees = m_pigeon.getFusedHeading();
     //var gyroDegrees = m_pigeon.getYaw();
-    //return gyroDegrees;
-    return Math.IEEEremainder(gyroDegrees, 360);
+    return gyroDegrees;
+    //return Math.IEEEremainder(gyroDegrees, 360);
   }
   
   public void resetGyroscope() {
