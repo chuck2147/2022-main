@@ -49,6 +49,7 @@ public class AutoShootCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return indexer.isEmpty();
+    // return indexer.isEmpty();
+    return false;
   }
 }
