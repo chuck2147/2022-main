@@ -35,8 +35,8 @@ public class RobotContainer {
   private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
   private final ClimberSubsystem rightClimber = new ClimberSubsystem(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT, new DigitalInput(ClimberConstants.RIGHT_CLIMBER_LIMITSWITCH_ID));
   private final ClimberSubsystem leftClimber = new ClimberSubsystem(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT, new DigitalInput(ClimberConstants.LEFT_CLIMBER_LIMITSWITCH_ID));
-  private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final IndexerSubsystem indexer = new IndexerSubsystem(intake);
   private final ShooterSubsystem shooter = new ShooterSubsystem();
   private final VisionSubsystem vision = new VisionSubsystem();
 
@@ -64,10 +64,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    ClimberButtons.Configure(leftClimber, rightClimber, intake);
-    ShooterButtons.Configure(shooter);
+    ClimberButtons.Configure(leftClimber, rightClimber);
+    ShooterButtons.Configure(shooter, indexer);
     IndexerButtons.Configure(intake, indexer, shooter, vision);
-    DriverButtons.Configure(drivetrain, vision, shooter);
+    DriverButtons.Configure(drivetrain, vision, shooter, indexer);
   }
 
   /**

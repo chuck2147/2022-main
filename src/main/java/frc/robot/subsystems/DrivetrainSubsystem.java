@@ -181,7 +181,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   public Pose2d getScaledPose() {
      final var translation = new Translation2d(m_pose.getX() * SCALE_X, m_pose.getY() * SCALE_Y);
-     //final var translation = new Translation2d(m_pose.getY() * SCALE_Y, m_pose.getX() * SCALE_X);
      final var rotation = m_pose.getRotation().rotateBy(new Rotation2d(0));
     
      return new Pose2d(translation.getX(), translation.getY(), rotation);

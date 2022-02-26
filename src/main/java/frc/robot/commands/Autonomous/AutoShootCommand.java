@@ -40,18 +40,13 @@ public class AutoShootCommand extends CommandBase {
   public void execute() {
     visionShooting.Align(drivetrain);
 
-    visionShooting.ShootByDistance(shooter);
-
-    if (visionShooting.IsOnTarget() && shooter.isUpToSpeed()) {
-      indexer.run(IndexerConstants.LOWER_MOTOR_SPEED, IndexerConstants.UPPER_MOTOR_SPEED_SHOOTING);
-    }
+    visionShooting.ShootByDistance(shooter, indexer);    
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     shooter.stopShooter();
-    indexer.run(0, 0);
   }
 
   // Returns true when the command should end.

@@ -41,7 +41,7 @@ public class VisionSubsystem extends SubsystemBase {
       }
     }
     else {
-      velocity = VisionConstants.FIND_TARGET_SPEED * DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
+      velocity = VisionConstants.FIND_TARGET_SPEED_MULTIPLIER * DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
     }
 
     return velocity;

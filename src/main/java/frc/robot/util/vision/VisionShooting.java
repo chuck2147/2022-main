@@ -9,6 +9,7 @@ import java.util.function.DoubleSupplier;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import frc.robot.util.MathCommon;
@@ -39,8 +40,8 @@ public class VisionShooting {
     public boolean IsOnTarget() {
         return visionSubsystem.IsOnTarget();
     }
-
-    public void ShootByDistance(ShooterSubsystem shooterSubsystem) {
+    
+    public void ShootByDistance(ShooterSubsystem shooter, IndexerSubsystem indexer) {
         var distanceToTarget = visionSubsystem.GetDistanceToTarget();
 
         // See if the distance has changed before setting the wheel speeds.
@@ -54,8 +55,13 @@ public class VisionShooting {
             var upperTargetSpeed = ShooterConstants.UPPER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance);
 
             if (lowerTargetSpeed != null && upperTargetSpeed != null) {
-                shooterSubsystem.setSpeeds(lowerTargetSpeed.value, upperTargetSpeed.value);
+                shooter.setSpeeds(lowerTargetSpeed.value, upperTargetSpeed.value);
             }
         }
-    }
+
+        if (setDistance != Double.NaN && IsOnTarget() && shooter.isUpToSpeed()) {
+            indexer.feedToShooter();
+        }
+    }    
+
 }

@@ -7,14 +7,9 @@ package frc.robot.commands.Autonomous.Routines;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
-import frc.robot.commands.CollectCommand;
-import frc.robot.commands.ExtendIntakeCommand;
-import frc.robot.commands.ShootByVisionCommand;
-import frc.robot.commands.Autonomous.AutoCollectCommand;
+import frc.robot.commands.IntakeUntilTwoBallsCommand;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;
@@ -38,21 +33,9 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory), //.deadlineWith(new AutoCollectCommand()),
+      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory).deadlineWith(new IntakeUntilTwoBallsCommand(indexer, intake)),
       new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer).withTimeout(7)
     );
 
-    // addCommands(
-    //   new ExtendIntakeCommand(intake),
-    //   new InstantCommand(() -> drivetrain.resetOdometry(goStraightTrajectory.getInitialPose())), 
-    //   new ParallelCommandGroup(
-    //     new CollectCommand(indexer, intake, shooter, visionSubsystem),
-    //     new SequentialCommandGroup(
-    //       AutoDriveBaseCommand.GetCommand(drivetrain, goStraightTrajectory),
-    //       AutoDriveBaseCommand.GetCommand(drivetrain, rotateTrajectory),
-    //       new ShootByVisionCommand(drivetrain, visionSubsystem, shooter, () -> 0, () -> 0)
-    //     )
-    //   )
-    // );
   }
 }

@@ -7,27 +7,29 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.ShooterConstants.ShooterState;
+import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
 
 public class ShooterCommand extends CommandBase {
   private final ShooterSubsystem shooter;
   private final ShooterConstants.ShooterState shooterState;
+  private final IndexerSubsystem indexer;
   
   private double lowerTargetSpeed = 0;
   private double upperTargetSpeed = 0;
 
   /** Creates a new ShooterCommand. */
-  public ShooterCommand(ShooterSubsystem shooter, ShooterState shooterState) {
+  public ShooterCommand(ShooterSubsystem shooter, IndexerSubsystem indexer, ShooterState shooterState) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.shooter = shooter;
     this.shooterState = shooterState;
-    addRequirements(shooter);
+    this.indexer = indexer;
+    addRequirements(shooter, indexer);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    shooter.SetOverrideVision(true);
 
     if (shooterState == ShooterState.Hub) {
       shootFromFrontOfHub();
@@ -44,11 +46,14 @@ public class ShooterCommand extends CommandBase {
   @Override
   public void execute() {
     shooter.setSpeeds(lowerTargetSpeed, upperTargetSpeed);
+
+    if (shooter.isUpToSpeed()) {
+      indexer.feedToShooter();
+    }
   }
 
   @Override
   public void end(boolean interrupted) {
-    shooter.SetOverrideVision(false);
     shooter.stopShooter();
   }
 
@@ -59,22 +64,22 @@ public class ShooterCommand extends CommandBase {
   }
 
   private void shootFromBehindTarmac() {
-    lowerTargetSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-    upperTargetSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.BEHIND_TARMAC_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.BEHIND_TARMAC_UPPER.value;
   }
 
   private void shootFromFrontOfHub() {
-    lowerTargetSpeed = ShooterConstants.FRONT_OF_HUB_LOWER.value;
-    upperTargetSpeed = ShooterConstants.FRONT_OF_HUB_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.FRONT_OF_HUB_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.FRONT_OF_HUB_UPPER.value;
   }
 
   private void shootFromLaunchPad(){
-    lowerTargetSpeed = ShooterConstants.LAUNCH_PAD_LOWER.value;
-    upperTargetSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.LAUNCH_PAD_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.LAUNCH_PAD_UPPER.value;
   }
   
   private void shootChuckIt() {
-    lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
-    upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
+    lowerTargetSpeed = -ShooterConstants.CHUCK_IT_LOWER.value;
+    upperTargetSpeed = -ShooterConstants.CHUCK_IT_UPPER.value;
   }
 }
