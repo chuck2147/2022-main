@@ -96,7 +96,7 @@ public class IndexerSubsystem extends SubsystemBase {
       lowerSpeed = 0;
     }
 
-    lowerMotor.set(ControlMode.PercentOutput, -lowerSpeed);
+    lowerMotor.set(ControlMode.PercentOutput, lowerSpeed);
     upperMotor.set(ControlMode.PercentOutput, upperSpeed);
     isFeedingToShooter = false;
   }
