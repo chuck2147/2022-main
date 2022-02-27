@@ -20,13 +20,16 @@ public class VisionShooting {
 
     VisionSubsystem visionSubsystem;
     private double setDistance;
-    private boolean speedSet;
+    private double lowerTargetSpeed;
+    private double upperTargetSpeed;
+
 
     public VisionShooting(VisionSubsystem vision) {
         visionSubsystem = vision;
                 
         setDistance = Double.NaN;
-        speedSet = false;
+        lowerTargetSpeed = Double.NaN;        
+        upperTargetSpeed = Double.NaN;
     }
     
     public void AlignAndDrive(DrivetrainSubsystem drivetrain, DoubleSupplier speedXSupplier, DoubleSupplier speedYSupplier) {
@@ -53,17 +56,21 @@ public class VisionShooting {
 
             var interpolatedDistance = new InterpolatingDouble(setDistance);
             
-            var lowerTargetSpeed = ShooterConstants.LOWER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance);
-            var upperTargetSpeed = ShooterConstants.UPPER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance);
+            var lowerTargetSpeedMap = ShooterConstants.LOWER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance);
+            var upperTargetSpeedMap = ShooterConstants.UPPER_SHOOTER_SPEED_MAP.getInterpolated(interpolatedDistance);
 
-            if (lowerTargetSpeed != null && upperTargetSpeed != null) {
-                shooter.setSpeeds(lowerTargetSpeed.value, upperTargetSpeed.value);
-                speedSet = true;
+            if (lowerTargetSpeedMap != null && upperTargetSpeedMap != null) {
+                lowerTargetSpeed = lowerTargetSpeedMap.value;
+                upperTargetSpeed = upperTargetSpeedMap.value;
             }
         }
 
-        if (speedSet && IsOnTarget() && shooter.isUpToSpeed()) {
-            indexer.feedToShooter();
+        if (lowerTargetSpeed != Double.NaN && upperTargetSpeed != Double.NaN) {
+            shooter.setSpeeds(lowerTargetSpeed, upperTargetSpeed);
+        
+            if (IsOnTarget() && shooter.isUpToSpeed()) {
+                indexer.feedToShooter();
+            }
         }
     }    
 
