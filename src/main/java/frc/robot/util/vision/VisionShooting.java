@@ -6,6 +6,8 @@ package frc.robot.util.vision;
 
 import java.util.function.DoubleSupplier;
 
+import com.ctre.phoenix.time.StopWatch;
+
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -46,7 +48,8 @@ public class VisionShooting {
         return visionSubsystem.IsOnTarget();
     }
     
-    public void ShootByDistance(ShooterSubsystem shooter, IndexerSubsystem indexer) {
+    public boolean ShootByDistance(ShooterSubsystem shooter, IndexerSubsystem indexer) {
+        var isActivelyShooting = false;
         var distanceToTarget = visionSubsystem.GetDistanceToTarget();
 
         // See if the distance has changed before setting the wheel speeds.
@@ -70,8 +73,10 @@ public class VisionShooting {
         
             if (IsOnTarget() && shooter.isUpToSpeed()) {
                 indexer.feedToShooter();
+                isActivelyShooting = true;
             }
         }
+        return isActivelyShooting;
     }    
 
 }

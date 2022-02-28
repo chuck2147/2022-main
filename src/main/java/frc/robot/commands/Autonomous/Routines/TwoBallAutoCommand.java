@@ -35,7 +35,7 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer).withTimeout(7)
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer).withTimeout(5)
     );
 
   }

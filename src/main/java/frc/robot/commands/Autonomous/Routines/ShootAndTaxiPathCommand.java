@@ -31,7 +31,7 @@ public class ShootAndTaxiPathCommand extends SequentialCommandGroup {
     
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer).withTimeout(7),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer).withTimeout(5),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
     );
   }

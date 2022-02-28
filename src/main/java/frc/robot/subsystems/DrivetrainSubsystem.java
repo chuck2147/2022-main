@@ -175,6 +175,10 @@ public class DrivetrainSubsystem extends SubsystemBase {
     SetStateFromSpeeds(new ChassisSpeeds(0.0, 0.0, 0.0));
   }
 
+  /**
+   * Get the current pose in meters.
+   * @return
+   */
   public Pose2d getPose() {
         return m_pose;
   }
