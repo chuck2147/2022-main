@@ -6,8 +6,6 @@ package frc.robot.util.vision;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix.time.StopWatch;
-
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.subsystems.DrivetrainSubsystem;
