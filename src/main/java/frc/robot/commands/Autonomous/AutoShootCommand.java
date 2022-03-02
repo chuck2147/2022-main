@@ -48,7 +48,7 @@ public class AutoShootCommand extends CommandBase {
     stopWatchFallBack.reset();
 
     stopWatchFallBack.start();
-    fallbackInitiated = false;
+    fallbackInitiated = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

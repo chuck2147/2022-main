@@ -11,8 +11,8 @@ public class AutoPathConstants {
     public static final double kMaxSpeedMetersPerSecond = DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND / 4;
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
 
-    public static final double kMaxAngularSpeedRadiansPerSecond = DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND / 8;
-    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI / 4;
+    public static final double kMaxAngularSpeedRadiansPerSecond = DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND*2;
+    public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI*2;
 
     public static final double kPXController = 1.5;
     public static final double kIXController = 0;
@@ -22,7 +22,7 @@ public class AutoPathConstants {
     public static final double kIYController = 0;
     public static final double kDYController = 0;
 
-    public static final double kPThetaController = 3;
+    public static final double kPThetaController = 12;
     public static final double kIThetaController = 0;
     public static final double kDThetaController = 0;
 
