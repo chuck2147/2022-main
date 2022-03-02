@@ -28,6 +28,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.util.drive.DriftCorrection;
 
 public class DrivetrainSubsystem extends SubsystemBase {
   private static final DrivetrainSubsystem instance = new DrivetrainSubsystem();
@@ -51,13 +52,13 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private Pose2d m_pose = new Pose2d(0, 0, new Rotation2d());
   private final double SCALE_X = 1; // -1/0.9;
   private final double SCALE_Y = 1; // -1/0.9;
-  double length = 19;
-  double width = 20;
+
   private final NetworkTableInstance nt = NetworkTableInstance.getDefault();
   private final NetworkTable currentPoseTable = nt.getTable("/pathFollowing/current");
   private final NetworkTableEntry currentXEntry = currentPoseTable.getEntry("x");
   private final NetworkTableEntry currentYEntry = currentPoseTable.getEntry("y");
-  private final NetworkTableEntry currentAngleEntry = currentPoseTable.getEntry("angle");
+  private final NetworkTableEntry currentAngleEntry = currentPoseTable.getEntry("angle");  
+  private final NetworkTableEntry currentGyro = currentPoseTable.getEntry("gyro");
 
   private final Field2d field = new Field2d();
 
@@ -74,7 +75,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private final SwerveModule m_backLeftModule;
   private final SwerveModule m_backRightModule;
 
-  private ChassisSpeeds m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
+  // For correcting drift.
+  DriftCorrection driftCorrection = new DriftCorrection();
 
   public DrivetrainSubsystem() {
     ShuffleboardTab tab = Shuffleboard.getTab("Drivetrain");
@@ -82,6 +84,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     
     resetGyroscope();
     resetPose(new Vector2d(0,0), new Rotation2d(0));
+
     // Run resetPost on another Thread and delay for 1 second so Gyroscope is done calibrating on startup.
     // new Thread(() -> {
     //   try {
@@ -168,44 +171,61 @@ public class DrivetrainSubsystem extends SubsystemBase {
             DrivetrainConstants.BACK_RIGHT_MODULE_STEER_ENCODER,
             DrivetrainConstants.BACK_RIGHT_MODULE_STEER_OFFSET
     );
+    
+    SetStateFromSpeeds(new ChassisSpeeds(0.0, 0.0, 0.0));
   }
 
+  /**
+   * Get the current pose in meters.
+   * @return
+   */
   public Pose2d getPose() {
         return m_pose;
   }
 
   public Pose2d getScaledPose() {
-     m_pose = getPose();
      final var translation = new Translation2d(m_pose.getX() * SCALE_X, m_pose.getY() * SCALE_Y);
      final var rotation = m_pose.getRotation().rotateBy(new Rotation2d(0));
     
      return new Pose2d(translation.getX(), translation.getY(), rotation);
   }
-  public void resetOdometry(Pose2d pose){
-    m_odometry.resetPosition(pose, getGyroscopeRotation());
-    m_pose = pose;
+
+  public void resetOdometry(Pose2d pose) {
+    //resetGyroscope(pose.getRotation().getDegrees());
+
+    var vector = new Vector2d(pose.getX(), pose.getY());
+    resetPose(vector, pose.getRotation());
   }
 
   /**
    * Sets the gyroscope angle to zero. This can be used to set the direction the robot is currently facing to the
    * 'forwards' direction.
    */
-  public double getHeading() {
-    return Math.IEEEremainder(m_pigeon.getFusedHeading(), 360);
+  public double getGyroDegrees() {
+    var gyroDegrees = m_pigeon.getFusedHeading();
+    //var gyroDegrees = m_pigeon.getYaw();
+    return gyroDegrees;
+    //return Math.IEEEremainder(gyroDegrees, 360);
   }
   
   public void resetGyroscope() {
     resetGyroscope(0.0);
   }
   
+  
   public void resetGyroscope(double angle) {
-    m_pigeon.setFusedHeading(angle);
-    System.out.println("Resesting Gyroscope");
     // Use Degrees
+    // var heading = angle * (23040 / 360); // Thjs maybe needed to use to set to an actual angle.
+    // m_pigeon.setFusedHeading(heading);
+    m_pigeon.setFusedHeading(angle);
+
+    //m_pigeon.setYaw(angle);    
+
+    System.out.println("Resesting Gyroscope to " + angle);  
   }
 
   public Rotation2d getGyroscopeRotation() {
-    return Rotation2d.fromDegrees(getHeading());
+    return Rotation2d.fromDegrees(getGyroDegrees());
   }
 
   public double getAngularVelocity() {
@@ -217,7 +237,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
   private void updatePoseNT() {
     final var pose = getScaledPose();
 
-    currentAngleEntry.setDouble(pose.getRotation().getRadians());
+    currentGyro.setDouble(getGyroscopeRotation().getDegrees());
+    currentAngleEntry.setDouble(pose.getRotation().getDegrees());
     currentXEntry.setDouble(pose.getX());
     currentYEntry.setDouble(pose.getY());
 
@@ -239,21 +260,27 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void drive(double xDriveSpeed, double yDriveSpeed, double rotationSpeed) {
-    m_chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
+    var chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(
       xDriveSpeed,
       yDriveSpeed,
       rotationSpeed,
       getGyroscopeRotation()
     );
+
+    chassisSpeeds = driftCorrection.correctSpeeds(chassisSpeeds, getPose());
+
+    SetStateFromSpeeds(chassisSpeeds);
   }
 
   public void driveRobotCentric(double xDriveSpeed, double yDriveSpeed, double rotationSpeed) {
     // You can use `new ChassisSpeeds(...)` for robot-oriented movement instead of field-oriented movement
-    m_chassisSpeeds = new ChassisSpeeds(
+    var chassisSpeeds = new ChassisSpeeds(
       xDriveSpeed,
       yDriveSpeed,
       rotationSpeed
     );
+
+    SetStateFromSpeeds(chassisSpeeds);
   }
 
   public void setModuleStates(SwerveModuleState[] states) {
@@ -267,15 +294,19 @@ public class DrivetrainSubsystem extends SubsystemBase {
     m_pose = m_odometry.update(getGyroscopeRotation(), states[0], states[1], states[2], states[3]);
   }
 
+
   @Override
   public void periodic() {
-    SwerveModuleState[] states = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(m_chassisSpeeds);
-    setModuleStates(states);
     updatePoseNT();
-    m_chassisSpeeds = new ChassisSpeeds(0.0, 0.0, 0.0);
-    //System.out.println(getGyroscopeRotation());
 
     // Also update the Field2D object (so that we can visualize this in sim)
     field.setRobotPose(getPose());
   }
+
+  private void SetStateFromSpeeds(ChassisSpeeds chassisSpeeds) {
+    SwerveModuleState[] states = DrivetrainConstants.DRIVE_KINEMATICS.toSwerveModuleStates(chassisSpeeds);
+    setModuleStates(states);
+  }
+
+  
 }

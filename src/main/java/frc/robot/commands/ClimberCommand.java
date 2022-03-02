@@ -6,30 +6,23 @@ package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
 
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 
 public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
   private final ClimberSubsystem climberSubsystem;
   private final DoubleSupplier climbSpeedSupplier;
-  private final IntakeSubsystem intakeSubsystem;
   private final double encoderValueTop;
-  
 
-  public ClimberCommand(ClimberSubsystem subsystem, IntakeSubsystem intake, DoubleSupplier speedSupplier, double encoderValueTop) {
+  public ClimberCommand(ClimberSubsystem subsystem, DoubleSupplier speedSupplier, double encoderValueTop) {
     climberSubsystem = subsystem;
     climbSpeedSupplier = speedSupplier;
-    intakeSubsystem = intake;
     this.encoderValueTop = encoderValueTop;
     addRequirements(climberSubsystem);
   }
 
- 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -38,10 +31,7 @@ public class ClimberCommand extends CommandBase {
   @Override
   public void execute() {
     var speed = climbSpeedSupplier.getAsDouble();
-    if (speed != 0) {
-      intakeSubsystem.retractIntake();
-    }
-    
+
     if (Math.abs(climberSubsystem.getEncoderValue()) >= Math.abs(encoderValueTop)){
       speed = 0;
       if(encoderValueTop == ClimberConstants.RIGHT_CLIMBER_ENCODER_TOP) {

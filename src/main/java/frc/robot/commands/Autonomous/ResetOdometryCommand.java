@@ -2,30 +2,33 @@
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
 
-package frc.robot.commands;
+package frc.robot.commands.Autonomous;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.IntakeSubsystem;
+import frc.robot.subsystems.DrivetrainSubsystem;
 
-public class ExtendIntakeCommand extends CommandBase {
-  /** Creates a new ExtendIntakeCommand. */
-  IntakeSubsystem intake; 
+public class ResetOdometryCommand extends CommandBase {
   
-  public ExtendIntakeCommand(IntakeSubsystem intake) {
-    this.intake = intake; 
+  private Pose2d initializePose;
+  private DrivetrainSubsystem drivetrain;
+  private boolean isDone = false;
+
+  public ResetOdometryCommand(DrivetrainSubsystem drivetrainSubsystem, Pose2d resetPose) {
+    initializePose = resetPose;
+    drivetrain = drivetrainSubsystem;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+    drivetrain.resetOdometry(initializePose);
+    isDone = true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    intake.runIntake(); 
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
@@ -34,6 +37,6 @@ public class ExtendIntakeCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isDone;
   }
 }

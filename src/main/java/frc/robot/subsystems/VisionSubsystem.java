@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.Constants.VisionConstants;
 import frc.robot.util.MathCommon;
 import frc.robot.util.vision.Limelight;
@@ -40,7 +41,7 @@ public class VisionSubsystem extends SubsystemBase {
       }
     }
     else {
-      velocity = VisionConstants.FIND_TARGET_SPEED;
+      velocity = VisionConstants.FIND_TARGET_SPEED_MULTIPLIER * DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND;
     }
 
     return velocity;

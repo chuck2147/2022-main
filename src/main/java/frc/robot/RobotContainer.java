@@ -11,12 +11,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.ClimberConstants;
+import frc.robot.Constants.AutoPathConstants.PathType;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.DriverButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.ShooterButtons;
-import frc.robot.commands.Autonomous.DriveForwardCommand;
-import frc.robot.commands.Autonomous.ShootAndTaxiCommand;
+import frc.robot.commands.Autonomous.Routines.FourBallAutoCommand;
+import frc.robot.commands.Autonomous.Routines.ShootAndTaxiPathCommand;
+import frc.robot.commands.Autonomous.Routines.ThreeBallTarmacCommand;
+import frc.robot.commands.Autonomous.Routines.TwoBallAutoCommand;
 import frc.robot.subsystems.ClimberSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -35,8 +38,8 @@ public class RobotContainer {
   private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
   private final ClimberSubsystem rightClimber = new ClimberSubsystem(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT, new DigitalInput(ClimberConstants.RIGHT_CLIMBER_LIMITSWITCH_ID));
   private final ClimberSubsystem leftClimber = new ClimberSubsystem(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT, new DigitalInput(ClimberConstants.LEFT_CLIMBER_LIMITSWITCH_ID));
-  private final IndexerSubsystem indexer = new IndexerSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final IndexerSubsystem indexer = new IndexerSubsystem(intake);
   private final ShooterSubsystem shooter = new ShooterSubsystem();
   private final VisionSubsystem vision = new VisionSubsystem();
 
@@ -50,8 +53,12 @@ public class RobotContainer {
   }
 
   private void configureAutoSelector() {
-    autoChooser.setDefaultOption("Shoot and Taxi", new ShootAndTaxiCommand(drivetrain, vision, shooter));
-
+    autoChooser.setDefaultOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
+    autoChooser.addOption("3 Ball Wall", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
+    autoChooser.addOption("3 Ball Middle", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));    
+    autoChooser.addOption("4 Ball Wall", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
+    
+    autoChooser.addOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter, intake, indexer));
 
     SmartDashboard.putData("Auto Selector" , autoChooser);
   }
@@ -64,10 +71,10 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    ClimberButtons.Configure(leftClimber, rightClimber, intake);
-    ShooterButtons.Configure(shooter);
+    ClimberButtons.Configure(leftClimber, rightClimber);
+    ShooterButtons.Configure(shooter, indexer);
     IndexerButtons.Configure(intake, indexer, shooter, vision);
-    DriverButtons.Configure(drivetrain, vision, shooter);
+    DriverButtons.Configure(drivetrain, vision, shooter, indexer);
   }
 
   /**
