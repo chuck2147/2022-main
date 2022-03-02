@@ -2,6 +2,7 @@ package frc.robot.Constants;
 
 import java.util.function.DoubleSupplier;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.AxisTrigger;
 import frc.robot.Controller;
@@ -11,6 +12,10 @@ public class ControllerConstants {
 
     private final static Controller driverController = new Controller(0, 0.05);
     private final static Controller operatorController = new Controller(1, 0.05);
+
+    private final static double DRIVE_MAX_ACCELERATION_UNITS_PER_SECOND = 3;
+    private final static double DRIVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 3;
+    
 
     //---------------------------
     // Driver Controller
@@ -64,7 +69,14 @@ public class ControllerConstants {
   
       // Square the axis
       value = Math.copySign(value * value, value);
+
+      value = rateLimit(value);
   
       return value;
+    }
+
+    private static double rateLimit(double speed) {
+      var rateLimiter = new SlewRateLimiter(DRIVE_MAX_ACCELERATION_UNITS_PER_SECOND);
+      return rateLimiter.calculate(speed);
     }
 }
