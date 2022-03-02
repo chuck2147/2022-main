@@ -50,7 +50,10 @@ public final class ShooterConstants{
     public static final NTValue CHUCK_IT_UPPER = new NTValue(19000, "Chuck it Upper"); 
     public static final NTValue CHUCK_IT_LOWER = new NTValue(19000, "Chuck it Lower"); 
 
-    public static final double velocityPIDTolerance = 100;
+    public static final double AUTO_INSIDE_TARMAC_LOWER = 5000;
+    public static final double AUTO_INSIDE_TARMAC_UPPER = 5500;
+
+    public static final double velocityPIDTolerance = 300;
 
     //SHOOTER DISTANCE - from edge of Hub to Limelight - in Inches
     public static final double FRONT_OF_HUB_DISTANCE = 48;

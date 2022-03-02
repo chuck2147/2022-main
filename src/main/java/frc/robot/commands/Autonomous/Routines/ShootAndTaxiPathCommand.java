@@ -9,6 +9,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
+import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;
@@ -25,13 +26,16 @@ import frc.robot.subsystems.VisionSubsystem;
 public class ShootAndTaxiPathCommand extends SequentialCommandGroup {
   /** Creates a new ShootAndTaxiCommand. */
   public ShootAndTaxiPathCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake, IndexerSubsystem indexer) {
-    addRequirements(drivetrain, visionSubsystem, shooter);
+    addRequirements(drivetrain, visionSubsystem, shooter, intake, indexer);
 
     PathPlannerTrajectory pathTrajectory = PathPlanner.loadPath("Taxi", AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared, true);
     
+    var lowerSpeed = ShooterConstants.AUTO_INSIDE_TARMAC_LOWER;
+    var upperSpeed = ShooterConstants.AUTO_INSIDE_TARMAC_LOWER;
+
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer).withTimeout(5),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(5),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
     );
   }

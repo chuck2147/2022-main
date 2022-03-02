@@ -26,6 +26,10 @@ public class AutoPathConstants {
     public static final double kIThetaController = 0;
     public static final double kDThetaController = 0;
 
+    public enum PathType {
+        Middle, Wall
+    }
+
     // Constraint for the motion profilied robot angle controller
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
         new TrapezoidProfile.Constraints(

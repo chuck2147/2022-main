@@ -29,12 +29,19 @@ public class AutoShootCommand extends CommandBase {
   private double waitForFallbackInSeconds = 3;
 
   private boolean fallbackInitiated = false;
+
+  double lowerShooterSpeedDefault;
+  double upperShooterSpeedDefault;
   
-  public AutoShootCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem, ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem) {
-    addRequirements(visionSubsystem, shooterSubsystem, indexerSubsystem);
+  public AutoShootCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem, ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem,
+                          double lowerShooterSpeedDefault, double upperShooterSpeedDefault) {
+    addRequirements(drivetrainSubsystem, visionSubsystem, shooterSubsystem, indexerSubsystem);
     drivetrain = drivetrainSubsystem;
     shooter = shooterSubsystem;
     indexer = indexerSubsystem;
+
+    this.lowerShooterSpeedDefault = lowerShooterSpeedDefault;
+    this.upperShooterSpeedDefault = upperShooterSpeedDefault;
 
     visionShooting = new VisionShooting(visionSubsystem);
     stopWatchShooting = new StopWatch();
@@ -65,7 +72,7 @@ public class AutoShootCommand extends CommandBase {
     else {
       // Run fallback shooting.
       // NOTE: Probably can make this a parameter of distance or just speeds that can vary where we think it should be at.
-      shooter.setSpeeds(ShooterConstants.BEHIND_TARMAC_LOWER.value, ShooterConstants.BEHIND_TARMAC_UPPER.value);
+      shooter.setSpeeds(lowerShooterSpeedDefault, upperShooterSpeedDefault);
 
       if (shooter.isUpToSpeed()) {
         indexer.feedToShooter();
