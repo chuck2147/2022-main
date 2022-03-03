@@ -44,10 +44,10 @@ public class ThreeBallTarmacCommand extends SequentialCommandGroup {
     var upperSpeedEnd = ShooterConstants.BEHIND_TARMAC_UPPER.value;
 
     addCommands(
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedStart, upperSpeedStart).withTimeout(5),
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedStart, upperSpeedStart).withTimeout(4),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedEnd, upperSpeedEnd).withTimeout(5)
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedEnd, upperSpeedEnd).withTimeout(4)
     );
 
   }

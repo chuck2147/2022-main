@@ -8,6 +8,8 @@ package frc.robot.commands.Autonomous.Routines;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
 import frc.robot.Constants.AutoPathConstants.PathType;
@@ -36,10 +38,12 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
 
     String pathName1 = null;
     String pathName2 = null;
+    String pathName3 = null;
 
     if (pathType == PathType.Middle) {
       pathName1 = "2 Ball Middle";
-      pathName2 = "Terminal Middle";
+      pathName2 = "Terminal Middle Part 1";
+      pathName3 = "Terminal Middle Part 2";
     }
     else if (pathType == PathType.Wall) {
       pathName1 = "2 Ball";
@@ -49,16 +53,24 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
     if (pathName1 != null && pathName2 != null) {
       PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
       PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
+      PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
       var lowerSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
       var upperSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
 
       addCommands(
         new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
-        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(5),
-        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(5)
+        // Get first 2 balls.
+        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1)
+          .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(3),    
+        // Get next 2 balls at terminal.  
+        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2)
+          .andThen(new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL))
+            .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
+        // Go back to Tarmac and shoot.
+        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(3)
       );
     }
 

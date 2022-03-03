@@ -8,8 +8,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
 /** Add your docs here. */
 public class AutoPathConstants {
-    public static final double kMaxSpeedMetersPerSecond = DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND / 4;
-    public static final double kMaxAccelerationMetersPerSecondSquared = 3;
+    public static final double kMaxSpeedMetersPerSecond = DrivetrainConstants.MAX_VELOCITY_METERS_PER_SECOND;
+    public static final double kMaxAccelerationMetersPerSecondSquared = 4;
 
     public static final double kMaxAngularSpeedRadiansPerSecond = DrivetrainConstants.MAX_ANGULAR_VELOCITY_RADIANS_PER_SECOND*2;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI*2;
@@ -25,6 +25,8 @@ public class AutoPathConstants {
     public static final double kPThetaController = 12;
     public static final double kIThetaController = 0;
     public static final double kDThetaController = 0;
+
+    public static final double WAIT_FOR_BALL_ROLL_FROM_TERMINAL = 1.0;
 
     public enum PathType {
         Middle, Wall

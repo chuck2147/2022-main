@@ -119,7 +119,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
     // By default we will use Falcon 500s in standard configuration. But if you use a different configuration or motors
     // you MUST change it. If you do not, your code will crash on startup.
 
-    GearRatio swerveGearRatio = Mk4SwerveModuleHelper.GearRatio.L2; //Mk3SwerveModuleHelper.GearRatio.STANDARD
+    GearRatio swerveGearRatio = Mk4SwerveModuleHelper.GearRatio.L2;
 
     m_frontLeftModule = Mk4SwerveModuleHelper.createFalcon500(
             // This parameter is optional, but will allow you to see the current state of the module on the dashboard.
