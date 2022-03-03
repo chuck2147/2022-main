@@ -28,37 +28,41 @@ import frc.robot.subsystems.VisionSubsystem;
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 
 
-public class FourBallAutoCommand extends SequentialCommandGroup {
+public class FiveBallAutoCommand extends SequentialCommandGroup {
   /** Creates a new ShootAndTaxiCommand. */
-  public FourBallAutoCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake, IndexerSubsystem indexer, 
+  public FiveBallAutoCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake, IndexerSubsystem indexer, 
                              PathType pathType) {
     addRequirements(drivetrain, visionSubsystem, shooter, intake, indexer);
 
     String pathName1 = null;
     String pathName2 = null;
 
-    if (pathType == PathType.Middle) {
-      pathName1 = "2 Ball Middle";
-      pathName2 = "Terminal Middle";
+    if (pathType == PathType.Middle) { // Middle is not support yet.
+      pathName1 = "3 Ball Middle";
+      pathName2 = "Terminal Wall";
     }
     else if (pathType == PathType.Wall) {
-      pathName1 = "2 Ball";
-      pathName2 = "Terminal Wall";
+      pathName1 = "3 Ball Wall";
+      pathName2 = "Terminal Middle";
     }
 
     if (pathName1 != null && pathName2 != null) {
       PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
       PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
-      var lowerSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-      var upperSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+      var lowerSpeedStart = ShooterConstants.AUTO_INSIDE_TARMAC_LOWER;
+    var upperSpeedStart = ShooterConstants.AUTO_INSIDE_TARMAC_UPPER;
+
+    var lowerSpeedEnd = ShooterConstants.BEHIND_TARMAC_LOWER.value;
+    var upperSpeedEnd = ShooterConstants.BEHIND_TARMAC_UPPER.value;
 
       addCommands(
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedStart, upperSpeedStart).withTimeout(5),
         new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(5),
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedEnd, lowerSpeedEnd).withTimeout(5),
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(5)
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedEnd, lowerSpeedEnd).withTimeout(5)
       );
     }
 

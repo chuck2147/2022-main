@@ -16,6 +16,7 @@ import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.DriverButtons;
 import frc.robot.buttons.IndexerButtons;
 import frc.robot.buttons.ShooterButtons;
+import frc.robot.commands.Autonomous.Routines.FiveBallAutoCommand;
 import frc.robot.commands.Autonomous.Routines.FourBallAutoCommand;
 import frc.robot.commands.Autonomous.Routines.ShootAndTaxiPathCommand;
 import frc.robot.commands.Autonomous.Routines.ThreeBallTarmacCommand;
@@ -54,9 +55,10 @@ public class RobotContainer {
 
   private void configureAutoSelector() {
     autoChooser.setDefaultOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
-    autoChooser.addOption("3 Ball Wall", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
-    autoChooser.addOption("3 Ball Middle", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));    
-    autoChooser.addOption("4 Ball Wall", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
+    autoChooser.addOption("3 Ball - Start at Wall", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
+    autoChooser.addOption("3 Ball - Start at Middle", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));
+    autoChooser.addOption("4 Ball - Start at Middle", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));    
+    autoChooser.addOption("5 Ball - Start at Wall", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
     
     autoChooser.addOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter, intake, indexer));
 
