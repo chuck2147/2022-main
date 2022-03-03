@@ -38,7 +38,7 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
     String pathName2 = null;
 
     if (pathType == PathType.Middle) {
-      pathName1 = "2 Ball Middle";
+      pathName1 = "4 Ball Middle Part 1";
       pathName2 = "4 Ball Middle Part 2";
     }
     else if (pathType == PathType.Wall) {
