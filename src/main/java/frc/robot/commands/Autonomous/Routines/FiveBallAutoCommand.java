@@ -44,9 +44,9 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
       pathName2 = "Terminal Wall";
     }
     else if (pathType == PathType.Wall) {
-      pathName1 = "3 Ball Wall";
-      pathName2 = "Terminal Middle Part 1";
-      pathName3 = "Terminal Middle Part 2";
+      pathName1 = "5 Ball Wall Part 1";
+      pathName2 = "5 Ball Wall Part 2";
+      pathName3 = "5 Ball Wall Part 3";
     }
 
     if (pathName1 != null && pathName2 != null) {

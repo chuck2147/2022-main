@@ -41,16 +41,16 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
     String pathName3 = null;
 
     if (pathType == PathType.Middle) {
-      pathName1 = "2 Ball Middle";
-      pathName2 = "Terminal Middle Part 1";
-      pathName3 = "Terminal Middle Part 2";
+      pathName1 = "4 Ball Middle Part 1";
+      pathName2 = "4 Ball Middle Part 2";
+      pathName3 = "4 Ball Middle Part 3";
     }
-    else if (pathType == PathType.Wall) {
-      pathName1 = "2 Ball";
-      pathName2 = "Terminal Wall";
-    }
+    // else if (pathType == PathType.Wall) {
+    //   pathName1 = "2 Ball";
+    //   pathName2 = "Terminal Wall";
+    // }
 
-    if (pathName1 != null && pathName2 != null) {
+    if (pathName1 != null && pathName2 != null && pathName3 != null) {
       PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
       PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
       PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
