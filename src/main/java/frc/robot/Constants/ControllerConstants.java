@@ -69,7 +69,7 @@ public class ControllerConstants {
       // Square the axis
       value = Math.copySign(value * value, value);
 
-      value = rateLimit(value);
+      //value = rateLimit(value);
   
       return value;
     }
