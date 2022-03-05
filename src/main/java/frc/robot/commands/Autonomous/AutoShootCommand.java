@@ -24,7 +24,7 @@ public class AutoShootCommand extends CommandBase {
   private StopWatch stopWatchShooting;
   private StopWatch stopWatchFallBack;
 
-  private double waitForShootingToBeDoneInSeconds = 2.5;
+  private double waitForShootingToBeDoneInSeconds = 1.5;
   private double waitForFallbackInSeconds = 2;
 
   private boolean fallbackInitiated = false;

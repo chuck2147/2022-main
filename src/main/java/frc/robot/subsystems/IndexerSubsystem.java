@@ -44,7 +44,7 @@ public class IndexerSubsystem extends SubsystemBase {
   }
 
   public boolean isUpperTriggered() {
-    return irUpper.getVoltage() > IndexerConstants.HOPPER_IR_VOLTAGE;
+    return irUpper.getVoltage() > IndexerConstants.UPPER_IR_VOLTAGE;
   }
 
   public boolean isFull() {
