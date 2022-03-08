@@ -9,7 +9,6 @@ import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
 import frc.robot.Constants.AutoPathConstants.PathType;
@@ -63,14 +62,14 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
         // Get first 2 balls.
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1)
           .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(3),    
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5),    
         // Get next 2 balls at terminal.  
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2)
           .andThen(new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL))
             .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
         // Go back to Tarmac and shoot.
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(3)
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5)
       );
     }
 

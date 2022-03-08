@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-import java.util.function.Function;
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
@@ -10,8 +8,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IndexerConstants;
 import frc.robot.Constants.IntakeConstants.IntakeStates;
-import frc.robot.subsystems.ShooterSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 
 public class IndexerSubsystem extends SubsystemBase {
   private final IntakeStateSupplier intakeStateSupplier;

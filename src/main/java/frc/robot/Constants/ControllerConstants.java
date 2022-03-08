@@ -14,7 +14,7 @@ public class ControllerConstants {
     private final static Controller operatorController = new Controller(1, 0.05);
 
     private final static double DRIVE_MAX_ACCELERATION_UNITS_PER_SECOND = 3;
-    private final static double DRIVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 3;
+    //private final static double DRIVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 3;
     
 
     //---------------------------
