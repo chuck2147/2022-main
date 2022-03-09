@@ -7,7 +7,7 @@ public class VisionConstants {
     public static final double VISION_ALIGN_D = 0.005;
 
     // LIMELIGHT MEASUREMENTS
-    public static final double HUB_HEIGHT = 12 * (8 + (2/3)); // in inches 
+    public static final double HUB_HEIGHT = 104; //12 * (8 + (2/3)); // in inches 
     public static final double LIMELIGHT_HEIGHT = 32;
     public static final double LIMELIGHT_ANGLE = 0.557;  //0.588002603548; // in Radians
 

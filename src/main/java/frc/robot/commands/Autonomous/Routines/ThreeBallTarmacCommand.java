@@ -45,9 +45,9 @@ public class ThreeBallTarmacCommand extends SequentialCommandGroup {
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeedStart, upperSpeedStart).withTimeout(4),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeedStart, upperSpeedStart).withTimeout(2.5),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeedEnd, upperSpeedEnd).withTimeout(4)
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeedEnd, upperSpeedEnd).withTimeout(2.5)
     );
 
   }
