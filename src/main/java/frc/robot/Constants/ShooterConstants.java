@@ -57,8 +57,8 @@ public final class ShooterConstants{
 
     //SHOOTER DISTANCE - from edge of Hub to Limelight - in Inches
     public static final double FRONT_OF_HUB_DISTANCE = 48;
-    public static final double BEHIND_TARMAC_DISTANCE = 120.8;
-    public static final double LAUNCH_PAD_DISTANCE = 245;
+    public static final double BEHIND_TARMAC_DISTANCE = 75.5;
+    public static final double LAUNCH_PAD_DISTANCE = 128;
     public static final double CHUCK_IT_DISTANCE = 0;
 
     // Setup the map of distances to shooter speeds.

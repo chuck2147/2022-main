@@ -62,6 +62,8 @@ public class AutoShootCommand extends CommandBase {
 
     stopWatchFallBack.start();
     fallbackInitiated = true;
+
+    //drivetrain.drive(0, 0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
