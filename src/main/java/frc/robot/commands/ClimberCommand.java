@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
-import frc.robot.subsystems.IntakeSubsystem;
 
 public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
@@ -16,7 +15,7 @@ public class ClimberCommand extends CommandBase {
   private final double encoderValueTop;
   
 
-  public ClimberCommand(ClimberSubsystem subsystem, IntakeSubsystem intake, DoubleSupplier speedSupplier, double encoderValueTop) {
+  public ClimberCommand(ClimberSubsystem subsystem, DoubleSupplier speedSupplier, double encoderValueTop) {
     climberSubsystem = subsystem;
     climbSpeedSupplier = speedSupplier;
     this.encoderValueTop = encoderValueTop;
