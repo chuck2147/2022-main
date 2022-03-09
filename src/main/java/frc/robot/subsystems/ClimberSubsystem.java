@@ -23,6 +23,7 @@ public class ClimberSubsystem extends SubsystemBase {
     this.limitSwitch = limitSwitch;
 
     climberMotor.setInverted(false);
+    climberMotor.configForwardSoftLimitEnable(true, 0);
   }
   
   public ClimberSubsystem() {

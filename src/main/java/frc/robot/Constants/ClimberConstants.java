@@ -32,8 +32,8 @@ public final class ClimberConstants{
     public static double CLIMBER_MOTOR_F = 0;
     
     //Encoder Stopper
-    public static double RIGHT_CLIMBER_ENCODER_TOP = 170801;
-    public static double LEFT_CLIMBER_ENCODER_TOP = -130801;
+    public static double RIGHT_CLIMBER_ENCODER_TOP = 99170801;
+    public static double LEFT_CLIMBER_ENCODER_TOP = -99130801;
     
 } 
 
