@@ -14,14 +14,22 @@ public class ClimberSubsystem extends SubsystemBase {
   private final PneumaticsModuleType moduleType = PneumaticsModuleType.REVPH;
   private DoubleSolenoid climbPiston;
   private double encoderOffset = 0;
+  private final double encoderValueTop;  
 
-  public ClimberSubsystem(int motorID, int forwardPistonID, int reversePistonID) {
+
+  public ClimberSubsystem(int motorID, int forwardPistonID, int reversePistonID, double encoderValueTop) {
+    this.encoderValueTop = encoderValueTop;
+
     climberMotor = new TalonFX(motorID);
     climbPiston = new DoubleSolenoid(moduleType, forwardPistonID, reversePistonID);
 
     climberMotor.setInverted(false);
     climberMotor.setNeutralMode(NeutralMode.Brake);
     climberMotor.configForwardSoftLimitEnable(true, 0);
+  }
+
+  public double getTopEncoderValue() {
+    return encoderValueTop;
   }
   
   public void runClimber(double climbSpeed) {
@@ -34,6 +42,7 @@ public class ClimberSubsystem extends SubsystemBase {
       climbPiston.set(Value.kForward);
     }
   }
+
   public double getEncoderValue(){
     return climberMotor.getSelectedSensorPosition() - encoderOffset;
   }

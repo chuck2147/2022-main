@@ -8,15 +8,16 @@ import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
-  private final ClimberSubsystem climberSubsystem;
+  private final ClimberSubsystem climber;
   private final DoubleSupplier climbSpeedSupplier;
-  private final double encoderValueTop;  
+  private final String climberSubsystemName;
 
-  public ClimberCommand(ClimberSubsystem subsystem, DoubleSupplier speedSupplier, double encoderValueTop) {
-    climberSubsystem = subsystem;
+  public ClimberCommand(ClimberSubsystem subsystem, DoubleSupplier speedSupplier) {
+    climber = subsystem;
     climbSpeedSupplier = speedSupplier;
-    this.encoderValueTop = encoderValueTop;
-    addRequirements(climberSubsystem);
+    addRequirements(climber);
+
+    climberSubsystemName = subsystem.getClass().getSimpleName();
   }
  
   // Called when the command is initially scheduled.
@@ -27,36 +28,60 @@ public class ClimberCommand extends CommandBase {
   @Override
   public void execute() {
     var speed = climbSpeedSupplier.getAsDouble();
+
+    // ---------------------------------
+    // NOTE:  Keeping the old redundant code here for reference, but commenting it out for now.
+    //        Cleaner more performant code is below.
+
+    // if (Math.abs(climber.getEncoderValue()) >= Math.abs(climber.getTopEncoderValue())){
+    //   speed = 0;
+    //   if(climber.getTopEncoderValue() == ClimberConstants.LOW_CLIMBER_ENCODER_TOP) {
+    //     if (climbSpeedSupplier.getAsDouble() < 0) {
+    //       speed = climbSpeedSupplier.getAsDouble();
+    //     }
+    //     //need to continue testing left side of climber, it not working correctly
+    //   } else if (climber.getTopEncoderValue() == ClimberConstants.HIGH_CLIMBER_ENCODER_TOP) {
+    //     if (climbSpeedSupplier.getAsDouble() < 0) {
+    //       speed = climbSpeedSupplier.getAsDouble();
+    //     }
+    //   }
+    // }
+    // if (Math.abs(climber.getEncoderValue()) == 0) {
+    //   speed = 0;
+    //   if (climber.getTopEncoderValue() == ClimberConstants.LOW_CLIMBER_ENCODER_TOP) {
+    //     if (climbSpeedSupplier.getAsDouble() > 0) {
+    //       speed = climbSpeedSupplier.getAsDouble();
+    //     }
+    //     //need to continue testing left side of climber, it not working correctly
+    //   } else if (climber.getTopEncoderValue() == ClimberConstants.HIGH_CLIMBER_ENCODER_TOP) {
+    //     if (climbSpeedSupplier.getAsDouble() > 0) {
+    //       speed = climbSpeedSupplier.getAsDouble();
+    //     }
+    //   }
+    // }
     
-    if (Math.abs(climberSubsystem.getEncoderValue()) >= Math.abs(encoderValueTop)){
+    // Use "climberSubsystemName" instead to figure what climber it is.
+    if (Math.abs(climber.getEncoderValue()) >= Math.abs(climber.getTopEncoderValue())){
       speed = 0;
-      if(encoderValueTop == ClimberConstants.LOW_CLIMBER_ENCODER_TOP) {
-        if (climbSpeedSupplier.getAsDouble() < 0) {
-          speed = climbSpeedSupplier.getAsDouble();
-        }
-        //need to continue testing left side of climber, it not working correctly
-      } else if (encoderValueTop == ClimberConstants.HIGH_CLIMBER_ENCODER_TOP) {
-        if (climbSpeedSupplier.getAsDouble() < 0) {
-          speed = climbSpeedSupplier.getAsDouble();
-        }
+
+      if (climbSpeedSupplier.getAsDouble() < 0) {
+        speed = climbSpeedSupplier.getAsDouble();
       }
+      //need to continue testing left side of climber, it not working correctly
     }
-    if (Math.abs(climberSubsystem.getEncoderValue()) == 0) {
+
+    if (Math.abs(climber.getEncoderValue()) == 0) {
       speed = 0;
-      if (encoderValueTop == ClimberConstants.LOW_CLIMBER_ENCODER_TOP) {
-        if (climbSpeedSupplier.getAsDouble() > 0) {
-          speed = climbSpeedSupplier.getAsDouble();
-        }
-        //need to continue testing left side of climber, it not working correctly
-      } else if (encoderValueTop == ClimberConstants.HIGH_CLIMBER_ENCODER_TOP) {
-        if (climbSpeedSupplier.getAsDouble() > 0) {
-          speed = climbSpeedSupplier.getAsDouble();
-        }
+
+      if (climbSpeedSupplier.getAsDouble() > 0) {
+        speed = climbSpeedSupplier.getAsDouble();
       }
+        //need to continue testing left side of climber, it not working correctly      
     }
+    
     //System.out.println(climbSpeedSupplier.getAsDouble());
-    climberSubsystem.runClimber(speed);
-    climberSubsystem.setClimberPiston(speed);
+    climber.runClimber(speed);
+    climber.setClimberPiston(speed);
   }
 
   // Called once the command ends or is interrupted.

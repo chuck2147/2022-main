@@ -8,7 +8,7 @@ public class ClimberHighSubsystem extends ClimberSubsystem {
   public TalonFX climberMotor;
 
   public ClimberHighSubsystem() {
-    super(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT);
+    super(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT, ClimberConstants.HIGH_CLIMBER_ENCODER_TOP);
       
   }  
   
