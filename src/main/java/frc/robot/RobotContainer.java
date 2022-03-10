@@ -4,13 +4,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.AutoPathConstants.PathType;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.DriverButtons;
@@ -21,7 +19,8 @@ import frc.robot.commands.Autonomous.Routines.FourBallAutoCommand;
 import frc.robot.commands.Autonomous.Routines.ShootAndTaxiPathCommand;
 import frc.robot.commands.Autonomous.Routines.ThreeBallTarmacCommand;
 import frc.robot.commands.Autonomous.Routines.TwoBallAutoCommand;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.subsystems.ClimberHighSubsystem;
+import frc.robot.subsystems.ClimberLowSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.IntakeSubsystem;
@@ -37,8 +36,8 @@ import frc.robot.subsystems.VisionSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
-  private final ClimberSubsystem rightClimber = new ClimberSubsystem(ClimberConstants.RIGHT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT, new DigitalInput(ClimberConstants.RIGHT_CLIMBER_LIMITSWITCH_ID));
-  private final ClimberSubsystem leftClimber = new ClimberSubsystem(ClimberConstants.LEFT_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT, new DigitalInput(ClimberConstants.LEFT_CLIMBER_LIMITSWITCH_ID));
+  private final ClimberLowSubsystem lowClimber = new ClimberLowSubsystem(); // new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT, true);
+  private final ClimberHighSubsystem highClimber = new ClimberHighSubsystem(); // new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT, false);
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final IndexerSubsystem indexer = new IndexerSubsystem(intake);
   private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -73,7 +72,7 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
 
-    ClimberButtons.Configure(leftClimber, rightClimber);
+    ClimberButtons.Configure(lowClimber, highClimber);
     ShooterButtons.Configure(shooter, indexer);
     IndexerButtons.Configure(intake, indexer, shooter, vision);
     DriverButtons.Configure(drivetrain, vision, shooter, indexer);
