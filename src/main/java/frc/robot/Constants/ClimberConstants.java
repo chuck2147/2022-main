@@ -40,5 +40,8 @@ public final class ClimberConstants{
     public static double LOW_CLIMBER_ENCODER_TOP = 99170801;
     public static double HIGH_CLIMBER_ENCODER_TOP = -99130801;
     
+    public enum ClimberType {
+        Low, High
+    }
 } 
 

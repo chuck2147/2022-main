@@ -3,21 +3,17 @@ package frc.robot.commands;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.ClimberConstants;
 import frc.robot.subsystems.ClimberSubsystem;
 
 public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
   private final ClimberSubsystem climber;
   private final DoubleSupplier climbSpeedSupplier;
-  private final String climberSubsystemName;
 
   public ClimberCommand(ClimberSubsystem subsystem, DoubleSupplier speedSupplier) {
     climber = subsystem;
     climbSpeedSupplier = speedSupplier;
     addRequirements(climber);
-
-    climberSubsystemName = subsystem.getClass().getSimpleName();
   }
  
   // Called when the command is initially scheduled.
@@ -60,7 +56,7 @@ public class ClimberCommand extends CommandBase {
     //   }
     // }
     
-    // Use "climberSubsystemName" instead to figure what climber it is.
+    // Use "climber.getType()" instead to figure what climber it is.
     if (Math.abs(climber.getEncoderValue()) >= Math.abs(climber.getTopEncoderValue())){
       speed = 0;
 
@@ -78,7 +74,7 @@ public class ClimberCommand extends CommandBase {
       }
         //need to continue testing left side of climber, it not working correctly      
     }
-    
+
     //System.out.println(climbSpeedSupplier.getAsDouble());
     climber.runClimber(speed);
     climber.setClimberPiston(speed);
