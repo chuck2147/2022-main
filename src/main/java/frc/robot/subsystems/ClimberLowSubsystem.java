@@ -19,11 +19,11 @@ public class ClimberLowSubsystem extends ClimberSubsystem {
   }
   
   public void pushHook(){
-    hookPiston.set(Value.kForward);
+    hookPiston.set(Value.kReverse);
   }
 
   public void pullHook(){
-    hookPiston.set(Value.kReverse);
+    hookPiston.set(Value.kForward);
   }
   
 }
