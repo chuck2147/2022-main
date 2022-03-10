@@ -22,7 +22,5 @@ public class ClimberButtons {
         highSubsystem.setDefaultCommand(new ClimberCommand(highSubsystem, ControllerConstants.CLIMB_HIGH_AXIS, ClimberConstants.HIGH_CLIMBER_ENCODER_TOP));
         
         hookButton.whileHeld(new ClimberHookCommand(lowSubsystem));
-        //hookButton.whileHeld(leftSubsystem::pushHook);
-        //hookButton.whenReleased(leftSubsystem::pullHook);
     } 
 }

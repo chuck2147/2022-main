@@ -12,6 +12,7 @@ public class ClimberHookCommand extends CommandBase {
 
   public ClimberHookCommand(ClimberLowSubsystem lowSubsystem) {
     climber = lowSubsystem;
+    addRequirements(climber);
   }
 
   // Called when the command is initially scheduled.
