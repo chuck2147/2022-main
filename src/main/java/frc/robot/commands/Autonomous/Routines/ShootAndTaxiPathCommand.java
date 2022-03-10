@@ -10,6 +10,7 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.Constants.IndexerConstants.BallCount;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;
@@ -35,7 +36,7 @@ public class ShootAndTaxiPathCommand extends SequentialCommandGroup {
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeed, upperSpeed).withTimeout(5),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeed, upperSpeed).withTimeout(3),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
     );
   }

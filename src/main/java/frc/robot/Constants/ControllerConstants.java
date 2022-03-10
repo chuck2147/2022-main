@@ -14,7 +14,7 @@ public class ControllerConstants {
     private final static Controller operatorController = new Controller(1, 0.05);
 
     private final static double DRIVE_MAX_ACCELERATION_UNITS_PER_SECOND = 3;
-    private final static double DRIVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 3;
+    //private final static double DRIVE_MAX_ANGULAR_ACCELERATION_UNITS_PER_SECOND = 3;
     
 
     //---------------------------
@@ -40,8 +40,9 @@ public class ControllerConstants {
     // Operator Controller
 
     //CLIMBER BUTTONS
-    public static DoubleSupplier CLIMB_RIGHT_AXIS = () -> -operatorController.getRightY();
-    public static DoubleSupplier CLIMB_LEFT_AXIS = () -> -operatorController.getLeftY();
+    public static DoubleSupplier CLIMB_LOW_AXIS = () -> -operatorController.getRightY();
+    public static DoubleSupplier CLIMB_HIGH_AXIS = () -> -operatorController.getLeftY();
+    public static JoystickButton HOOK_PISTON = operatorController.getButton(Controller.Button.A);
     //INTAKE BUTTONS
     public static AxisTrigger RUN_INTAKE_REVERSE = new AxisTrigger(operatorController, 2);
     public static AxisTrigger RUN_COLLECT_INTAKE = new AxisTrigger(operatorController, 3);

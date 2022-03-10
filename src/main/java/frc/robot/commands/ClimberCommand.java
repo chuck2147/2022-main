@@ -1,7 +1,3 @@
-// Copyright (c) FIRST and other WPILib contributors.
-// Open Source Software; you can modify and/or share it under the terms of
-// the WPILib BSD license file in the root directory of this project.
-
 package frc.robot.commands;
 
 import java.util.function.DoubleSupplier;
@@ -14,7 +10,7 @@ public class ClimberCommand extends CommandBase {
   /** Creates a new ClimberCommand. */
   private final ClimberSubsystem climberSubsystem;
   private final DoubleSupplier climbSpeedSupplier;
-  private final double encoderValueTop;
+  private final double encoderValueTop;  
 
   public ClimberCommand(ClimberSubsystem subsystem, DoubleSupplier speedSupplier, double encoderValueTop) {
     climberSubsystem = subsystem;
@@ -22,7 +18,7 @@ public class ClimberCommand extends CommandBase {
     this.encoderValueTop = encoderValueTop;
     addRequirements(climberSubsystem);
   }
-
+ 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {}
@@ -31,15 +27,15 @@ public class ClimberCommand extends CommandBase {
   @Override
   public void execute() {
     var speed = climbSpeedSupplier.getAsDouble();
-
+    
     if (Math.abs(climberSubsystem.getEncoderValue()) >= Math.abs(encoderValueTop)){
       speed = 0;
-      if(encoderValueTop == ClimberConstants.RIGHT_CLIMBER_ENCODER_TOP) {
+      if(encoderValueTop == ClimberConstants.LOW_CLIMBER_ENCODER_TOP) {
         if (climbSpeedSupplier.getAsDouble() < 0) {
           speed = climbSpeedSupplier.getAsDouble();
         }
         //need to continue testing left side of climber, it not working correctly
-      } else if (encoderValueTop == ClimberConstants.LEFT_CLIMBER_ENCODER_TOP) {
+      } else if (encoderValueTop == ClimberConstants.HIGH_CLIMBER_ENCODER_TOP) {
         if (climbSpeedSupplier.getAsDouble() < 0) {
           speed = climbSpeedSupplier.getAsDouble();
         }
@@ -47,12 +43,12 @@ public class ClimberCommand extends CommandBase {
     }
     if (Math.abs(climberSubsystem.getEncoderValue()) == 0) {
       speed = 0;
-      if (encoderValueTop == ClimberConstants.RIGHT_CLIMBER_ENCODER_TOP) {
+      if (encoderValueTop == ClimberConstants.LOW_CLIMBER_ENCODER_TOP) {
         if (climbSpeedSupplier.getAsDouble() > 0) {
           speed = climbSpeedSupplier.getAsDouble();
         }
         //need to continue testing left side of climber, it not working correctly
-      } else if (encoderValueTop == ClimberConstants.LEFT_CLIMBER_ENCODER_TOP) {
+      } else if (encoderValueTop == ClimberConstants.HIGH_CLIMBER_ENCODER_TOP) {
         if (climbSpeedSupplier.getAsDouble() > 0) {
           speed = climbSpeedSupplier.getAsDouble();
         }

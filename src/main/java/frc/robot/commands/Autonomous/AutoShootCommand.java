@@ -7,6 +7,7 @@ package frc.robot.commands.Autonomous;
 import frc.robot.util.StopWatch;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IndexerConstants.BallCount;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
 import frc.robot.subsystems.ShooterSubsystem;
@@ -24,8 +25,11 @@ public class AutoShootCommand extends CommandBase {
   private StopWatch stopWatchShooting;
   private StopWatch stopWatchFallBack;
 
-  private double waitForShootingToBeDoneInSeconds = 3;
-  private double waitForFallbackInSeconds = 3;
+  private double waitForShootingToBeDoneInSeconds_TwoBall = 1.5;
+  private double waitForShootingToBeDoneInSeconds_OneBall = 0.9;
+  private double waitForShootingToBeDoneInSeconds;
+
+  private double waitForFallbackInSeconds = 2;
 
   private boolean fallbackInitiated = false;
 
@@ -33,8 +37,11 @@ public class AutoShootCommand extends CommandBase {
   double upperShooterSpeedDefault;
   
   public AutoShootCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem, ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem,
-                          double lowerShooterSpeedDefault, double upperShooterSpeedDefault) {
+                          BallCount ballCountToShoot, double lowerShooterSpeedDefault, double upperShooterSpeedDefault) {
     addRequirements(drivetrainSubsystem, visionSubsystem, shooterSubsystem, indexerSubsystem);
+    
+    waitForShootingToBeDoneInSeconds = (ballCountToShoot == BallCount.One) ? waitForShootingToBeDoneInSeconds_OneBall : waitForShootingToBeDoneInSeconds_TwoBall;
+
     drivetrain = drivetrainSubsystem;
     shooter = shooterSubsystem;
     indexer = indexerSubsystem;
@@ -55,6 +62,8 @@ public class AutoShootCommand extends CommandBase {
 
     stopWatchFallBack.start();
     fallbackInitiated = true;
+
+    //drivetrain.drive(0, 0, 0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

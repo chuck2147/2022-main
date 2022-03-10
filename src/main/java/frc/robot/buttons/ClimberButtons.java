@@ -4,15 +4,23 @@
 
 package frc.robot.buttons;
 
-
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.ClimberConstants;
 import frc.robot.Constants.ControllerConstants;
 import frc.robot.commands.ClimberCommand;
-import frc.robot.subsystems.ClimberSubsystem;
+import frc.robot.commands.ClimberHookCommand;
+import frc.robot.subsystems.ClimberHighSubsystem;
+import frc.robot.subsystems.ClimberLowSubsystem;
 
 public class ClimberButtons {
-    public static void Configure(ClimberSubsystem leftSubsystem, ClimberSubsystem rightSubsystem) {
-        rightSubsystem.setDefaultCommand(new ClimberCommand(rightSubsystem, ControllerConstants.CLIMB_RIGHT_AXIS, ClimberConstants.RIGHT_CLIMBER_ENCODER_TOP));
-        leftSubsystem.setDefaultCommand(new ClimberCommand(leftSubsystem, ControllerConstants.CLIMB_LEFT_AXIS, ClimberConstants.LEFT_CLIMBER_ENCODER_TOP));
+
+    public static void Configure(ClimberLowSubsystem lowSubsystem, ClimberHighSubsystem highSubsystem) {
+        
+        final JoystickButton hookButton = ControllerConstants.HOOK_PISTON;
+
+        lowSubsystem.setDefaultCommand(new ClimberCommand(lowSubsystem, ControllerConstants.CLIMB_LOW_AXIS, ClimberConstants.LOW_CLIMBER_ENCODER_TOP));
+        highSubsystem.setDefaultCommand(new ClimberCommand(highSubsystem, ControllerConstants.CLIMB_HIGH_AXIS, ClimberConstants.HIGH_CLIMBER_ENCODER_TOP));
+        
+        hookButton.whileHeld(new ClimberHookCommand(lowSubsystem));
     } 
 }

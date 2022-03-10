@@ -39,17 +39,17 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
     String pathName2 = null;
     String pathName3 = null;
 
-    if (pathType == PathType.Middle) { // Middle is not support yet.
-      pathName1 = "3 Ball Middle";
-      pathName2 = "Terminal Wall";
-    }
-    else if (pathType == PathType.Wall) {
+    if (pathType == PathType.Wall) {
       pathName1 = "5 Ball Wall Part 1";
       pathName2 = "5 Ball Wall Part 2";
       pathName3 = "5 Ball Wall Part 3";
     }
+    // else if (pathType == PathType.Middle) { // Middle is not supported yet.
+    //   pathName1 = "3 Ball Middle";
+    //   pathName2 = "Terminal Wall";
+    // }
 
-    if (pathName1 != null && pathName2 != null) {
+    if (pathName1 != null && pathName2 != null && pathName3 != null) {
       PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
       PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
       PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
@@ -63,18 +63,18 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
       addCommands(
         new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
         // Shoot the first ball.
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedStart, upperSpeedStart).withTimeout(3),
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeedStart, upperSpeedStart).withTimeout(1.5),
         // Go around the tarmac and get 2 more balls and shoot.
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1)
           .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedEnd, upperSpeedEnd).withTimeout(3),
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeedEnd, upperSpeedEnd).withTimeout(2.5),
         // Get next 2 balls at terminal.  
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2)
           .andThen(new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL))
             .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
         // Go back to Tarmac and shoot.
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, lowerSpeedEnd, upperSpeedEnd).withTimeout(3)
+        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeedEnd, upperSpeedEnd).withTimeout(2.5)
       );
     }
 
