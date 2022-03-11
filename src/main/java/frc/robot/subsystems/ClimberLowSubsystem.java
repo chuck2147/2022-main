@@ -14,7 +14,11 @@ public class ClimberLowSubsystem extends ClimberSubsystem {
   private DoubleSolenoid hookPiston;
 
   public ClimberLowSubsystem() {
-    super(ClimberType.Low, ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT, ClimberConstants.LOW_CLIMBER_ENCODER_TOP);
+    super(ClimberType.Low, 
+          ClimberConstants.LOW_CLIMBER_MOTOR_ID, 
+          ClimberConstants.CLIMBER_LOW_AIR_IN, 
+          ClimberConstants.CLIMBER_LOW_AIR_OUT, 
+          ClimberConstants.LOW_CLIMBER_ENCODER_OFFSET);
     
     hookPiston = new DoubleSolenoid(moduleType, ClimberConstants.HOOK_LOW_AIR_IN, ClimberConstants.HOOK_LOW_AIR_OUT);  
   }

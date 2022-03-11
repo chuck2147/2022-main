@@ -9,19 +9,19 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberConstants.ClimberType;
+import frc.robot.util.MathCommon;
 
 public class ClimberSubsystem extends SubsystemBase {
-  public TalonFX climberMotor;
+  private TalonFX climberMotor;
   private final PneumaticsModuleType moduleType = PneumaticsModuleType.REVPH;
   private DoubleSolenoid pneumaticBrakePiston;
-  private double encoderOffset = 0;
-  private final double encoderValueTop;
+  private final double encoderOffset;
   private final ClimberType climberType;
 
 
-  public ClimberSubsystem(ClimberType climberType, int motorID, int forwardPistonID, int reversePistonID, double encoderValueTop) {
+  public ClimberSubsystem(ClimberType climberType, int motorID, int forwardPistonID, int reversePistonID, double encoderOffset) {
     this.climberType = climberType;
-    this.encoderValueTop = encoderValueTop;
+    this.encoderOffset = encoderOffset;
 
     climberMotor = new TalonFX(motorID);
     pneumaticBrakePiston = new DoubleSolenoid(moduleType, forwardPistonID, reversePistonID);
@@ -34,6 +34,10 @@ public class ClimberSubsystem extends SubsystemBase {
 
   public ClimberType getType() {
     return climberType;
+  }
+
+  public double getEncoderValue() {
+    return climberMotor.getSelectedSensorPosition() - encoderOffset;
   }
   
   public void runClimber(double climbSpeed) {
