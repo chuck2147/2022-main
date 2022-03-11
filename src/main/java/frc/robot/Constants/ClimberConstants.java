@@ -16,8 +16,8 @@ public final class ClimberConstants{
     //MOTOR ID
     public static int HIGH_CLIMBER_MOTOR_ID = 19;
     public static int LOW_CLIMBER_MOTOR_ID = 18;
-    //public static int LOW_CLIMBER_LIMITSWITCH_ID = 0;
-   // public static int HIGH_CLIMBER_LIMITSWITCH_ID = 1;
+    public static int LOW_CLIMBER_LIMITSWITCH_ID = 0;
+    public static int HIGH_CLIMBER_LIMITSWITCH_ID = 1;
 
     // BRAKE PNEUMATIC ID
     public static int CLIMBER_HIGH_AIR_IN = 5;
@@ -27,8 +27,8 @@ public final class ClimberConstants{
 
     // HOOK PNEUMATIC ID
     // FIXME WITH CORRECT IDs
-    public static int HOOK_LOW_AIR_IN = 11;
-    public static int HOOK_LOW_AIR_OUT = 12;
+    public static int HOOK_LOW_AIR_IN = 9;
+    public static int HOOK_LOW_AIR_OUT = 8;
 
     //MOTOR PIDs
     public static double CLIMBER_MOTOR_P = 0;

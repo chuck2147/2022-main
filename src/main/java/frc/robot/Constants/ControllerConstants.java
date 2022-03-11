@@ -40,7 +40,7 @@ public class ControllerConstants {
     // Operator Controller
 
     //CLIMBER BUTTONS
-    public static DoubleSupplier CLIMB_LOW_AXIS = () -> -operatorController.getRightY();
+    public static DoubleSupplier CLIMB_LOW_AXIS = () -> operatorController.getRightY();
     public static DoubleSupplier CLIMB_HIGH_AXIS = () -> -operatorController.getLeftY();
     public static JoystickButton HOOK_PISTON = operatorController.getButton(Controller.Button.A);
     //INTAKE BUTTONS

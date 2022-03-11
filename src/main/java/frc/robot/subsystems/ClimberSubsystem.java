@@ -13,7 +13,7 @@ import frc.robot.Constants.ClimberConstants.ClimberType;
 public class ClimberSubsystem extends SubsystemBase {
   public TalonFX climberMotor;
   private final PneumaticsModuleType moduleType = PneumaticsModuleType.REVPH;
-  private DoubleSolenoid climbPiston;
+  private DoubleSolenoid pneumaticBrakePiston;
   private double encoderOffset = 0;
   private final double encoderValueTop;
   private final ClimberType climberType;
@@ -24,44 +24,29 @@ public class ClimberSubsystem extends SubsystemBase {
     this.encoderValueTop = encoderValueTop;
 
     climberMotor = new TalonFX(motorID);
-    climbPiston = new DoubleSolenoid(moduleType, forwardPistonID, reversePistonID);
+    pneumaticBrakePiston = new DoubleSolenoid(moduleType, forwardPistonID, reversePistonID);
 
     climberMotor.setInverted(false);
     climberMotor.setNeutralMode(NeutralMode.Brake);
-    climberMotor.configForwardSoftLimitEnable(true, 0);
+    // climberMotor.configReverseSoftLimitEnable(false, 0);
+    // climberMotor.configForwardSoftLimitEnable(false, 0);
   }
 
   public ClimberType getType() {
     return climberType;
   }
-
-  public double getTopEncoderValue() {
-    return encoderValueTop;
-  }
   
   public void runClimber(double climbSpeed) {
     climberMotor.set(ControlMode.PercentOutput, climbSpeed);
 
-    if (climbSpeed == 0) {
-      climbPiston.set(Value.kReverse);
+    if (Math.abs(climbSpeed) < 0.01) {
+      pneumaticBrakePiston.set(Value.kForward);
     }
     else {
-      climbPiston.set(Value.kForward);
+      pneumaticBrakePiston.set(Value.kReverse);
     }
   }
 
-  public double getEncoderValue(){
-    return climberMotor.getSelectedSensorPosition() - encoderOffset;
-  }
-  
-  public void setClimberPiston(double climbSpeed){
-    if (Math.abs(climbSpeed) < 0.01) {
-      climbPiston.set(Value.kReverse);
-    }
-    else {
-      climbPiston.set(Value.kForward);
-    }
-  }
   @Override
   public void periodic() { 
     // if(!limitSwitch.get()) {

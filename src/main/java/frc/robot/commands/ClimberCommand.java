@@ -57,27 +57,30 @@ public class ClimberCommand extends CommandBase {
     // }
     
     // Use "climber.getType()" instead to figure what climber it is.
-    if (Math.abs(climber.getEncoderValue()) >= Math.abs(climber.getTopEncoderValue())){
-      speed = 0;
+    // if (Math.abs(climber.getEncoderValue()) >= Math.abs(climber.getTopEncoderValue())){
+    //   speed = 0;
 
-      if (climbSpeedSupplier.getAsDouble() < 0) {
-        speed = climbSpeedSupplier.getAsDouble();
-      }
-      //need to continue testing left side of climber, it not working correctly
-    }
+    //   if (climbSpeedSupplier.getAsDouble() < 0) {
+    //     speed = climbSpeedSupplier.getAsDouble();
+    //   }
+    //   //need to continue testing left side of climber, it not working correctly
+    // }
 
-    if (Math.abs(climber.getEncoderValue()) == 0) {
-      speed = 0;
+    // if (Math.abs(climber.getEncoderValue()) == 0) {
+    //   speed = 0;
 
-      if (climbSpeedSupplier.getAsDouble() > 0) {
-        speed = climbSpeedSupplier.getAsDouble();
-      }
-        //need to continue testing left side of climber, it not working correctly      
-    }
+    //   if (climbSpeedSupplier.getAsDouble() > 0) {
+    //     speed = climbSpeedSupplier.getAsDouble();
+    //   }
+    //     //need to continue testing left side of climber, it not working correctly      
+    // }
 
     //System.out.println(climbSpeedSupplier.getAsDouble());
+    // if(climber.getEncoderValue() <= 0 && climbSpeedSupplier.getAsDouble() <= 0) {
+    //   speed = 0; 
+    // }
+
     climber.runClimber(speed);
-    climber.setClimberPiston(speed);
   }
 
   // Called once the command ends or is interrupted.
