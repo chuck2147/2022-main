@@ -28,7 +28,7 @@ public class ControllerConstants {
     public static JoystickButton FRONT_OF_HUB_SHOT = driverController.getButton(Controller.Button.A);
     public static JoystickButton BEHIND_TARMAC_SHOT = driverController.getButton(Controller.Button.X);
     public static JoystickButton LAUNCH_PAD_SHOT = driverController.getButton(Controller.Button.Y);
-    public static JoystickButton CHUCK_IT_SHOT = driverController.getButton(Controller.Button.RightBumper);
+    //public static JoystickButton CHUCK_IT_SHOT = driverController.getButton(Controller.Button.RightBumper);
     public static JoystickButton VISION_ALIGN = driverController.getButton(Controller.Button.B);
     public static JoystickButton VISION_AND_SHOOTER_ALIGN = driverController.getButton(Controller.Button.LeftBumper);
 
@@ -42,7 +42,7 @@ public class ControllerConstants {
     //CLIMBER BUTTONS
     public static DoubleSupplier CLIMB_LOW_AXIS = () -> operatorController.getRightY();
     public static DoubleSupplier CLIMB_HIGH_AXIS = () -> -operatorController.getLeftY();
-    public static JoystickButton HOOK_PISTON = operatorController.getButton(Controller.Button.A);
+    public static JoystickButton HOOK_PISTON = driverController.getButton(Controller.Button.RightBumper);
     //INTAKE BUTTONS
     public static AxisTrigger RUN_INTAKE_REVERSE = new AxisTrigger(operatorController, 2);
     public static AxisTrigger RUN_COLLECT_INTAKE = new AxisTrigger(operatorController, 3);
