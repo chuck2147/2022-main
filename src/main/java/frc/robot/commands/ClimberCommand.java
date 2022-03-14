@@ -26,24 +26,7 @@ public class ClimberCommand extends CommandBase {
     var speed = climbSpeedSupplier.getAsDouble();
     
     // Use "climber.getType()" instead to figure what climber it is.
-    // if (Math.abs(climber.getEncoderValue()) >= Math.abs(climber.getTopEncoderValue())){
-    //   speed = 0;
-
-    //   if (climbSpeedSupplier.getAsDouble() < 0) {
-    //     speed = climbSpeedSupplier.getAsDouble();
-    //   }
-    //   //need to continue testing left side of climber, it not working correctly
-    // }
-
-    // if (Math.abs(climber.getEncoderValue()) == 0) {
-    //   speed = 0;
-
-    //   if (climbSpeedSupplier.getAsDouble() > 0) {
-    //     speed = climbSpeedSupplier.getAsDouble();
-    //   }
-    //     //need to continue testing left side of climber, it not working correctly      
-    // }
-
+    
     //---------------------------------------------
     // NOTE: Put this back in before next practice.
     // if(climber.getEncoderValue() <= 0 && climbSpeedSupplier.getAsDouble() <= 0) {

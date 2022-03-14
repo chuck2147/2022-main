@@ -7,6 +7,7 @@ package frc.robot.commands.Autonomous.Routines;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.PathPlannerTrajectory;
 
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -14,6 +15,8 @@ import frc.robot.Constants.IndexerConstants.BallCount;
 import frc.robot.commands.Autonomous.AutoCollectCommand;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
+import frc.robot.commands.Autonomous.AutoStartIntakeCommand;
+import frc.robot.commands.Autonomous.AutoStopIntakeCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -37,9 +40,25 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
     var upperSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
 
     addCommands(
-      new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose())
-        .andThen(AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory))
-          .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
+      new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
+      // Get first 2 balls.
+      // (new WaitCommand(0.5))
+      //   .andThen(AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory))
+      //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
+      // new SequentialCommandGroup(
+      //   new WaitCommand(0.5),
+      //   AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1))
+      //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
+
+      // AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
+      //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
+
+      // Get first 2 balls.
+      new AutoStartIntakeCommand(intake),
+      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory),
+      new AutoStopIntakeCommand(intake),
+
+      // Shoot 2 balls
       new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5)
     );
 

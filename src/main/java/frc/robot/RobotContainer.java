@@ -36,8 +36,8 @@ import frc.robot.subsystems.VisionSubsystem;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final DrivetrainSubsystem drivetrain = DrivetrainSubsystem.getInstance();
-  private final ClimberLowSubsystem lowClimber = new ClimberLowSubsystem(); // new ClimberSubsystem(ClimberConstants.LOW_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_LOW_AIR_IN, ClimberConstants.CLIMBER_LOW_AIR_OUT, true);
-  private final ClimberHighSubsystem highClimber = new ClimberHighSubsystem(); // new ClimberSubsystem(ClimberConstants.HIGH_CLIMBER_MOTOR_ID, ClimberConstants.CLIMBER_HIGH_AIR_IN, ClimberConstants.CLIMBER_HIGH_AIR_OUT, false);
+  private final ClimberLowSubsystem lowClimber = new ClimberLowSubsystem();
+  private final ClimberHighSubsystem highClimber = new ClimberHighSubsystem();
   private final IntakeSubsystem intake = new IntakeSubsystem();
   private final IndexerSubsystem indexer = new IndexerSubsystem(intake);
   private final ShooterSubsystem shooter = new ShooterSubsystem();
@@ -54,12 +54,12 @@ public class RobotContainer {
 
   private void configureAutoSelector() {
     autoChooser.addOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
-    autoChooser.addOption("3 Ball - Start at Wall", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
-    autoChooser.addOption("3 Ball - Start at Middle", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));
-    autoChooser.setDefaultOption("4 Ball - Start at Middle", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));    
-    autoChooser.addOption("5 Ball - Start at Wall", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
+    //autoChooser.addOption("3 Ball - Start at Wall", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
+    //autoChooser.addOption("3 Ball - Start at Middle", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));
+    autoChooser.setDefaultOption("4 Ball", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));    
+    //autoChooser.addOption("5 Ball - Start at Wall", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
     
-    autoChooser.addOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter, intake, indexer));
+    //autoChooser.addOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter, intake, indexer));
 
     SmartDashboard.putData("Auto Selector" , autoChooser);
   }

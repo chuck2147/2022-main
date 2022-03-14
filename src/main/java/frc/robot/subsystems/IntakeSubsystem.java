@@ -15,7 +15,6 @@ import frc.robot.subsystems.IndexerSubsystem.IntakeStateSupplier;
 public class IntakeSubsystem extends SubsystemBase implements IntakeStateSupplier {
   private TalonFX intakeMotor = new TalonFX(IntakeConstants.INTAKE_MOTOR_ID);
   private IntakeStates intakeState = IntakeStates.Stopped;
-  private boolean wasStateSet = false;
 
   private PneumaticsModuleType intakeLeftModuleType = PneumaticsModuleType.REVPH;
   private PneumaticsModuleType intakeRightModuleType = PneumaticsModuleType.REVPH;
@@ -28,16 +27,26 @@ public class IntakeSubsystem extends SubsystemBase implements IntakeStateSupplie
     intakeMotor.setNeutralMode(NeutralMode.Coast);
 
     intakeMotor.setInverted(false);
+
+    stopIntake();
   }
 
   public void runIntakeForward() {
     intakeState = IntakeStates.Forward;
-    wasStateSet = true;
+
+    setIntake(-IntakeConstants.INTAKE_MOTOR_SPEED, Value.kForward);
   }
 
   public void runIntakeReverse() {
     intakeState = IntakeStates.Reverse;
-    wasStateSet = true;
+
+    setIntake(IntakeConstants.INTAKE_MOTOR_SPEED, Value.kForward);
+  }
+
+  public void stopIntake() {
+    intakeState = IntakeStates.Stopped;
+
+    setIntake(0, Value.kReverse);
   }
 
   public IntakeStates getState() {
@@ -46,28 +55,12 @@ public class IntakeSubsystem extends SubsystemBase implements IntakeStateSupplie
 
   @Override
   public void periodic() {
-    if(!wasStateSet){
-      intakeState = IntakeStates.Stopped;
-    }
+  }
 
-    double motorSpeed = 0;
-    if (intakeState == IntakeStates.Forward) {
-      motorSpeed = -IntakeConstants.INTAKE_MOTOR_SPEED;
-      intakeRightPiston.set(Value.kForward);
-      intakeLeftPiston.set(Value.kForward);
-    } 
-    else if (intakeState == IntakeStates.Reverse) {
-      motorSpeed = IntakeConstants.INTAKE_MOTOR_SPEED;
-      intakeRightPiston.set(Value.kForward);
-      intakeLeftPiston.set(Value.kForward);
-    } 
-    else {
-      intakeRightPiston.set(Value.kReverse);
-      intakeLeftPiston.set(Value.kReverse);
-    }
+  private void setIntake(double motorSpeed, Value direction) {
+    intakeRightPiston.set(direction);
+    intakeLeftPiston.set(direction);
 
     intakeMotor.set(ControlMode.PercentOutput, motorSpeed);
-
-    wasStateSet = false;
   }
 }
