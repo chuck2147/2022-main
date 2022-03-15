@@ -12,11 +12,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.IndexerConstants.BallCount;
+import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.commands.Autonomous.AutoCollectCommand;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
-import frc.robot.commands.Autonomous.AutoStartIntakeCommand;
-import frc.robot.commands.Autonomous.AutoStopIntakeCommand;
+import frc.robot.commands.Autonomous.AutoPathIntakeCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -54,9 +54,9 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
       //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
 
       // Get first 2 balls.
-      new AutoStartIntakeCommand(intake),
+      new AutoPathIntakeCommand(intake, IntakeStates.Forward),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory),
-      new AutoStopIntakeCommand(intake),
+      new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
       // Shoot 2 balls
       new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5)

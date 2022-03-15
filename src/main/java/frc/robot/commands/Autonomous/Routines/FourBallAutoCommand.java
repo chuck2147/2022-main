@@ -14,11 +14,10 @@ import frc.robot.Constants.AutoPathConstants;
 import frc.robot.Constants.AutoPathConstants.PathType;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.IndexerConstants.BallCount;
-import frc.robot.commands.Autonomous.AutoCollectCommand;
+import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
-import frc.robot.commands.Autonomous.AutoStartIntakeCommand;
-import frc.robot.commands.Autonomous.AutoStopIntakeCommand;
+import frc.robot.commands.Autonomous.AutoPathIntakeCommand;
 import frc.robot.commands.Autonomous.ResetOdometryCommand;
 import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.IndexerSubsystem;
@@ -73,9 +72,9 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
 
         // AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1)        
         //   .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-        new AutoStartIntakeCommand(intake),
+        new AutoPathIntakeCommand(intake, IntakeStates.Forward),
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1),
-        new AutoStopIntakeCommand(intake),
+        new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
         // Shoot first 2 balls.
         new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5),
@@ -90,11 +89,11 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
         //Get next 2 balls at terminal.
         //new AutoStartIntakeCommand(intake),
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2)
-          .alongWith(new AutoStartIntakeCommand(intake)),
+          .alongWith(new AutoPathIntakeCommand(intake, IntakeStates.Forward)),
         new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
         // Go back to Tarmac and shoot.
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
-        new AutoStopIntakeCommand(intake),
+        new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
         // Shoot last two balls.
         new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5)

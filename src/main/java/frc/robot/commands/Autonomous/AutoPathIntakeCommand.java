@@ -5,23 +5,32 @@
 package frc.robot.commands.Autonomous;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.IntakeConstants.IntakeStates;
 import frc.robot.subsystems.IntakeSubsystem;
 
-public class AutoStopIntakeCommand extends CommandBase {
+public class AutoPathIntakeCommand extends CommandBase {
   
   private final IntakeSubsystem intake;
   private boolean done = false;
+  private IntakeStates intakeState;
 
-  public AutoStopIntakeCommand(IntakeSubsystem intake) {
+  public AutoPathIntakeCommand(IntakeSubsystem intake, IntakeStates intakeState) {
 
     this.intake = intake;
+    this.intakeState = intakeState;
     addRequirements(intake);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    intake.stopIntake();
+
+    if (intakeState == IntakeStates.Forward) {
+      intake.runIntakeForward();
+    }
+    else if (intakeState == IntakeStates.Stopped) {
+      intake.stopIntake();
+    }
     
     done = true;
   }
