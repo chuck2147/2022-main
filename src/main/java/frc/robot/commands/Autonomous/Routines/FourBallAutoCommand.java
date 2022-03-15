@@ -87,7 +87,6 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
         //       .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
 
         //Get next 2 balls at terminal.
-        //new AutoStartIntakeCommand(intake),
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2)
           .alongWith(new AutoPathIntakeCommand(intake, IntakeStates.Forward)),
         new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
