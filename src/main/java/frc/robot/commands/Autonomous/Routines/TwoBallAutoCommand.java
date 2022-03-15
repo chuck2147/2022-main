@@ -55,6 +55,7 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
 
       // Get first 2 balls.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),
+      new WaitCommand(1),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory),
       new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 

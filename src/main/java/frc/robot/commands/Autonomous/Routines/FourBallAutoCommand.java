@@ -75,6 +75,7 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
 
         // Get first 2 balls.
         new AutoPathIntakeCommand(intake, IntakeStates.Forward),
+        new WaitCommand(1),
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1),
         new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
@@ -89,8 +90,8 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
         //       .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
 
         //Get next 2 balls at terminal.
-        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2)
-          .alongWith(new AutoPathIntakeCommand(intake, IntakeStates.Forward)),
+        new AutoPathIntakeCommand(intake, IntakeStates.Forward),
+        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2),
         new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
         
         // Go back to Tarmac and shoot.
