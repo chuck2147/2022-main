@@ -59,7 +59,7 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
       new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
       // Shoot 2 balls
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5)
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(3)
     );
 
   }
