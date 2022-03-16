@@ -97,8 +97,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
     //   }
     // }).start();
     
-    //resetGyroscope(offsetDegrees);
-   //resetOdometry(m_pose);
     // There are 4 methods you can call to create your swerve modules.
     // The method you use depends on what motors you are using.
     //

@@ -41,17 +41,6 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      // Get first 2 balls.
-      // (new WaitCommand(0.5))
-      //   .andThen(AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory))
-      //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-      // new SequentialCommandGroup(
-      //   new WaitCommand(0.5),
-      //   AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1))
-      //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-
-      // AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory)
-      //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
 
       // Get first 2 balls.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),

@@ -60,19 +60,7 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
 
       addCommands(
         new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
-        // Get first 2 balls.
-        // (new WaitCommand(0.5))
-        //   .andThen(AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1))        
-        //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-
-        // new SequentialCommandGroup(
-        //   new WaitCommand(0.5),
-        //   AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1))
-        //     .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-
-        // AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1)        
-        //   .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-
+        
         // Get first 2 balls.
         new AutoPathIntakeCommand(intake, IntakeStates.Forward),
         new WaitCommand(1),
@@ -82,18 +70,11 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
         // Shoot first 2 balls.
         new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5),
 
-        // Get next 2 balls at terminal.  
-        // AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2)
-        //   .andThen(new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL))
-        //   // Go back to Tarmac and shoot.
-        //     .andThen(AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3))
-        //       .deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-
         //Get next 2 balls at terminal.
         new AutoPathIntakeCommand(intake, IntakeStates.Forward),
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2),
         new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
-        
+
         // Go back to Tarmac and shoot.
         AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
         new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
