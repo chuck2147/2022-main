@@ -33,7 +33,7 @@ public class ShooterCommand extends CommandBase {
 
     if (shooterState == ShooterState.Hub) {
       shootFromFrontOfHub();
-    } else if (shooterState == ShooterState.Tarmac){
+    } else if (shooterState == ShooterState.InnerTarmac){
       shootFromBehindTarmac();
     } else if (shooterState == ShooterState.LaunchPad){
       shootFromLaunchPad();
@@ -64,8 +64,8 @@ public class ShooterCommand extends CommandBase {
   }
 
   private void shootFromBehindTarmac() {
-    lowerTargetSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-    upperTargetSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+    lowerTargetSpeed = ShooterConstants.INNER_TARMAC_LOWER.value;
+    upperTargetSpeed = ShooterConstants.INNER_TARMAC_UPPER.value;
   }
 
   private void shootFromFrontOfHub() {

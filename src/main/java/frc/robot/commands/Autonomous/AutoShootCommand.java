@@ -37,7 +37,7 @@ public class AutoShootCommand extends CommandBase {
   double upperShooterSpeedDefault;
   
   public AutoShootCommand(DrivetrainSubsystem drivetrainSubsystem, VisionSubsystem visionSubsystem, ShooterSubsystem shooterSubsystem, IndexerSubsystem indexerSubsystem,
-                          BallCount ballCountToShoot, double lowerShooterSpeedDefault, double upperShooterSpeedDefault) {
+                          BallCount ballCountToShoot, double lowerShooterSpeedDefault, double upperShooterSpeedDefault, boolean fallbackShooting) {
     addRequirements(drivetrainSubsystem, visionSubsystem, shooterSubsystem, indexerSubsystem);
     
     waitForShootingToBeDoneInSeconds = (ballCountToShoot == BallCount.One) ? waitForShootingToBeDoneInSeconds_OneBall : waitForShootingToBeDoneInSeconds_TwoBall;
@@ -52,6 +52,8 @@ public class AutoShootCommand extends CommandBase {
     visionShooting = new VisionShooting(visionSubsystem);
     stopWatchShooting = new StopWatch();
     stopWatchFallBack = new StopWatch();
+
+    fallbackInitiated = fallbackShooting;
   }
 
   // Called when the command is initially scheduled.
@@ -60,8 +62,7 @@ public class AutoShootCommand extends CommandBase {
     stopWatchShooting.reset();    
     stopWatchFallBack.reset();
 
-    stopWatchFallBack.start();
-    fallbackInitiated = true;
+    stopWatchFallBack.start();    
   }
 
   // Called every time the scheduler runs while the command is scheduled.

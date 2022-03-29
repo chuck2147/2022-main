@@ -40,14 +40,14 @@ public class ThreeBallTarmacCommand extends SequentialCommandGroup {
     var lowerSpeedStart = ShooterConstants.AUTO_INSIDE_TARMAC_LOWER;
     var upperSpeedStart = ShooterConstants.AUTO_INSIDE_TARMAC_UPPER;
 
-    var lowerSpeedEnd = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-    var upperSpeedEnd = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+    var lowerSpeedEnd = ShooterConstants.INNER_TARMAC_LOWER.value;
+    var upperSpeedEnd = ShooterConstants.INNER_TARMAC_UPPER.value;
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeedStart, upperSpeedStart).withTimeout(2.5),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeedStart, upperSpeedStart, true).withTimeout(2.5),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory).deadlineWith(new AutoCollectCommand(BallCount.Two, indexer, intake)),
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeedEnd, upperSpeedEnd).withTimeout(2.5)
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeedEnd, upperSpeedEnd, true).withTimeout(2.5)
     );
 
   }

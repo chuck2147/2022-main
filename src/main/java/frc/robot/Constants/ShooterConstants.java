@@ -19,7 +19,7 @@ import frc.robot.util.interpolableMap.InterpolatingTreeMap;
 public final class ShooterConstants{
     //SHOOTER STATES 
     public enum ShooterState {
-        Hub, Tarmac, LaunchPad, ChuckIt;
+        Hub, InnerTarmac, LaunchPad, ChuckIt;
     }
 
     //MOTOR ID
@@ -40,8 +40,14 @@ public final class ShooterConstants{
     public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(2000, "Front of Hub Upper");
     public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(9000, "Front of Hub Lower");
 
-    public static final NTValue BEHIND_TARMAC_UPPER = new NTValue(6000, "Behind Tarmac Upper");
-    public static final NTValue BEHIND_TARMAC_LOWER = new NTValue(5000, "Behind Tarmac Lower");
+    public static final NTValue INNER_TARMAC_UPPER = new NTValue(6000, "Inner Tarmac Upper");
+    public static final NTValue INNER_TARMAC_LOWER = new NTValue(5000, "Inner Tarmac Lower");
+
+    public static final NTValue PEAK_TARMAC_UPPER = new NTValue(7500, "Peak Tarmac Upper");
+    public static final NTValue PEAK_TARMAC_LOWER = new NTValue(4000, "Peak Tarmac Lower");
+
+    public static final NTValue BALL_CIRCLE_UPPER = new NTValue(9000, "Ball Circle Upper");
+    public static final NTValue BALL_CIRCLE_LOWER = new NTValue(3500, "Ball Circle Lower");
     
     public static final NTValue LAUNCH_PAD_UPPER = new NTValue(12000, "Launch Pad Upper"); // 13000
     public static final NTValue LAUNCH_PAD_LOWER = new NTValue(3000, "Launch Pad Lower");  // 2750
@@ -57,9 +63,10 @@ public final class ShooterConstants{
 
     //SHOOTER DISTANCE - from edge of Hub to Limelight - in Inches
     public static final double FRONT_OF_HUB_DISTANCE = 6;
-    public static final double BEHIND_TARMAC_DISTANCE = 75.5; // 120.8
-    public static final double LAUNCH_PAD_DISTANCE = 128; //245
-    public static final double CHUCK_IT_DISTANCE = 0;
+    public static final double INNER_TARMAC_DISTANCE = 82.935; // 75.5; // 120.8
+    public static final double PEAK_TARMAC_DISTANCE = 91.97;
+    public static final double BALL_CIRCLE_DISTANCE = 126.31;
+    public static final double LAUNCH_PAD_DISTANCE = 176.26; // 128; //245
 
     // Setup the map of distances to shooter speeds.
     public static final InterpolatingTreeMap<InterpolatingDouble, InterpolatingDouble> UPPER_SHOOTER_SPEED_MAP = new InterpolatingTreeMap<>();
@@ -76,18 +83,20 @@ public final class ShooterConstants{
     static {
         //----------
         // Add in standard shots.
-       //setShooterSpeedMap(FRONT_OF_HUB_DISTANCE, FRONT_OF_HUB_LOWER.value, FRONT_OF_HUB_UPPER.value);
-        setShooterSpeedMap(BEHIND_TARMAC_DISTANCE, BEHIND_TARMAC_LOWER.value, BEHIND_TARMAC_UPPER.value);
+        setShooterSpeedMap(FRONT_OF_HUB_DISTANCE, FRONT_OF_HUB_LOWER.value, FRONT_OF_HUB_UPPER.value);
+        setShooterSpeedMap(INNER_TARMAC_DISTANCE, INNER_TARMAC_LOWER.value, INNER_TARMAC_UPPER.value);
+        setShooterSpeedMap(PEAK_TARMAC_DISTANCE, PEAK_TARMAC_LOWER.value, PEAK_TARMAC_UPPER.value);        
+        setShooterSpeedMap(BALL_CIRCLE_DISTANCE, BALL_CIRCLE_LOWER.value, BALL_CIRCLE_UPPER.value);
         setShooterSpeedMap(LAUNCH_PAD_DISTANCE, LAUNCH_PAD_LOWER.value, LAUNCH_PAD_UPPER.value);
 
         //---------------
         // Add more shot points here.    
-        setShooterSpeedMap(10, 8500.0, 2500.0);  //54.8 
-        setShooterSpeedMap(20, 7250.0, 3000.0);   //    67 
-        setShooterSpeedMap(42, 6000.0, 5000.0);   //78
-        setShooterSpeedMap(60, 5500, 5000);       //96.4
-        setShooterSpeedMap(98, 3900, 8750.0);        //   169 
-        setShooterSpeedMap(112, 3250, 10500.0);   //206.8
+        // setShooterSpeedMap(10, 8500.0, 2500.0);  //54.8 
+        // setShooterSpeedMap(20, 7250.0, 3000.0);   //    67 
+        // setShooterSpeedMap(42, 6000.0, 5000.0);   //78
+        // setShooterSpeedMap(60, 5500, 5000);       //96.4
+        // setShooterSpeedMap(98, 3900, 8750.0);        //   169 
+        // setShooterSpeedMap(112, 3250, 10500.0);   //206.8
     }  
     
 } 

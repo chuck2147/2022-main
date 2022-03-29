@@ -20,6 +20,11 @@ public class VisionSubsystem extends SubsystemBase {
   public static final PIDController visionPID = new PIDController(VisionConstants.VISION_ALIGN_P, VisionConstants.VISION_ALIGN_I, VisionConstants.VISION_ALIGN_D, 0.01);
 
   ShuffleboardTab tab = Shuffleboard.getTab("NTValues");
+  NetworkTableEntry verticalOffset = tab.add("Vertical Offset To Target", 0)
+    .withSize(2, 1)
+    .withWidget(BuiltInWidgets.kTextView)
+    .getEntry();
+
   NetworkTableEntry distanceToTarget = tab.add("Distance To Target", 0)
     .withSize(2, 1)
     .withWidget(BuiltInWidgets.kTextView)
@@ -63,8 +68,8 @@ public class VisionSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    verticalOffset.setValue(GetVerticalOffset());
     distanceToTarget.setValue(GetDistanceToTarget());
-
   }
 
   private double GetHorizontalOffset() {

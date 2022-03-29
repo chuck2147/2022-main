@@ -54,10 +54,8 @@ public class RobotContainer {
 
   private void configureAutoSelector() {
     autoChooser.addOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
-    //autoChooser.addOption("3 Ball - Start at Wall", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
-    //autoChooser.addOption("3 Ball - Start at Middle", new ThreeBallTarmacCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));
-    autoChooser.setDefaultOption("4 Ball", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Middle));    
-    //autoChooser.addOption("5 Ball - Start at Wall", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer, PathType.Wall));
+    autoChooser.setDefaultOption("4 Ball", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer));    
+    //autoChooser.addOption("5 Ball", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
     
     //autoChooser.addOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter, intake, indexer));
 

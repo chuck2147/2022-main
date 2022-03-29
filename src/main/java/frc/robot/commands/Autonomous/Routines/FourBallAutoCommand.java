@@ -11,7 +11,6 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.AutoPathConstants;
-import frc.robot.Constants.AutoPathConstants.PathType;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.IndexerConstants.BallCount;
 import frc.robot.Constants.IntakeConstants.IntakeStates;
@@ -32,57 +31,44 @@ import frc.robot.subsystems.VisionSubsystem;
 
 public class FourBallAutoCommand extends SequentialCommandGroup {
   /** Creates a new ShootAndTaxiCommand. */
-  public FourBallAutoCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake, IndexerSubsystem indexer, 
-                             PathType pathType) {
+  public FourBallAutoCommand(DrivetrainSubsystem drivetrain, VisionSubsystem visionSubsystem, ShooterSubsystem shooter, IntakeSubsystem intake, IndexerSubsystem indexer) {
     addRequirements(drivetrain, visionSubsystem, shooter, intake, indexer);
 
-    String pathName1 = null;
-    String pathName2 = null;
-    String pathName3 = null;
+    String pathName1 = "4 Ball Middle Part 1";
+    String pathName2 = "4 Ball Middle Part 2 OLD";
+    String pathName3 = "4 Ball Middle Part 3 OLD";
 
-    if (pathType == PathType.Middle) {
-      pathName1 = "4 Ball Middle Part 1";
-      pathName2 = "4 Ball Middle Part 2";
-      pathName3 = "4 Ball Middle Part 3";
-    }
-    // else if (pathType == PathType.Wall) {
-    //   pathName1 = "2 Ball";
-    //   pathName2 = "Terminal Wall";
-    // }
+    PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
+    PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
+    PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
-    if (pathName1 != null && pathName2 != null && pathName3 != null) {
-      PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
-      PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
-      PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
+    var lowerSpeed = ShooterConstants.INNER_TARMAC_LOWER.value; // 5000
+    var upperSpeed = ShooterConstants.INNER_TARMAC_UPPER.value; // 6000
 
-      var lowerSpeed = ShooterConstants.BEHIND_TARMAC_LOWER.value;
-      var upperSpeed = ShooterConstants.BEHIND_TARMAC_UPPER.value;
+    addCommands(
+      new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
+      
+      // Get first 2 balls.
+      new AutoPathIntakeCommand(intake, IntakeStates.Forward),
+      new WaitCommand(1),
+      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1),
+      new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
-      addCommands(
-        new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
-        
-        // Get first 2 balls.
-        new AutoPathIntakeCommand(intake, IntakeStates.Forward),
-        new WaitCommand(1),
-        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1),
-        new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
+      // Shoot first 2 balls.
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed, true).withTimeout(2.5),
 
-        // Shoot first 2 balls.
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5),
+      //Get next 2 balls at terminal.
+      new AutoPathIntakeCommand(intake, IntakeStates.Forward),
+      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2),
+      new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
 
-        //Get next 2 balls at terminal.
-        new AutoPathIntakeCommand(intake, IntakeStates.Forward),
-        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2),
-        new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
+      // Go back to Tarmac and shoot.
+      AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
+      new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
-        // Go back to Tarmac and shoot.
-        AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
-        new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
-
-        // Shoot last two balls.
-        new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed).withTimeout(2.5)
-      );
-    }
+      // Shoot last two balls.
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed, true).withTimeout(2.5)
+    );
 
   }
 }
