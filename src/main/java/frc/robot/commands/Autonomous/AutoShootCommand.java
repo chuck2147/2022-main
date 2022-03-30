@@ -25,7 +25,7 @@ public class AutoShootCommand extends CommandBase {
   private StopWatch stopWatchShooting;
   private StopWatch stopWatchFallBack;
 
-  private double waitForShootingToBeDoneInSeconds_TwoBall = 1.5;
+  private double waitForShootingToBeDoneInSeconds_TwoBall = 1.4;
   private double waitForShootingToBeDoneInSeconds_OneBall = 0.9;
   private double waitForShootingToBeDoneInSeconds;
 
