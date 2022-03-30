@@ -33,12 +33,12 @@ public class ShooterCommand extends CommandBase {
 
     if (shooterState == ShooterState.Hub) {
       shootFromFrontOfHub();
-    } else if (shooterState == ShooterState.InnerTarmac){
+    } else if (shooterState == ShooterState.TarmacEdge){
       shootFromBehindTarmac();
     } else if (shooterState == ShooterState.LaunchPad){
       shootFromLaunchPad();
-    } else if (shooterState == ShooterState.ChuckIt) {
-      shootChuckIt();
+    } else if (shooterState == ShooterState.BallCircle) {
+      shootBallCircle();
     }
   }
 
@@ -64,8 +64,8 @@ public class ShooterCommand extends CommandBase {
   }
 
   private void shootFromBehindTarmac() {
-    lowerTargetSpeed = ShooterConstants.INNER_TARMAC_LOWER.value;
-    upperTargetSpeed = ShooterConstants.INNER_TARMAC_UPPER.value;
+    lowerTargetSpeed = ShooterConstants.TARMAC_EDGE_LOWER.value;
+    upperTargetSpeed = ShooterConstants.TARMAC_EDGE_UPPER.value;
   }
 
   private void shootFromFrontOfHub() {
@@ -78,8 +78,8 @@ public class ShooterCommand extends CommandBase {
     upperTargetSpeed = ShooterConstants.LAUNCH_PAD_UPPER.value;
   }
   
-  private void shootChuckIt() {
-    lowerTargetSpeed = ShooterConstants.CHUCK_IT_LOWER.value;
-    upperTargetSpeed = ShooterConstants.CHUCK_IT_UPPER.value;
+  private void shootBallCircle() {
+    lowerTargetSpeed = ShooterConstants.BALL_CIRCLE_LOWER.value;
+    upperTargetSpeed = ShooterConstants.BALL_CIRCLE_UPPER.value;
   }
 }

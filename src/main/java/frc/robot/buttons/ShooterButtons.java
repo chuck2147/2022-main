@@ -14,9 +14,9 @@ public class ShooterButtons {
         final JoystickButton launchPadButton = ControllerConstants.LAUNCH_PAD_SHOT;
         final JoystickButton chuckButton = ControllerConstants.CHUCK_IT_SHOT;
 
-        tarmacButton.whileHeld(new ShooterCommand(shooter, indexer, ShooterState.InnerTarmac));
+        tarmacButton.whileHeld(new ShooterCommand(shooter, indexer, ShooterState.TarmacEdge));
         hubButton.whileHeld(new ShooterCommand(shooter, indexer, ShooterState.Hub));
         launchPadButton.whileHeld(new ShooterCommand(shooter, indexer, ShooterState.LaunchPad));
-        chuckButton.whileHeld(new ShooterCommand(shooter, indexer, ShooterState.ChuckIt));
+        chuckButton.whileHeld(new ShooterCommand(shooter, indexer, ShooterState.BallCircle));
     }
 }

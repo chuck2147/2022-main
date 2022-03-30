@@ -48,8 +48,8 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
     PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory4 = PathPlanner.loadPath(pathName4, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
-    var lowerSpeed = ShooterConstants.INNER_TARMAC_LOWER.value; // 5000
-    var upperSpeed = ShooterConstants.INNER_TARMAC_UPPER.value; // 6000
+    var lowerSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_LOWER; // 5000
+    var upperSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_UPPER; // 6000
 
     var lowerSpeedShot2 = lowerSpeed;
     var upperSpeedShot2 = upperSpeed;

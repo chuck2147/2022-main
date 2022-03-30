@@ -40,8 +40,8 @@ public class ThreeBallTarmacCommand extends SequentialCommandGroup {
     var lowerSpeedStart = ShooterConstants.AUTO_INSIDE_TARMAC_LOWER;
     var upperSpeedStart = ShooterConstants.AUTO_INSIDE_TARMAC_UPPER;
 
-    var lowerSpeedEnd = ShooterConstants.INNER_TARMAC_LOWER.value;
-    var upperSpeedEnd = ShooterConstants.INNER_TARMAC_UPPER.value;
+    var lowerSpeedEnd = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_LOWER; // 5000
+    var upperSpeedEnd = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_UPPER; // 6000
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),
