@@ -40,8 +40,8 @@ public final class ShooterConstants{
     public static final NTValue FRONT_OF_HUB_UPPER = new NTValue(2000, "Front of Hub Upper");
     public static final NTValue FRONT_OF_HUB_LOWER = new NTValue(9000, "Front of Hub Lower");
 
-    public static final NTValue TARMAC_EDGE_UPPER = new NTValue(6000, "Tarmac Edge Upper");
-    public static final NTValue TARMAC_EDGE_LOWER = new NTValue(5000, "Tarmac Edge Lower");
+    public static final NTValue TARMAC_EDGE_UPPER = new NTValue(7250, "Tarmac Edge Upper");
+    public static final NTValue TARMAC_EDGE_LOWER = new NTValue(4400, "Tarmac Edge Lower");
 
     public static final NTValue BALL_CIRCLE_UPPER = new NTValue(9000, "Ball Circle Upper");
     public static final NTValue BALL_CIRCLE_LOWER = new NTValue(3500, "Ball Circle Lower");

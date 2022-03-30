@@ -35,8 +35,8 @@ public class TwoBallAutoCommand extends SequentialCommandGroup {
 
     PathPlannerTrajectory pathTrajectory = PathPlanner.loadPath("2 Ball", AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
-    var lowerSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_LOWER; // 5000
-    var upperSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_UPPER; // 6000
+    var lowerSpeed = ShooterConstants.TARMAC_EDGE_LOWER.value; // 5000
+    var upperSpeed = ShooterConstants.TARMAC_EDGE_UPPER.value; // 6000
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory.getInitialPose()),

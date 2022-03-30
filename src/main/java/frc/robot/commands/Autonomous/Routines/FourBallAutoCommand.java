@@ -41,9 +41,9 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
     PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
-
-    var lowerSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_LOWER; // 5000
-    var upperSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_UPPER; // 6000
+    
+    var lowerSpeed = ShooterConstants.TARMAC_EDGE_LOWER.value; // 5000
+    var upperSpeed = ShooterConstants.TARMAC_EDGE_UPPER.value; // 6000
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
