@@ -36,8 +36,12 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
 
     String pathName1 = "4 Ball Middle Part 1";
     String pathName2 = "4 Ball Middle Part 2";
+
     String pathName3 = "5 Ball Part 3";
     String pathName4 = "5 Ball Part 4";
+
+    // String pathName3 = "5 Ball Part 3 Circle";
+    // String pathName4 = "5 Ball Part 4 Circle";
 
     PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
@@ -46,6 +50,12 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
 
     var lowerSpeed = ShooterConstants.INNER_TARMAC_LOWER.value; // 5000
     var upperSpeed = ShooterConstants.INNER_TARMAC_UPPER.value; // 6000
+
+    var lowerSpeedShot2 = lowerSpeed;
+    var upperSpeedShot2 = upperSpeed;
+
+    //var lowerSpeedShot2 = ShooterConstants.BALL_CIRCLE_LOWER.value;
+    //var upperSpeedShot2 = ShooterConstants.BALL_CIRCLE_UPPER.value;
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
@@ -69,7 +79,7 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
       new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
       // Shoot two balls.
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed, true).withTimeout(2.5),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeedShot2, upperSpeedShot2, true).withTimeout(2.5),
 
       // Get last ball.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),
