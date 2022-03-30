@@ -13,7 +13,6 @@ import frc.robot.Constants.AutoPathConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.IndexerConstants.BallCount;
 import frc.robot.Constants.IntakeConstants.IntakeStates;
-import frc.robot.commands.Autonomous.AutoCollectCommand;
 import frc.robot.commands.Autonomous.AutoPathPlanCommand;
 import frc.robot.commands.Autonomous.AutoShootCommand;
 import frc.robot.commands.Autonomous.AutoPathIntakeCommand;

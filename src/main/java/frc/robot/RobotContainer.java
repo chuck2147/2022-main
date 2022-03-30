@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.AutoPathConstants.PathType;
 import frc.robot.buttons.ClimberButtons;
 import frc.robot.buttons.DriverButtons;
 import frc.robot.buttons.IndexerButtons;
