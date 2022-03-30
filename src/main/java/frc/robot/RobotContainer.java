@@ -59,7 +59,7 @@ public class RobotContainer {
   private void configureAutoSelector() {
     autoChooser.addOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
     autoChooser.setDefaultOption("4 Ball", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer));    
-    //autoChooser.addOption("5 Ball", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
+    autoChooser.addOption("5 Ball", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
     
     //autoChooser.addOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter, intake, indexer));
 

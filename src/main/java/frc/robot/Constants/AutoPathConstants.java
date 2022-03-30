@@ -26,7 +26,8 @@ public class AutoPathConstants {
     public static final double kIThetaController = 0;
     public static final double kDThetaController = 0;
 
-    public static final double WAIT_FOR_BALL_ROLL_FROM_TERMINAL = 0.8;
+    public static final double WAIT_FOR_INTAKE_TO_EXTEND = 0.5;
+    public static final double WAIT_FOR_BALL_ROLL_FROM_TERMINAL = 0.5;
 
     public enum PathType {
         Middle, Wall

@@ -52,7 +52,7 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
       
       // Get first 2 balls.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),
-      new WaitCommand(1),
+      new WaitCommand(AutoPathConstants.WAIT_FOR_INTAKE_TO_EXTEND),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1),
       new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
@@ -62,14 +62,14 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
       //Get next 2 balls at terminal.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2),
-      new WaitCommand(0.5),
+      new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
 
       // Go back to Tarmac and shoot.
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
       new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
       // Shoot two balls.
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed, false).withTimeout(2.5),
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.Two, lowerSpeed, upperSpeed, true).withTimeout(2.5),
 
       // Get last ball.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),
@@ -77,7 +77,7 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
       new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
       // Shoot last.
-      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeed, upperSpeed, false).withTimeout(2.5)
+      new AutoShootCommand(drivetrain, visionSubsystem, shooter, indexer, BallCount.One, lowerSpeed, upperSpeed, true).withTimeout(2.5)
     );
 
   }

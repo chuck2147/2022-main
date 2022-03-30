@@ -50,7 +50,7 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
       
       // Get first 2 balls.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),
-      new WaitCommand(1),
+      new WaitCommand(AutoPathConstants.WAIT_FOR_INTAKE_TO_EXTEND),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory1),
       new AutoPathIntakeCommand(intake, IntakeStates.Stopped),
 
