@@ -35,8 +35,8 @@ public class FourBallAutoCommand extends SequentialCommandGroup {
     addRequirements(drivetrain, visionSubsystem, shooter, intake, indexer);
 
     String pathName1 = "4 Ball Middle Part 1";
-    String pathName2 = "4 Ball Middle Part 2 OLD";
-    String pathName3 = "4 Ball Middle Part 3 OLD";
+    String pathName2 = "4 Ball Middle Part 2";
+    String pathName3 = "4 Ball Middle Part 3";
 
     PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
