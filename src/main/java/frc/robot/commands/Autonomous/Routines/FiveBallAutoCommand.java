@@ -62,7 +62,7 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
       //Get next 2 balls at terminal.
       new AutoPathIntakeCommand(intake, IntakeStates.Forward),
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory2),
-      new WaitCommand(AutoPathConstants.WAIT_FOR_BALL_ROLL_FROM_TERMINAL),
+      new WaitCommand(0.5),
 
       // Go back to Tarmac and shoot.
       AutoPathPlanCommand.GetCommand(drivetrain, pathTrajectory3),
