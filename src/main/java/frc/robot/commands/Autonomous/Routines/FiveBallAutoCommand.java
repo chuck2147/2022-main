@@ -36,20 +36,16 @@ public class FiveBallAutoCommand extends SequentialCommandGroup {
 
     String pathName1 = "4 Ball Middle Part 1";
     String pathName2 = "4 Ball Middle Part 2";
-
     String pathName3 = "4 Ball Middle Part 3";
     String pathName4 = "5 Ball Part 4";
-
-    // String pathName3 = "5 Ball Part 3 Circle";
-    // String pathName4 = "5 Ball Part 4 Circle";
 
     PathPlannerTrajectory pathTrajectory1 = PathPlanner.loadPath(pathName1, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory2 = PathPlanner.loadPath(pathName2, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory3 = PathPlanner.loadPath(pathName3, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
     PathPlannerTrajectory pathTrajectory4 = PathPlanner.loadPath(pathName4, AutoPathConstants.kMaxSpeedMetersPerSecond, AutoPathConstants.kMaxAccelerationMetersPerSecondSquared);
 
-    var lowerSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_LOWER; // 5000
-    var upperSpeed = ShooterConstants.AUTO_INNER_CIRCLE_TARMAC_UPPER; // 6000
+    var lowerSpeed = ShooterConstants.TARMAC_EDGE_LOWER.value; // 5000
+    var upperSpeed = ShooterConstants.TARMAC_EDGE_UPPER.value; // 6000
 
     addCommands(
       new ResetOdometryCommand(drivetrain, pathTrajectory1.getInitialPose()),
