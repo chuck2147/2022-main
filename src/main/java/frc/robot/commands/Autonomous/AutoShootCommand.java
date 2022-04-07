@@ -81,7 +81,7 @@ public class AutoShootCommand extends CommandBase {
       // NOTE: Probably can make this a parameter of distance or just speeds that can vary where we think it should be at.
       shooter.setSpeeds(lowerShooterSpeedDefault, upperShooterSpeedDefault);
 
-      if (shooter.isUpToSpeed()) {
+      if (visionShooting.IsOnTarget() && shooter.isUpToSpeed()) {
         indexer.feedToShooter();
         stopWatchShooting.start();
       }

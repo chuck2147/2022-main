@@ -277,7 +277,6 @@ public class DrivetrainSubsystem extends SubsystemBase {
       yDriveSpeed,
       rotationSpeed
     );
-
     SetStateFromSpeeds(chassisSpeeds);
   }
 

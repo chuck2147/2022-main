@@ -20,6 +20,8 @@ import frc.robot.commands.Autonomous.Routines.FourBallAutoCommand;
 import frc.robot.commands.Autonomous.Routines.ShootAndTaxiPathCommand;
 import frc.robot.commands.Autonomous.Routines.ThreeBallTarmacCommand;
 import frc.robot.commands.Autonomous.Routines.TwoBallAutoCommand;
+import frc.robot.commands.Autonomous.Routines.Simple;
+import frc.robot.commands.Autonomous.Routines.Simple2;
 import frc.robot.subsystems.ClimberHighSubsystem;
 import frc.robot.subsystems.ClimberLowSubsystem;
 import frc.robot.subsystems.DrivetrainSubsystem;
@@ -57,12 +59,13 @@ public class RobotContainer {
   }
 
   private void configureAutoSelector() {
-    autoChooser.addOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));  
-    autoChooser.setDefaultOption("4 Ball", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
-    autoChooser.addOption("5 Ball", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
+    // autoChooser.addOption("2 Ball", new TwoBallAutoCommand(drivetrain, vision, shooter, intake, indexer));  
+    // autoChooser.setDefaultOption("4 Ball", new FourBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
+    // autoChooser.addOption("5 Ball", new FiveBallAutoCommand(drivetrain, vision, shooter, intake, indexer));
     
     //autoChooser.addOption("Shoot and Taxi", new ShootAndTaxiPathCommand(drivetrain, vision, shooter, intake, indexer));
-
+    autoChooser.addOption("Simple", new Simple(drivetrain, vision, shooter, intake, indexer));
+    autoChooser.setDefaultOption("Simple 2", new Simple2(drivetrain, vision, shooter, intake, indexer));
     SmartDashboard.putData("Auto Selector" , autoChooser);
   }
 
